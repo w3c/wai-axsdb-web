@@ -1,0 +1,168 @@
+<!doctype html>
+<html id="top">
+<head>
+	<meta charset="utf-8">
+	<title>Accessibility Support Database</title>
+	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" href="../css/wai-act.css">
+	<link rel="stylesheet" href="../css/icomoon/style.css">
+	<script src="assets/js/modernizr.min.js"></script>
+</head>
+<body>
+	<header role="banner">
+		<div class="w3c-wai-header">
+			<a href="/"><img src="http://w3.org/2008/site/images/logo-w3c-mobile-lg" alt="W3C" height="53" width="90"></a>
+			<a href="/" class="wai"><img src="http://www.w3.org/WAI/images/wai-temp" alt="Web Accessibility Initiative"></a>
+		</div>
+	</header>
+	<main role="main">
+		<style scoped>
+			h2 select {
+				font-size: 0.5em;
+				position:fixed;
+				right: 10px;
+				bottom: 10px;
+			}
+			main > .code > .figcontent {
+				height: 10em;
+			}
+		</style>
+		<h1 class="page-title">
+			Accessibility Support Database
+		</h1>
+		<h2>Styleguide</h2>
+		<section>
+			<h3>Buttons</h3>
+			<figure class="sample">
+				<figcaption>Example:</figcaption>
+				<div class="figcontent">
+					<input type="button" class="btn" value="Button (input)">
+					<button type="button" class="btn">Button (button)</button>
+					<a href="#" class="btn">Button (link)</a>
+					<br><br>
+					<input type="button" class="btn-primary" value="Button (input)">
+					<button type="button" class="btn-primary">Button (button)</button>
+					<a href="#" class="btn-primary">Button (link)</a>
+				</div>
+			</figure>
+			<figure class="code">
+				<figcaption>Code snippet:</figcaption>
+				<div class="figcontent">
+					<pre class="language-markup"><code>&lt;input type="button" class="btn" value="Button (input)">
+&lt;button type="button" class="btn">Button (button)&lt;/button>
+&lt;a href="#" class="btn">Button (link)&lt;/a>
+&lt;br>&lt;br>
+&lt;input type="button" class="btn-primary" value="Button (input)">
+&lt;button type="button" class="btn-primary">Button (button)&lt;/button>
+&lt;a href="#" class="btn-primary">Button (link)&lt;/a></code></pre>
+					</div>
+				</figure>
+			</section>
+			<section>
+				<h3>Front page buttons</h3>
+				<figure class="sample">
+					<figcaption>Example:</figcaption>
+					<div class="figcontent">
+						<div class="asd-fp-container">
+							<div class="main-row">
+								<a href="#" class="btn-primary">
+									<strong><span class="icon-eye-open"></span> View Test Results</strong><br>
+									View the test cases and the corresponding test results and comments available in the database. <br>
+									You have the option to provide comments on this data.
+								</a>
+								<a href="asd-run-tests.html" class="btn-primary">
+									<strong><span class="icon-pencil"></span> Run Test Cases</strong><br>
+									Run test cases with your own combinations of web browser and assistive technology. <br>
+									You have the option to contribute the test results into the database.
+								</a>
+							</div>
+							<div class="secondary-row">
+								<a href="#" class="btn">
+									<span class="icon-plus-sign"></span> Submit Test Case
+									<div>
+										Contribute test cases for existing WCAG 2.0 Techniques  , to extend the coverage of the database to different situations and contexts.
+									</div>
+								</a>
+								<a href="#" class="btn">
+									<span class="icon-cogs"></span> For Developers
+									<div>
+										How to develop with accesdb. Experiment with running examples and build your own with AccessDB Workbench
+									</div>
+								</a>
+								<a href="#" class="btn">
+									<span class="icon-question-sign"></span> Help/About
+									<div>
+										Find more information, video tutorials and other supporting documentation
+									</div>
+								</a>
+							</div>
+							<div class="tertionary-row">
+								<a href="#"><span class="icon-stethoscope"></span> For Admins</a>
+							</div>
+						</div>
+					</div>
+				</figure>
+				<figure class="code">
+					<figcaption>Code sample:</figcaption>
+					<div class="figcontent">
+						<pre class="language-markup"><code>&lt;div class="asd-fp-container">
+	&lt;div class="main-row">
+		&lt;a href="#" class="btn-primary">
+			&lt;strong>&lt;span class="icon-eye-open">&lt;/span> View Test Results&lt;/strong>&lt;br>
+			View the test cases and the corresponding test results and comments available in the database. &lt;br>
+			You have the option to provide comments on this data.
+		&lt;/a>
+		&lt;a href="asd-run-tests.html" class="btn-primary">
+			&lt;strong>&lt;span class="icon-pencil">&lt;/span> Run Test Cases&lt;/strong>&lt;br>
+			Run test cases with your own combinations of web browser and assistive technology. &lt;br>
+			You have the option to contribute the test results into the database.
+		&lt;/a>
+	&lt;/div>
+	&lt;div class="secondary-row">
+		&lt;a href="#" class="btn">
+			&lt;span class="icon-plus-sign">&lt;/span> Submit Test Case
+			&lt;div>
+				Contribute test cases for existing WCAG 2.0 Techniques  , to extend the coverage of the database to different situations and contexts.
+			&lt;/div>
+		&lt;/a>
+		&lt;a href="#" class="btn">
+			&lt;span class="icon-cogs">&lt;/span> For Developers
+			&lt;div>
+				How to develop with accesdb. Experiment with running examples and build your own with AccessDB Workbench
+			&lt;/div>
+		&lt;/a>
+		&lt;a href="#" class="btn">
+			&lt;span class="icon-question-sign">&lt;/span> Help/About
+			&lt;div>
+				Find more information, video tutorials and other supporting documentation
+			&lt;/div>
+		&lt;/a>
+	&lt;/div>
+	&lt;div class="tertionary-row">
+		&lt;a href="#">&lt;span class="icon-stethoscope">&lt;/span> For Admins&lt;/a>
+	&lt;/div>
+&lt;/div></code></pre>
+						</div>
+					</figure>
+				</section>
+			</main>
+			<footer role="complimentary" aria-label="Document info">
+				<p><strong>Status:</strong> [DRAFT] 27 September 2013 (see <a href="http://www.w3.org/WAI/EO/changelogs/cl-app-notes">changelog</a>)<br>
+					Editors: Bim Egan, <a href="http://www.w3.org/People/shadi/">Shadi Abou Zahra</a> and the <a href="http://www.w3.org/WAI/EO/">Education and Outreach Working Group (EOWG)</a>.<br>
+					Developed with support from the <a href="http://www.w3.org/WAI/ACT/">WAI-ACT</a> project, co-funded by the European Commission<abbr title="Information Society Technologies"> IST</abbr> Programme. [See <a href="../res/acks">Acknowledgements</a>]
+				</p>
+				<p>[<a href="http://www.w3.org/WAI/sitemap.html">WAI Site Map</a>]          [<a href="http://www.w3.org/WAI/sitehelp.html">Help with WAI Website</a>] [<a href="http://www.w3.org/WAI/search.php">Search</a>] [<a href="http://www.w3.org/WAI/contacts">Contacting WAI</a>]<br>
+					<strong>Feedback welcome to <a href="mailto:wai-eo-editors@w3.org">wai-eo-editors@w3.org</a></strong> (a publicly archived list) or <a href="mailto:wai@w3.org">wai@w3.org</a> (a WAI staff-only list).
+				</p>
+				<div class="copyright">                          <p><a rel="Copyright" href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2013 <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup>
+					(<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>,
+					<a href="http://www.ercim.org/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>,
+					<a href="http://www.keio.ac.jp/">Keio</a>,
+					<a href="http://ev.buaa.edu.cn/">Beihang</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
+					<a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a>,               <a rel="Copyright" href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a>               and <a rel="Copyright" href="http://www.w3.org/Consortium/Legal/copyright-software">software licensing</a> rules apply. Your interactions with this site are in accordance with our <a href="http://www.w3.org/Consortium/Legal/privacy-statement#Public">public</a>
+					and <a href="http://www.w3.org/Consortium/Legal/privacy-statement#Members">Member</a>privacy statements.</p>                   </div><!-- ends copyright -->
+
+				</footer>
+				<script src="assets/js/main.min.js"></script>
+			<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script></body>
+			</html>

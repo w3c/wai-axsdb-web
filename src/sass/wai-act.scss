@@ -1,0 +1,792 @@
+@-ms-viewport { width: device-width; } @-o-viewport { width: device-width; } @viewport { width: device-width; }
+
+@import "compass/css3";
+@import "helpers";
+@import "normalize";
+@import "script";
+@import "grid";
+
+// MQ-Variables
+
+$small:  25em; //* 400px */
+$medium: 43.75em; //* 700px */
+$big:    56.25em; //* 900px */
+$large:  81.25em; //* 1300px */
+
+// Grid systems variable
+
+$sgs-row-width:     100%;    // fluid container width
+$sgs-row-max-width: 0; // max. container width
+$sgs-columns:       12;     // no. of columns
+$sgs-gutter:        1em;   // spacing between columns
+$ie7-support: false;
+
+// Font definitions
+//
+// Markup: <div class="font-primary">font-family: "Fira Sans", "HelveticaNeue", "Helvetica", "Arial", sans-serif;</div>
+// <div class="font-secondary">font-family: "Vollkorn", Georgia, Times, "Times New Roman", serif;</div>
+
+@include font-face("Vollkorn", font-files("vollkorn/vollkorn-regular.woff"), "vollkorn/vollkorn-regular.eot");
+@include font-face("Vollkorn", font-files("vollkorn/vollkorn-italic.woff"), "vollkorn/vollkorn-italic.eot", normal, italic);
+@include font-face("Vollkorn", font-files("vollkorn/vollkorn-bold.woff"), "vollkorn/vollkorn-bold.eot", bold);
+@include font-face("Vollkorn", font-files("vollkorn/vollkorn-bolditalic.woff"), "vollkorn/vollkorn-bolditalic.eot", bold, italic);
+
+@include font-face("Fira Sans", font-files("firasans/firasansot-regular.woff"), "firasans/firasansot-regular.eot");
+@include font-face("Fira Sans", font-files("firasans/firasansot-regularitalic.woff"), "firasans/firasansot-regularitalic.eot", normal, italic);
+@include font-face("Fira Sans", font-files("firasans/firasansot-bold.woff"), "firasans/firasansot-bold.eot", bold);
+@include font-face("Fira Sans", font-files("firasans/firasansot-bolditalic.woff"), "firasans/firasansot-bolditalic.eot", bold, italic);
+
+.font-primary {
+	font-family: "Fira Sans", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+}
+
+.font-secondary {
+	font-family: "Vollkorn", Georgia, Times, "Times New Roman", serif;
+}
+
+// Body
+//
+// Markup: <body></body>
+//
+// Styleguide 1.2
+
+body {
+	@extend .font-primary;
+	background-color: #F5F5F5;
+	color: #333;
+	font-size: percentage(15/16);
+	@include mq($medium) {
+		font-size: 100%;
+	}
+	@include mq($big) {
+  	font-size: 112.5%;
+  }
+	line-height: 1.5;
+}
+
+body, h1, h2, h3, h4, h5, h6 {
+  font-size-adjust: 0.5;
+}
+
+
+// Header
+//
+// Markup: <header role="banner">
+//	<h1>
+//		<a href="/"><img src="http://w3.org/2008/site/images/logo-w3c-mobile-lg" alt="W3C" height="53" width="90"></a>
+//		<a href="/" class="wai">Web Accessibility Initiative</a>
+//	</h1>
+//</header>
+//
+// Styleguide 1.2
+
+header[role=banner] {
+	@include container();
+	border-top: 5px solid #930;
+	div {
+		background-color: #005A9C;
+		float: right;
+	}
+	img {
+		display:inline-block;
+		vertical-align: middle;
+		background: #2471AA;
+	}
+	a {
+			text-decoration: none;
+			display: inline-block;
+			&:hover, &:focus {text-decoration: underline;}
+	}
+	.wai {
+	}
+}
+
+// Main
+//
+// Markup: <main role="main"></main>
+//
+// Styleguide 1.3
+
+main {
+	display:block;
+	@include container();
+}
+
+// Footer
+//
+// Markup: <footer role="complinentary"></footer>
+//
+// Styleguide 1.4
+
+footer {
+	@extend main;
+}
+
+
+// Headings
+//
+// Markup: <h1>Heading Level 1</h1>
+// <h2>Heading Level 2</h2>
+// <h3>Heading Level 3</h3>
+// <h4>Heading Level 4</h4>
+// <h5>Heading Level 5</h5>
+// <h6>Heading Level 6</h6>
+//
+// Styleguide 1.4
+
+h1, h2, h3, h4 {
+	@extend .font-secondary;
+	font-weight: normal;
+	.subheading {
+		@extend .font-primary;
+		font-size: 0.55em;
+		margin: 0.25em;
+	}
+	* > &:first-child {
+		margin-top:0;
+	}
+}
+
+.page-title {
+	clear:both;
+	margin-bottom: 1em;
+	line-height: 1;
+}
+
+a {
+	color: #036;
+	&:visited {
+		// color: #A8BFCF;
+	}
+	&:hover, &:focus {
+		color: #005A9C;
+	}
+}
+
+.navigation {
+	background-color: #eee;
+	&.tabbed {
+		@include container-full();
+		ul {
+			margin:0;
+			padding:0;
+			list-style:none;
+			width: 100%;
+			float: left;
+			@include generate_grid_positions(li, 4);
+			@include background(linear-gradient(to bottom, lighten(#036, 10%), #036));
+			li {
+				@include column(4);
+				margin-bottom: 0 !important;
+				//border-right: 1px solid #eee;
+				//box-sizing:border-box;
+				text-align: center;
+				a:hover, a:focus {
+					background-color: rgba(#fff, .1);
+				}
+				&:last-child {
+					border-right: none;
+				}
+				a {
+					display: block;
+					padding: 1em;
+					//background-color: #036;
+					color: #fff;
+				}
+				&.current {
+					position:relative;
+					overflow: visible;
+					@include background(linear-gradient(to bottom, #360, lighten(#360, 10%)));
+					&::after {
+						position: absolute;
+						display: inline-block;
+						content: "";
+						border-width: 1em 1em;
+						height: 0;
+						width: 0;
+						border-color: #4D9900 transparent transparent transparent;
+						top: 100%;
+						left: 48%;
+						left: calc(50% - .5em);
+						border-style: solid;
+					}
+				}
+			}
+		}
+	}
+	&.main {
+		@include mq($big) {
+			font-size: 1.25em;
+		}
+	}
+}
+
+.icon-navigation {
+	margin:0 0 1em;
+	.js & button {
+		display: block !important;
+	}
+	button {
+		background-color: #FFF;
+		border:none;
+		padding: .5em;
+		display: inline-block;
+		transition: all 600ms;
+		.icon {
+			@extend .icon-menu;
+		}
+		.on {
+			display:none;
+		}
+		&.on {
+			background-color: #2F78AE;
+			color: #eee;
+			border-radius: .25em .25em 0 0;
+			.icon {
+				@extend .icon-menu-active;
+			}
+			.on {
+				display:inline;
+			}
+			.off {
+				display:none;
+			}
+		}
+	}
+	ul {
+		.js & {
+			display: none;
+		}
+		border-radius: 0 .25em .25em;
+		list-style:none;
+		@include container();
+		margin:0 0 1em;
+		float:left;
+		width:100%;
+		padding:1em 1em 0;
+		box-sizing:border-box;
+		background-color: #2F78AE;
+		a {
+			color: #eee;
+			text-decoration: none;
+			padding: 1em 1em .5em;
+			border-radius: .5em;
+			display: inline-block;
+			&:hover, &:focus {
+				background-color: rgba(0,0,0,.3);
+			}
+		}
+		.icon {
+			display:block;
+			width: 3em;
+			height: 3em;
+			margin:0 auto .25em;
+		}
+		@include generate_grid_positions(li, 6);
+		li {
+			@include column(6);
+			text-align: center;
+			margin-bottom:1em !important;
+			&.current {
+				a {
+					color: #333;
+					background-color: rgba(#fff,.3);
+				}
+			}
+		}
+		@include mq($small) {
+			@include generate_grid_positions(li, 4);
+			li {
+				@include column(4);
+			}
+		}
+		@include mq($medium) {
+			@include generate_grid_positions(li, 2);
+			li {
+				@include column(2);
+			}
+		}
+		@include mq(large) {
+			@include generate_grid_positions(li, 1);
+			li {
+				@include column(1);
+			}
+		}
+	}
+}
+
+.with-side-menu {
+	@include mq($medium) {
+		@include container();
+	}
+	.navigation {
+		clear: both;
+		@include mq($medium) {
+			@include column(4);
+		}
+		@include mq($big) {
+			@include column(3);
+		}
+		@include mq($large) {
+			@include column(2);
+		}
+	}
+	.content {
+		@include mq($medium) {
+			@include column(8);
+			@include push(4);
+		}
+		@include mq($big) {
+			@include column(9);
+			@include push(3);
+		}
+		@include mq($large) {
+			@include column(10);
+			@include push(2);
+		}
+	}
+}
+
+.content {
+	@include container-full();
+	.tabbed.main.navigation + & {
+		clear: both;
+		float: left;
+		padding: 2em 0 1em;
+		@include background(linear-gradient(to bottom, #999, #fff 1em));
+	}
+	h2 {
+		margin-top:0;
+	}
+	&.draft h2 {
+		&::before {
+			display: inline-block;
+			@extend .font-primary;
+			font-weight: bold;
+			padding: 0 .2em;
+			vertical-align: middle;
+			content: "DRAFT";
+			font-size: .5em;
+			background-color: #CCFFCC;
+			margin-right: .25em;
+		}
+	}
+	.inner {
+		@extend .two3rds;
+		padding:0 !important;
+	}
+	.annotation {
+		width: percentage(1/2) - 2%;
+		padding-left:1%;
+		margin-right: -1 * percentage(1/2);
+		float:right;
+		border-left: 2px solid #930;
+		.annotation-header {
+			margin-top:0;
+			font-weight: bold;
+			color: #930;
+		}
+		.annotation-content {
+			font-size: percentage(16/18);
+			p:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+}
+
+.status {
+	h3, p {
+		display:inline;
+	}
+	.draft & {
+		background-color: #CCFFCC;
+		padding: .25em;
+	}
+}
+
+.note {
+	position: relative;
+	&::before, &::after {
+		position:absolute;
+	}
+	&::after {
+		font-weight: bold;
+		display: block;
+		transform-origin: left bottom;
+		transform: rotate(90deg);
+		top:-1em;
+		left: calc(100% - 1.5em);
+	}
+	&::before {
+		content: '';
+		right: 0;
+		top:0;
+		width:1.5em;
+		bottom:0;
+	}
+	&.note-todo {
+		background-color: lighten(#f00, 40%);
+		&::after {
+			content: "TODO";
+			color: #fff;
+		}
+		&::before {
+			background-color: #f00;
+		}
+	}
+}
+
+figure {
+	&.code {
+		width:150%;
+		border: 1px solid #036;
+		pre {
+			margin:0;
+			padding: .5em;
+		}
+		figcaption {
+			background-color: #036;
+			color: #fff;
+			padding: .25em .25em 0;
+		}
+	}
+}
+
+// Table
+//
+// Section 5
+
+table {
+	margin: 0 auto;
+	th {
+		text-align: left;
+		background-color: #ccc;
+	}
+	th, td {
+		padding: .5em;
+		border: 1px solid #ccc;
+	}
+	&.results {
+		clear: both;
+		width: 100%;
+		.result {
+			text-align: center;
+		}
+	}
+}
+
+// Forms
+
+.form-submitTestCase {
+	width:75%;
+	margin: 0 auto;
+}
+
+form {
+	fieldset {
+		margin-bottom: 1em;
+		legend + p {
+			margin-top: 0;
+		}
+	}
+	button {
+		&[type=submit] {
+			float:right;
+		}
+	}
+}
+
+// Search input
+
+[role=search] {
+	input {
+
+	}
+}
+
+// Form Block
+
+.form-block {
+	display: table;
+	width: 100%;
+	border: 1px solid #999;
+	border-radius: .5em;
+}
+
+// Form Row
+
+.form-row {
+	display: table-row;
+	label, > span {
+		border-top: 1px solid #999;
+		display: table-cell;
+		vertical-align: middle;
+		padding: .5em;
+	}
+	&:first-child {
+		label, > span {
+			border-top: none;
+		}
+	}
+	&:nth-child(even) {
+		background-color: #f3f3f3;
+	}
+	&:nth-child(odd) {
+		background-color: #eee;
+	}
+	label {
+		width: 25%;
+	}
+	input, select, textarea {
+		width: 90%;
+	}
+	textarea {
+		height: 3em;
+	}
+}
+
+// Selects
+
+select {
+	padding: .25em;
+	font-size: 1em;
+}
+
+// Buttons
+
+.btn-primary {
+	@include background(linear-gradient(to bottom, lighten(#036, 10%), #036));
+	color: #fff;
+	font-weight: normal;
+	font-size: 1.25em;
+	padding: .25em;
+	border: {
+		style: none;
+		radius: .25em;
+	}
+}
+
+/* ====== ICONS   ======== EDIT ABOVE! ======== */
+
+.icon {
+	display:inline-block;
+	height: 1em;
+	width: 1em;
+	background-size: contain;
+	background-repeat:no-repeat;
+	vertical-align: middle;
+	.alt {
+		@extend .visuallyhidden;
+	}
+	&.icon-with-visible-text {
+		margin-right:.25em;
+	}
+	&.icon-menu {
+		background-image: url(../img/menu.svg);
+	}
+	&.icon-menu-active {
+		background-image: url(../img/menu-active.svg);
+	}
+	&.icon-link {
+		background-image: url(../img/link.svg);
+	}
+	&.icon-images {
+		background-image: url(../img/images.svg);
+	}
+	&.icon-tables {
+		background-image: url(../img/tables.svg);
+	}
+	&.icon-forms {
+		background-image: url(../img/forms.svg);
+	}
+	&.icon-carousels {
+		background-image: url(../img/images.svg);
+	}
+	&.icon-arrow {
+		background-image: url(../img/arrow.svg);
+	}
+	&.icon-expand {
+		background-image: url(../img/expand.svg);
+	}
+	&.icon-collapse {
+		background-image: url(../img/collapse.svg);
+	}
+}
+
+/* ====== HELPERS ======== EDIT ABOVE! ======== */
+
+/*
+* Hide only visually, but have it available for screenreaders: h5bp.com/v
+*/
+
+.visuallyhidden {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+
+/*
+* Extends the .visuallyhidden class to allow the element to be focusable
+* when navigated to via the keyboard: h5bp.com/p
+*/
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+	clip: auto;
+	height: auto;
+	margin: 0;
+	overflow: visible;
+	position: static;
+	width: auto;
+}
+
+// Grid System
+//
+// Styleguide 7
+
+// Column wrapper
+//
+// Styleguide 7.1
+
+.grid {
+	@include container();
+}
+
+.with-filter {
+	clear: both;
+	@include mq($medium) {
+		h3>button {display:none;}
+		.column-first {
+			@include column(4);
+		}
+		.column-second {
+			@include column(8);
+			@include push(4);
+		}
+	}
+	&.with-basket {
+		@include mq($medium) {
+		h3>button {display:none;}
+		.column-first {
+			@include column(3);
+		}
+		.column-second {
+			@include column(7);
+			@include push(3);
+		}
+		.column-third {
+			@include column(2);
+			@include push(10);
+		}
+	}
+	}
+}
+
+.column {
+	@include column(12);
+}
+
+@include mq($medium) {
+	.onehalf {
+		@include column(6);
+	}
+	.one3rd {
+		@include column(4);
+	}
+	.two3rds {
+		@include column(8);
+	}
+	.one4th {
+		@include column(3);
+	}
+	.two4ths {
+		@extend .onehalf;
+	}
+	.three4ths {
+		@include column(9);
+	}
+	.one6th {
+		@include column(2);
+	}
+	.two6ths {
+		@extend .one3rd;
+	}
+	.three6ths {
+		@extend .onehalf;
+	}
+	.four6ths {
+		@extend .two3rds;
+	}
+	.five6ths {
+		@include column(10);
+	}
+}
+
+.last {
+	@include column_omega();
+}
+
+// Flush right
+
+.flush.right {
+	float:right;
+}
+
+
+// Treevue
+
+.treevue, .treevue ul {
+	padding:0;
+	margin:0;
+	li {
+    list-style:none;
+    /* Create a little space to the left for the open/close images */
+    //padding-left:18px;
+  }
+}
+
+.treevue li {
+	padding-bottom: 0.25em;
+	padding-left: 3em;
+	@include mq($big) {
+		padding-left: 1em;
+	}
+	overflow:hidden;
+	input[type=checkbox] {
+		margin-right: .25em;
+	}
+	&::before {
+		width: 3em;
+		height:3em;
+		@include mq($big) {
+			width: 1.5em;
+			height:1.5em;
+		}
+		@extend .icon;
+		content: '';
+		margin-left: -1em;
+		float:left;
+	}
+}
+
+.treevue li.treevue-expanded {
+    // background: url(../img/opened.png) no-repeat 0 .45em;
+    &::before {
+			@extend .icon-collapse;
+		}
+}
+.treevue li.treevue-collapsed {
+    // background: url(../img/closed.png) no-repeat 0 .45em;
+    &::before {
+			@extend .icon-expand;
+		}
+}
+.treevue label:hover {
+    background:rgba(0,0,0, 0.05);
+}

@@ -1,0 +1,70 @@
+		<h1 class="page-title">
+			<a href="/">Accessibility Support Database</a>
+		</h1>
+		<div class="tabbed main navigation">
+			<nav role="navigation" aria-label="Navigation">
+				<ul>
+					<li><a href="#/results.html">View Test Results</a></li><li><a href="#/tests-submit.html">Run Test Cases</a></li><li class="current"><a href="#/test-submit.html">Submit Test Cases</a></li>
+				</ul>
+			</nav></div>
+			<div class="content">
+				<div class="grid">
+					<h2>Submit Test Case</h2>
+					<form class="form-submitTestCase roleExpertsOnly" id="testunitform" action="http://www.w3.org/WAI/accessibility-support/api_stable/testunit/commit/jomajp6h9jd5u7dlvu0pd7rtg4" data-ajax="false" method="post" enctype="multipart/form-data">
+						<input name="sessionId" id="sessionId" value="jomajp6h9jd5u7dlvu0pd7rtg4" type="hidden">
+						<input name="testUnitId" id="testUnitId" value="null" type="hidden">
+						<input name="rights" id="rights" value="http://www.w3.org/Consortium/Legal/2008/04-testsuite-license.html" type="hidden">
+						<input name="version" id="version" value="0" type="hidden">
+						<input name="language" id="language" value="en" type="hidden">
+						<input value="2014-1-23" name="date" id="date" type="hidden">
+						<input name="TestUnitDescription" id="TestUnitDescription" value="" type="hidden">
+						<input name="requirement" id="requirement" value="" type="hidden">
+						<input name="creator" id="creator" value="" type="hidden">
+						<input name="testform_webTechnology" id="testform_webTechnology" value="HTML" type="hidden">
+
+						<fieldset>
+							<legend>About the Test Case</legend>
+							<p>Provide information about the test Case</p>
+							<div class="form-block">
+								<div class="form-row">
+									<label for="technique">WCAG 2.0 Technique (required)</label>
+									<span>
+										<input type="search" id="technique" required placeholder="e.g. H2: Combining adjacent image and text links for the same resource">
+									</span>
+								</div>
+								<div class="form-row">
+									<label for="testform_tu_status">Status of test</label>
+									<span>
+										<select id="testform_tu_status">
+											<option value="unconfirmed">Unconfirmed</option>
+											<option value="new">New</option>
+											<option value="ballot">Ballot</option>
+											<option value="pending">Pending</option>
+											<option value="fixes">Fixes</option>
+											<option value="edits">Edits</option>
+											<option value="holding">Holding</option>
+											<option value="rejected">Rejected</option>
+											<option value="accepted">Accepted</option>
+											<option value="deprecated">Deprecated</option>
+										</select>
+									</span>
+								</div>
+								<div class="form-row required">
+									<label for="title">Test Title (required)</label>
+									<span>
+										<input required type="text" id="title">
+									</span>
+								</div>
+								<div class="form-row">
+									<label for="desc">Test Description</label>
+									<span>
+										<textarea name="desc" id="desc" cols="30" rows="10"></textarea>
+									</span>
+								</div>
+							</div>
+						</fieldset>
+						<button id="testform_submit" type="submit" class="btn-primary">Submit Test Case</button>
+
+					</form>
+				</div>
+			</div>

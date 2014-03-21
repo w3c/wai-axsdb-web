@@ -1,0 +1,91 @@
+accessdb.code={
+	libraries:[
+	           		{
+	           			name:"jQuery latest",
+	           			value:"<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js'></script>",
+	           			group:"jQuery"
+	           		},
+	           		{
+	           			name:"jQuery UI latest",
+	           			value:"<link href='http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css' rel='stylesheet' type='text/css' />\n" +
+	           					   "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js'></script>",
+	           			group:"jQuery UI"
+	           		}
+	           ],
+	  htmlTemplate:"<!DOCTYPE html>\n" +
+	  		"<html>\n" +
+	  		"<head>\n" +
+	  		"<meta charset=utf-8 />\n" +
+	  		"<title>Test file title</title>\n" +
+	  		"</head>\n" +
+	  		"<body>\n" +
+	  		"</body>\n" +
+	  		"</html>",
+	  	addLibrary:function(){
+	  		var source =$('#code_library').find(":selected").val();
+	  		var result = $.grep(accessdb.code.libraries, function(e){ return e.name == source; });
+	  		var newhead = "<head>\n" +result[0].value;
+	  		var current =  accessdb.code.editorDoc.getValue();	  		
+	  		current=current.replace(/<head>/gi,newhead);
+	  		$("#testCode").val(current);	
+	  		accessdb.code.editorDoc.setValue(current);
+
+	  	}
+};
+accessdb.code.updateTitle = function(){
+	var newtitle = $('#title').val();
+	newtitle = accessdb.session.select_test_case.technique.nameId + ": " + newtitle;
+	var el = $( '<html></html>' );
+	var editorVal = accessdb.code.editorDoc.getValue();
+	el.html(editorVal);
+	var aa = $(el).find("title")[0];
+	$(aa).text(newtitle);
+	var newCode = "<!DOCTYPE html>\n<html>\n";
+	newCode = newCode + $(el).html().replace(new RegExp('\n\n', 'gim') , '');
+	newCode = newCode + "\n</html>";
+	accessdb.code.editorDoc.setValue(newCode);
+};
+
+accessdb.code.showLibraries = function(){
+	var selectE = $("#code_library");
+	$(selectE).empty();
+	var option = $("<option></option>")
+		.attr("value","")
+		.text("Select");
+	$(selectE).append(option);	
+	for (var lib_key in accessdb.code.libraries) {
+		//console.log(example_key);
+		var lib = accessdb.code.libraries[lib_key];
+		//console.log(example);
+		option = $("<option></option>")
+			.attr("value",lib.name)
+			.text(lib.name);
+		$(selectE).append(option);		
+	}
+};
+accessdb.code.initeditor = function(){
+	var mixedMode = {
+	        name: "htmlmixed",
+	        scriptTypes: [{matches: /\/x-handlebars-template|\/x-mustache/i,
+	                       mode: null},
+	                      {matches: /(text|application)\/(x-)?vb(a|script)/i,
+	                       mode: "vbscript"}]
+	      };
+		    accessdb.code.editorDoc=  CodeMirror.fromTextArea(document.getElementById('testCode'), {
+		    	  // your settings here
+		    	  lineNumbers : true,
+		    	  smartIndent:true,
+		    	  tabSize:4, 
+		    	  indentWithTabs:true,
+		    	    matchBrackets : true,
+		    	  //  tabMode: "indent",
+		    	  //  smartIndent :true,
+		    	    mode: mixedMode
+		    	});	
+		    accessdb.code.editorDoc.setValue(accessdb.code.htmlTemplate);
+		    accessdb.code.editorDoc. focus();
+		   
+};
+accessdb.code.reseteditor = function(){
+		    accessdb.code.editorDoc.setValue(accessdb.code.htmlTemplate);	   
+};
