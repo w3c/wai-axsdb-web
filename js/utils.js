@@ -6,14 +6,11 @@ String.prototype.getNums= function(){
 function Utils(){};
 
 Utils.loadingStart=function(holder){
-	var img = $("<img></img>")
-				.attr("class","loading-img-small")
-				.attr("alt","loading data")
-				.attr("src","img/ajax-loader-small.gif");
-	$(holder).append(img);
+	var div = $('<div class="progress"><div>Loading…</div></div>');
+	$(holder).append(div);
 };
 Utils.loadingEnd=function(holder){
-	$(holder).find(".loading-img-small").remove();
+	$(holder).find(".progress").remove();
 };
 Utils.treeNodeTolist=function(node, nodeType, list, parent){
 	list = list || [];
@@ -200,7 +197,6 @@ Utils.doSelectQuery = function(url, q, async)
 	debug(q);
 	q = encodeURI(q);
 	var out = new Array();
-	
 	$.ajax({
 		type : "GET",
 		url : url + q,
@@ -275,7 +271,7 @@ Utils.ajaxSync = function (url, method, data)
     });
 	return out;
 };
-Utils.doSelectQueryWithCallBack = function(url, q, callback,failcallback)
+Utils.doSelectQueryWithCallBack = function(url, q, callback)
 {
 	debug(q);
 	q = encodeURI(q);
@@ -292,14 +288,13 @@ Utils.doSelectQueryWithCallBack = function(url, q, callback,failcallback)
 		url : url + q,
 		dataType : "json",
 		async: true,
-		error: function(){
+		error: function(error){
         	debug("ajax query error: "+arguments.callee.caller.toString());
-        	if(failcallback)
-        		failcallback();
+            callback(error, null);
         },
 		success : function(data) {
 			//debug(data);
-			callback(data);
+			callback(null, data);
 		}		
 	});	
 };

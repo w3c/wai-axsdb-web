@@ -1,6 +1,7 @@
 window.accessdb.Models.testingSession = Backbone.Model.extend({
     // Backbone
     defaults: {
+        // if this structure changed need to change server side object also
         sessionName: null,
         sessionId: null,
         testProfileId: "-1",
@@ -47,17 +48,11 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         var self = this;
         Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTINGSESSION_SAVE, 'POST', self, function (error, data) {
             if(data)
-            {
                 self.set(data);
-                callback(true);
-            }
-            else
-                callback(false);
         });
     },
     saveResultsBunch: function (callback) {
-        var bunch =
-        {
+        var bunch = {
             optionalName: $("#optional_name").val() || "",
             results: this.get("testResultList"),
             date: null,
@@ -69,7 +64,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         var that = this;
         if (this.userId != null)
             bunch.user.userId = this.userId;
-        Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_PERSIST, 'POST', bunch, function (data) {
+        Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_PERSIST, 'POST', bunch, function (error, data) {
             if (data != null)
                 that.clearResults();
             return callback(data);
@@ -91,7 +86,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         var obj = this;
         // debug(JSON.stringify(obj));
         Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTINGSESSION_PERSIST + this.this.get("sessionId"),
-            'POST', obj, function (data) {
+            'POST', obj, function (error, data) {
 
                 // obj.clearRatings();
                 // obj.clearResults();
@@ -115,17 +110,21 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         return false;
     },
     addToQueue: function (unitId) {
-        if ($.inArray(unitId, this.get("testUnitIdList")) < 0)
-            this.get("testUnitIdList").push(unitId);
+        if ($.inArray(unitId, this.get("testUnitIdList")) < 0){
+            var newList = _.clone(this.get("testUnitIdList"));
+            newList.push(unitId);
+            this.set("testUnitIdList",newList)
+        }
         this.saveLocalSession();
     },
     isTestInQueue: function (unitId) {
         return jQuery.inArray(unitId, this.get("testUnitIdList")) > 0;
     },
     removeFromQueue: function (unitId) {
-        var index = $.inArray(unitId, this.get("testUnitIdList"));
-        if (index >= 0)
-            this.get("testUnitIdList").splice(index, 1);
+        var newList = _.filter(this.get("testUnitIdList"), function(e){
+            return unitId !== e;
+        });
+        this.set("testUnitIdList", newList);
         this.saveLocalSession();
     },
     saveTestingData: function (testUnit, skipme) {
@@ -170,10 +169,10 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         lData.pass = $("#pass").val();
         lData.sessionId = this.get("sessionId");
         var obj = this;
-        Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_LOGIN, 'POST', lData, function (data) {
+        Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_LOGIN, 'POST', lData, function (error, data) {
             obj.setData(data);
             obj.saveLocalSession();
-            obj.updateUI();
+            //obj.updateUI();
             callback(obj);
         });
     },
@@ -190,7 +189,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
     logout: function () {
         var obj = this;
         Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_LOGOUT + obj.sessionId, 'POST', null,
-            function (data) {
+            function (error, data) {
                 obj.resetLocalSession();
                 debug("doLogout");
                 msg2user("User logged out!");
@@ -198,7 +197,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
                 $(".loginhidden").hide();
                 $("#loginform").show();
                 accessdb.session.resetLocalSession();
-                accessdb.session.updateUI();
+                //accessdb.session.updateUI();
             });
     },
     saveLocalSession: function () {
@@ -225,48 +224,5 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         accessdb.session.sessionId = accessdb.config.sessionId;
         this.saveLocalSession();
         debug("session reset in local storage");
-    },
-    updateQueueView: function (id) {
-        var input = $("#thetestsTreeDiv input[value='" + id + "'] ")[0];
-        $(input).attr("checked", false);
-        if ($(input).parent().parent().find("input:checked").length < 1)
-            $(input).parent().parent().parent().find("input").attr("checked", false);
-        this.updateUI();
-    },
-    updateUI: function () {
-        $(".tests_count_all").html(Requirements.getCountAllTests());
-        $(".inqueuetest").html(this.get("testUnitIdList").length);
-        if (UserTestingProfile.getUserProfileById(this.get("testProfileId")))
-            $(".currentprofile").html(UserTestingProfile.getUserProfileById(this.get("testProfileId")).profileName);
-        else
-            $(".currentprofile").html("None");
-        // $(".next_tests_count").html();
-        // $(".tests_done").html();
-        if (this.userId) {
-            $(".userid").html("Logout " + this.get("userId"));
-        }
-        else
-            $(".userid").html("Login");
-
-        var divListTestsSelected = $(".divListTestsSelected").empty();
-        if (accessdb.session.testUnitIdList.length > 0) {
-            divListTestsSelected = $(divListTestsSelected).append("<ul />");
-            accessdb.session.testUnitIdList = accessdb.session.testUnitIdList.sort();
-        }
-        for (var i = 0; i < accessdb.session.testUnitIdList.length; i++) {
-            var id = accessdb.session.testUnitIdList[i];
-            var a = $(
-                '<a class="removeMeFromQueue" data-inline="true" data-mini="true" data-accessdb-id="" data-role="button" data-icon="delete" data-iconpos="notext">Delete</a>')
-                .attr("data-accessdb-id", id);
-            $(a).on('click', function (event) {
-                var id = $(event.target).closest("a").attr("data-accessdb-id");
-                accessdb.session.removeFromQueue(id);
-                accessdb.session.updateQueueView(id);
-            });
-
-            var li = $("<li />").html(id).append(a);
-            $(divListTestsSelected).find("ul").append(li);
-        }
-        //$("#tests").trigger("create");
     }
 });

@@ -37,7 +37,35 @@ window.accessdb.appRouter.on('route:tests-finish', function () {
     $("main").load("pages/tests-finish.html");
 });
 window.accessdb.appRouter.on('route:tests-run', function () {
-    $("main").load("pages/tests-run.html");
+    $("main").load("pages/tests-run.html", function(){
+        $("main").get(0).setAttribute("id", "tests");
+        $("#tests .webTechTreeDiv").on('treevue:change', function (event) {
+            accessdb.testsFilter.loadTrees(true,["WCAG","TESTS"]);
+        });
+        $("#tests input[name=conformance]").on('change', function (event) {
+            accessdb.testsFilter.loadTrees(true,["WCAG","WEBTECHS","TESTS"]);
+        });
+        $("#tests .criteriaTreeDiv").on('treevue:change', function (event) {
+            accessdb.testsFilter.loadTrees(true,["TESTS","WEBTECHS"]);
+        });
+        $("#thetestsTreeDiv").on('treevue:change', function (event) {
+            Filter.importTests($("#thetestsTreeDiv ul"));
+        });
+        $("#tests .divTreeTestsSelected").on('treevue:change', function (event) {
+            event.preventDefault();
+            var id = $(event.target).attr("value");
+            accessdb.session.removeFromQueue(id);
+        });
+        // on remove from the selected tests
+        $(document).on("click", "span.icon.icon-remove", function (event) {
+            event.preventDefault();
+            var id = $(event.target).find("span").attr("aria-described-by");
+            accessdb.session.removeFromQueue(id);
+        });
+        accessdb.testsFilter = accessdb.testsFilter || new Filter("tests");
+        accessdb.testsFilter.loadTrees(false,["WCAG","WEBTECHS","TESTS"]);
+    });
+
 });
 window.accessdb.appRouter.on('route:tests-run-submit', function () {
     $("main").load("pages/tests-run-submit.html");
