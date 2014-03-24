@@ -9,7 +9,7 @@ function Filter(page){
 	this.uas=[];
 	this.oss=[];
 	
-	this.populate=function(){
+	this.populate = function(){
 		this.criteriosLevel =  $('input[name=conformance]:checked', "#"+this.page).val() || this.criteriosLevel;
 		this.criterios = Filter.importCriteria("#"+this.page + " .criteriaTreeDiv > ul");
 		if(this.page=="results"){
@@ -32,11 +32,7 @@ Filter.prototype.loadTree=function(treeIds, callback){
         $(".criteriaTreeDiv").empty();
         Utils.loadingStart(".criteriaTreeDiv");
         Filter.getWCAG2TreeData(function(error, data){
-            var treeData = null;
-            if(that.criterios.length<1)
-                treeData = Filter.treeSelectAll(data);
-            else
-                treeData = data;
+            var treeData = data;
             treeData.label = "All Success Criteria";
             var processDatafn = function (data){
                 if(data.description && (data.type == "Guideline" || data.type == "SuccessCriterio")){
@@ -57,13 +53,7 @@ Filter.prototype.loadTree=function(treeIds, callback){
         $(".atTreeDiv").empty();
         Utils.loadingStart(".atTreeDiv");
         this.getATTree(function(error, data){
-            var treeData = null;
-            if(that.technologies.length<1)
-                treeData = Filter.treeSelectAll(data);
-            else
-            {
-                treeData = data;
-            }
+            var treeData = data;
             treeData.label = "All";
             treeData.collapsed = false;
             $.treevue([treeData],  that.page+"-accessdb-ATTree").appendTo('.atTreeDiv');   
@@ -76,11 +66,7 @@ Filter.prototype.loadTree=function(treeIds, callback){
         Utils.loadingStart(".uaTreeDiv");
         this.getUATree(function(error, data){
             $(".uaTreeDiv").empty();
-            var treeData = null;
-            if(that.uas.length<1)
-                treeData = Filter.treeSelectAll(data);
-            else
-                treeData = data;
+            var treeData = data;
             treeData.label = "All";
             treeData.collapsed = false;
             $.treevue([treeData],  that.page+"-accessdb-UATree").appendTo('.uaTreeDiv');   
@@ -95,8 +81,6 @@ Filter.prototype.loadTree=function(treeIds, callback){
             $(".osTreeDiv").empty();
             var treeData = null;
             if(that.oss.length<1)
-                treeData = Filter.treeSelectAll(data);
-            else
                 treeData = data;
             treeData.label = "All";
             treeData.collapsed = false;
@@ -111,7 +95,7 @@ Filter.prototype.loadTree=function(treeIds, callback){
         Utils.loadingStart(".webTechTreeDiv");
         Filter.getWebtechsTreeData(function(error, data){
             $(".webTechTreeDiv").empty();
-            var treeData = Filter.treeSelectAll(data);
+            var treeData = data;
             treeData.label = "All";
             treeData.collapsed = false;
             $.treevue([treeData],  that.page+"-accessdb-webtechs").appendTo('.webTechTreeDiv');    
@@ -144,6 +128,10 @@ Filter.prototype.loadTree=function(treeIds, callback){
             $(".testsOnPage").html(countTests);
             debug(data);
             debug(accessdb.testsFilter);
+            accessdb.API.TEST.countAll(function(error, data){
+                if(data)
+                    $(".tests_count_all").html(data);
+            });
             $.treevue(data.children,  that.page+"-teststree").appendTo('#thetestsTreeDiv');
             Utils.loadingEnd(".webTechTreeDiv");
             callback("TESTS");
@@ -257,34 +245,4 @@ Filter.importCriteria = function(holder){
 		Utils.treeNodeTolist(nodeListChildren[ind], "SuccessCriterio", list);
 	}
 	return list;	
-};
-Filter.treeSelectAll = function (root){
-    /*    var treeData = [];
-     for ( var i1 in root.children) {
-     var nodeL1 = root.children[i1];
-     nodeL1.selected = true;
-     for ( var i2 in nodeL1.children) {
-     var nodeL2 = nodeL1.children[i2];
-     nodeL2.selected = true;
-     for ( var i3 in nodeL2.children) {
-     nodeL3 = nodeL2.children[i3];
-     if(!nodeL3.disabled)
-     {
-     nodeL3.selected = true;
-     nodeL2[i3] = nodeL3;
-     }
-     }
-     nodeL1[i2] = nodeL2;
-     }
-     treeData[i1] = nodeL1;
-     }
-     var node = {
-     label: root.label,
-     collapsed: false,
-     selectable : true,
-     disabled : false,
-     subselector : true,
-     children : treeData
-     };*/
-    return root;
 };

@@ -38,7 +38,7 @@ window.accessdb.appRouter.on('route:tests-finish', function () {
 });
 window.accessdb.appRouter.on('route:tests-run', function () {
     $("main").load("pages/tests-run.html", function(){
-        $("main")[0].setAttribute("id", "tests");
+        $("main").get(0).setAttribute("id", "tests");
         $("#tests .webTechTreeDiv").on('treevue:change', function (event) {
             accessdb.testsFilter.loadTrees(true,["WCAG","TESTS"]);
         });
@@ -50,12 +50,17 @@ window.accessdb.appRouter.on('route:tests-run', function () {
         });
         $("#thetestsTreeDiv").on('treevue:change', function (event) {
             Filter.importTests($("#thetestsTreeDiv ul"));
-            accessdb.session.updateUI();
         });
         $("#tests .divTreeTestsSelected").on('treevue:change', function (event) {
+            event.preventDefault();
             var id = $(event.target).attr("value");
             accessdb.session.removeFromQueue(id);
-            accessdb.session.updateQueueView(id);
+        });
+        // on remove from the selected tests
+        $(document).on("click", "span.icon.icon-remove", function (event) {
+            event.preventDefault();
+            var id = $(event.target).find("span").attr("aria-described-by");
+            accessdb.session.removeFromQueue(id);
         });
         accessdb.testsFilter = accessdb.testsFilter || new Filter("tests");
         accessdb.testsFilter.loadTrees(false,["WCAG","WEBTECHS","TESTS"]);
