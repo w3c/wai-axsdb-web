@@ -1,6 +1,7 @@
 window.accessdb.Models.testingSession = Backbone.Model.extend({
     // Backbone
     defaults: {
+        // if this structure changed need to change server side object also
         sessionName: null,
         sessionId: null,
         testProfileId: "-1",
@@ -69,7 +70,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         var that = this;
         if (this.userId != null)
             bunch.user.userId = this.userId;
-        Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_PERSIST, 'POST', bunch, function (data) {
+        Utils.(accessdb.config.services.URL_SERVICE_TESTRESULT_PERSIST, 'POST', bunch, function (error, data) {
             if (data != null)
                 that.clearResults();
             return callback(data);
@@ -91,7 +92,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         var obj = this;
         // debug(JSON.stringify(obj));
         Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTINGSESSION_PERSIST + this.this.get("sessionId"),
-            'POST', obj, function (data) {
+            'POST', obj, function (error, data) {
 
                 // obj.clearRatings();
                 // obj.clearResults();
@@ -170,7 +171,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         lData.pass = $("#pass").val();
         lData.sessionId = this.get("sessionId");
         var obj = this;
-        Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_LOGIN, 'POST', lData, function (data) {
+        Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_LOGIN, 'POST', lData, function (error, data) {
             obj.setData(data);
             obj.saveLocalSession();
             obj.updateUI();
@@ -190,7 +191,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
     logout: function () {
         var obj = this;
         Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_LOGOUT + obj.sessionId, 'POST', null,
-            function (data) {
+            function (error, data) {
                 obj.resetLocalSession();
                 debug("doLogout");
                 msg2user("User logged out!");

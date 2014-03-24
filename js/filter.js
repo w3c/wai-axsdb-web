@@ -10,7 +10,7 @@ function Filter(page){
 	this.oss=[];
 	
 	this.populate=function(){
-		this.criteriosLevel = $("#"+this.page).find("select.WCAGLevel").val() || this.criteriosLevel;
+		this.criteriosLevel =  $('input[name=conformance]:checked', "#"+this.page).val() || this.criteriosLevel;
 		this.criterios = Filter.importCriteria("#"+this.page + " .criteriaTreeDiv > ul");
 		if(this.page=="results"){
 		    this.ats = Filter.importProducts("#"+this.page + " .atTreeDiv > ul", "AssistiveTechnology");
@@ -25,51 +25,29 @@ function Filter(page){
 	};
  	
 }
-Filter.treeSelectAll = function (root){
-/*    var treeData = [];
-    for ( var i1 in root.children) {
-        var nodeL1 = root.children[i1];
-        nodeL1.selected = true;
-        for ( var i2 in nodeL1.children) {
-            var nodeL2 = nodeL1.children[i2];
-                nodeL2.selected = true;
-                for ( var i3 in nodeL2.children) {
-                    nodeL3 = nodeL2.children[i3];
-                    if(!nodeL3.disabled)
-                    {
-                        nodeL3.selected = true;
-                        nodeL2[i3] = nodeL3;
-                    }
-                }
-                nodeL1[i2] = nodeL2;
-        }
-        treeData[i1] = nodeL1;
-    }
-    var node = {
-            label: root.label,
-            collapsed: false,
-            selectable : true,
-            disabled : false,
-            subselector : true,
-            children : treeData
-    };*/
-    return root;
-};
+
 Filter.prototype.loadTree=function(treeIds, callback){
     var that = this;
     if(treeIds.indexOf("WCAG")>=0){
         $(".criteriaTreeDiv").empty();
         Utils.loadingStart(".criteriaTreeDiv");
-        Filter.getWCAG2TreeData(function(data){
+        Filter.getWCAG2TreeData(function(error, data){
             var treeData = null;
             if(that.criterios.length<1)
                 treeData = Filter.treeSelectAll(data);
             else
-            {
                 treeData = data;
-            }
-            treeData.label = "All";
-            $.treevue([treeData], that.page+"-accessdb-wcag2").appendTo('.criteriaTreeDiv'); 
+            treeData.label = "All Success Criteria";
+            var processDatafn = function (data){
+                if(data.description && (data.type == "Guideline" || data.type == "SuccessCriterio")){
+                    data.label =  data.label + ": " + data.description;
+                }
+                if(data.description && (data.type == "Principle")){
+                    data.label =  data.description;
+                }
+                return data;
+            };
+            $.treevue([treeData], that.page, processDatafn).appendTo('.criteriaTreeDiv');
             Utils.loadingEnd(".criteriaTreeDiv");
             that.populate();
             callback("WCAG");
@@ -78,7 +56,7 @@ Filter.prototype.loadTree=function(treeIds, callback){
     else if(treeIds.indexOf("AT")>=0){
         $(".atTreeDiv").empty();
         Utils.loadingStart(".atTreeDiv");
-        this.getATTree(function(data){
+        this.getATTree(function(error, data){
             var treeData = null;
             if(that.technologies.length<1)
                 treeData = Filter.treeSelectAll(data);
@@ -96,7 +74,7 @@ Filter.prototype.loadTree=function(treeIds, callback){
     else if(treeIds.indexOf("UA")>=0){
         $(".uaTreeDiv").empty();
         Utils.loadingStart(".uaTreeDiv");
-        this.getUATree(function(data){
+        this.getUATree(function(error, data){
             $(".uaTreeDiv").empty();
             var treeData = null;
             if(that.uas.length<1)
@@ -113,7 +91,7 @@ Filter.prototype.loadTree=function(treeIds, callback){
     else if(treeIds.indexOf("OS")>=0){
         $(".osTreeDiv").empty();
         Utils.loadingStart(".osTreeDiv");
-        this.getOSTree(function(data){
+        this.getOSTree(function(error, data){
             $(".osTreeDiv").empty();
             var treeData = null;
             if(that.oss.length<1)
@@ -131,7 +109,7 @@ Filter.prototype.loadTree=function(treeIds, callback){
     else if(treeIds.indexOf("WEBTECHS")>=0){ 
         $(".webTechTreeDiv").empty();
         Utils.loadingStart(".webTechTreeDiv");
-        Filter.getWebtechsTreeData(function(data){
+        Filter.getWebtechsTreeData(function(error, data){
             $(".webTechTreeDiv").empty();
             var treeData = Filter.treeSelectAll(data);
             treeData.label = "All";
@@ -144,7 +122,7 @@ Filter.prototype.loadTree=function(treeIds, callback){
     else if(treeIds.indexOf("TESTS")>=0){ 
         $("#thetestsTreeDiv").empty();
         Utils.loadingStart(".thetestsTreeDiv");
-        TestUnit.getTestsTreeData(function(data){   
+        TestUnit.getTestsTreeData(function(error, data){
             $("#thetestsTreeDiv").empty();
             // select what is in queue
             var countTests = 0;
@@ -193,29 +171,29 @@ Filter.prototype.loadTrees=function(populate, treeIds){
 
 };
 Filter.prototype.getATTree = function(callback){
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_AT, "POST", this, function(data){
-        callback(data);
+    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_AT, "POST", this, function(error, data){
+        callback(error, data);
     });     
 };
 Filter.prototype.getUATree = function(callback){
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_UA, "POST", this, function(data){
-        callback(data);
+    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_UA, "POST", this, function(error, data){
+        callback(error, data);
     });     
 };
 Filter.prototype.getOSTree = function(callback){
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_OS, "POST", this, function(data){
-        callback(data);
+    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_OS, "POST", this, function(error, data){
+        callback(error, data);
     });     
 };
 Filter.getWCAG2TreeData = function(callback,level){
     level = level || "AA";
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TECHNIQUES_WCAG2  + level, "GET", null, function(data){
-        callback(data);
+    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TECHNIQUES_WCAG2  + level, "GET", null, function(error, data){
+        callback(error, data);
     }); 
 };
 Filter.getWebtechsTreeData = function(callback){
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TECHNIQUES_TECHS , "GET", null, function(data){
-        callback(data);
+    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TECHNIQUES_TECHS , "GET", null, function(error, data){
+        callback(error, data);
     }); 
 };
 
@@ -279,4 +257,34 @@ Filter.importCriteria = function(holder){
 		Utils.treeNodeTolist(nodeListChildren[ind], "SuccessCriterio", list);
 	}
 	return list;	
+};
+Filter.treeSelectAll = function (root){
+    /*    var treeData = [];
+     for ( var i1 in root.children) {
+     var nodeL1 = root.children[i1];
+     nodeL1.selected = true;
+     for ( var i2 in nodeL1.children) {
+     var nodeL2 = nodeL1.children[i2];
+     nodeL2.selected = true;
+     for ( var i3 in nodeL2.children) {
+     nodeL3 = nodeL2.children[i3];
+     if(!nodeL3.disabled)
+     {
+     nodeL3.selected = true;
+     nodeL2[i3] = nodeL3;
+     }
+     }
+     nodeL1[i2] = nodeL2;
+     }
+     treeData[i1] = nodeL1;
+     }
+     var node = {
+     label: root.label,
+     collapsed: false,
+     selectable : true,
+     disabled : false,
+     subselector : true,
+     children : treeData
+     };*/
+    return root;
 };
