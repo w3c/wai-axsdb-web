@@ -1,1 +1,50 @@
-<p>login</p>
+<h1 class="page-title">
+   Log-in page
+</h1>
+<nav class="navbar" role="navigation">
+    <a href="#/home.html" class="btn-small"><span class="icon-home"></span> Home</a>
+</nav>
+<div>
+    <div role="alert" id="infodiv"></div>
+    <div role="alert" id="msg"></div>
+
+    <form id="loginform" method="post">
+        <input type="hidden" name="sessionid" value="">
+
+        <label for="userId">Username:</label>
+        <input type="text" name="userId" id="userId" title="Your W3C account username" value="">
+        <label for="pass" class="ui-input-text">Password:</label>
+        <input type="password" name="pass" id="pass" value="" class="ui-input-text ui-body-c">
+        <button id="doLogin">Login</button>
+    </form>
+    <p>Note that login is not required to use and contribute to this database. <a href="#why-login" class="ui-link">Then, why login?</a></p>
+
+    <a target="w3c" href="http://www.w3.org/Help/Account/" data-role="button" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" class="ui-btn ui-btn-up-c ui-shadow ui-btn-corner-all ui-btn-inline"><span class="ui-btn-inner"><span class="ui-btn-text">Forgot your username/password?
+				(new window)</span></span></a>
+    <div id="logoutInfo" style="display: none;" aria-live="assertive">
+        <p>
+            Logged in User: <span class="userid">Login</span>
+        </p>
+    </div>
+
+    <h2>
+        <a name="why-login" id="why" shape="rect" class="ui-link">Why Login?</a>
+    </h2>
+    <p>
+        Anyone can <a href="http://www.w3.org/Help/Account/Request/Public" class="ui-link">create
+        a W3C Account <img src="http://www.w3.org/Icons/tr.png" alt="different format">
+    </a> and use their account to login into this database. Logged-in
+        users are provided with additional features including:
+    </p>
+    <ul>
+        <li>Saving <em>testing profiles</em> with information on the web
+            browsers and assistive technlogy used;
+        </li>
+        <li>Options to receive notifications when relevant test results and
+            comments are contributed;</li>
+        <li>Overview of the test cases, test results, and comments they have
+            contributed to the database;</li>
+        <li>Contributions they make to the database are publicly associated
+            with their W3C Account.</li>
+    </ul>
+</div>

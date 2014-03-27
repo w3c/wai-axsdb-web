@@ -4,14 +4,45 @@
     {
         accessdb.config.services[property] = accessdb.config.URL_API_ROOT + accessdb.config.services[property];
     }
+    // session initialization
     accessdb.session = new accessdb.Models.testingSession;
     accessdb.session.profiles_index = 0;
+    accessdb.session.save(function(error, data){
+        if(error){
+            console.error("session not initialized" + error)
+        }
+        else
+            console.info("Test session initialize: " + accessdb.session.get("sessionId"));
+    })
+
+    // Event Handlers
     accessdb.session.on('change', function(){
         if (accessdb.session.get("userId")) {
             $(".userid").html("Logout " + accessdb.session.get("userId"));
         }
         else
             $(".userid").html("Login");
+    });
+    accessdb.session.on('change:userId', function(o){
+        //update UI login/out
+        /*
+        if(accessdb.session.userId!=null)
+        {
+            $("#loginform").hide();
+            $("#logoutInfo").show();
+            $(".userid").html(accessdb.session.userId);
+            $(".loginhidden").show();
+        }
+        else
+        {
+            $("#loginform").show();
+            $("#logoutInfo").hide();
+        }
+        */
+    });
+    accessdb.session.on('change:testResultList', function(o){
+        //update UI for results
+
     });
     accessdb.session.on('change:testUnitIdList', function(o){
         console.log("change:testUnitIdList");
@@ -45,6 +76,9 @@
     accessdb.session.on('invalid', function(model,error){
         console.warn("session invalid: "+ error); // printing the error message on console.
     });
+
+
+
 })();
 
 //

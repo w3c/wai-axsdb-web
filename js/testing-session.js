@@ -46,12 +46,17 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
     },
     save: function (callback) {
         var self = this;
-        Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTINGSESSION_SAVE, 'POST', self, function (error, data) {
-            if(data)
+        accessdb.API.TESTINGSESSION.save(self, function(error, data){
+            if(!error)
+            {
                 self.set(data);
+            }
+            callback(error, self);
         });
+
     },
     saveResultsBunch: function (callback) {
+        var self = this;
         var bunch = {
             optionalName: $("#optional_name").val() || "",
             results: this.get("testResultList"),
@@ -61,37 +66,31 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
                 userId: "anon"
             }
         };
-        var that = this;
         if (this.userId != null)
             bunch.user.userId = this.userId;
-        Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_PERSIST, 'POST', bunch, function (error, data) {
-            if (data != null)
-                that.clearResults();
-            return callback(data);
+        accessdb.API.TESTRESULT.persistBunch(bunch, function(error, data){
+            if (!eroor && data != null)
+                self.clearResults();
+            callback(error, data);
         });
     },
     persistAll: function (callback) {
         var session = this;
         this.save(function (session) {
-            debug("session saved");
-            debug(session);
+            console.log("session saved");
             session.persist(function (ses) {
-                debug("session persisted");
-                debug(ses);
+                console.log("session persisted");
                 return callback(ses);
             });
         });
     },
     persist: function (callback) {
-        var obj = this;
-        // debug(JSON.stringify(obj));
-        Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTINGSESSION_PERSIST + this.this.get("sessionId"),
-            'POST', obj, function (error, data) {
-
-                // obj.clearRatings();
-                // obj.clearResults();
-                return callback(obj);
-            });
+        var self = this;
+        accessdb.API.TESTINGSESSION.persist(self, function(error, data){
+            self.clearRatings();
+            self.clearResults();
+            callback(error, self);
+        });
     },
     clearResults: function () {
         this.set("testResultList", []);
@@ -163,18 +162,20 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         }
         this.saveLocalSession();
     },
-    login: function (callback) {
-        var lData = new Object();
-        lData.userId = $("#userId").val();
-        lData.pass = $("#pass").val();
-        lData.sessionId = this.get("sessionId");
-        var obj = this;
-        Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_LOGIN, 'POST', lData, function (error, data) {
-            obj.setData(data);
-            obj.saveLocalSession();
-            //obj.updateUI();
-            callback(obj);
-        });
+    login: function (lData, callback) {
+        var self = this;
+        if(self.isValid()){
+            accessdb.API.TESTINGSESSION.login(lData, function (error, data) {
+                if(!error)
+                {
+                    self.set(data);
+                    self.saveLocalSession();
+                }
+                else
+                    console.error(error);
+                callback(error, data);
+            });
+        }
     },
     isSessionAuthenticated: function () {
         var data = Utils.ajaxSync(accessdb.config.services.URL_SERVICE_TESTINGSESSION_LOAD + this.get("sessionId"), 'GET',
@@ -186,18 +187,24 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
             auth = true;
         return auth;
     },
-    logout: function () {
-        var obj = this;
+    logout: function (callback) {
+        var self = this;
+        accessdb.API.TESTINGSESSION.logout(self, function(error, data){
+            if(!error){
+                self.resetLocalSession();
+                console.log("doLogout");
+                //$("#logoutInfo").hide();
+                //$(".loginhidden").hide();
+                //$("#loginform").show();
+                self.resetLocalSession();
+                //accessdb.session.updateUI();
+            }
+            callback(error, data);
+        });
+        
         Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_LOGOUT + obj.sessionId, 'POST', null,
             function (error, data) {
-                obj.resetLocalSession();
-                debug("doLogout");
-                msg2user("User logged out!");
-                $("#logoutInfo").hide();
-                $(".loginhidden").hide();
-                $("#loginform").show();
-                accessdb.session.resetLocalSession();
-                //accessdb.session.updateUI();
+                
             });
     },
     saveLocalSession: function () {
@@ -214,7 +221,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         else {
 
         }
-        debug("session saved in local storage");
+        console.log("session saved in local storage");
     },
     resetLocalSession: function () {
         $.removeCookie('accessdb-session-id');
@@ -223,6 +230,6 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         accessdb.session = new TestingSession();
         accessdb.session.sessionId = accessdb.config.sessionId;
         this.saveLocalSession();
-        debug("session reset in local storage");
+        console.log("session reset in local storage");
     }
 });

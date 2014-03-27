@@ -12,6 +12,7 @@ window.accessdb.Models.AppRouter = Backbone.Router.extend({
         "tests-run-submit.html": "tests-run-submit",
         "user-profiles.html": "user-profiles",
         "test.html/:id": "test",
+        "log-in.html": "log-in",
         "*actions": "defaultRoute"
     }
 });
@@ -20,6 +21,52 @@ window.accessdb.appRouter = new window.accessdb.Models.AppRouter;
 
 window.accessdb.appRouter.on('route:home', function () {
     $("main").load("pages/home.html");
+});
+window.accessdb.appRouter.on('route:log-in', function () {
+    $("main").load("pages/log-in.html", function(){
+        $("#doLogin").on("click", function(event){
+            event.preventDefault();
+            var lData = new Object();
+            lData.userId = $("#userId").val();
+            lData.pass = $("#pass").val();
+            lData.sessionId =  accessdb.session.get("sessionId");
+            accessdb.session.save(function(error, data)
+            {
+                if (!error) {
+                    accessdb.session.login(lData, function(error, data)
+                    {
+                        if(!error && data){
+                            if(data.userId!=null)                            {
+                                console.log("login sucess");
+                                $(".loginhidden").show();
+                                $("#logoutInfo").show();
+                                $("#loginform").hide();
+                                //      $(".userid").html("Logout " + obj.userId);
+                                // $(".here").trigger("click");
+                                //Utils.goBack();
+                                //msg2user("User with id: " + obj.userId + " has been successfully logged in.");
+                            }
+                            // else
+                            //   msg2user("User failed to login. Please try again.");
+                        }
+
+                    });
+                } else {
+                    console.error(error);
+                    return;
+                }
+            });
+        });
+        $('#login').on("keydown", function(e) {
+            if (e.keyCode == $.ui.keyCode.ENTER) {
+                if(accessdb.session.userId==null)
+                    $("#doLogin").trigger("click");
+                else
+                    $("#doLogout").trigger("click");
+            }
+        });
+    });
+
 });
 window.accessdb.appRouter.on('route:results', function () {
     $("main").load("pages/results.html");
