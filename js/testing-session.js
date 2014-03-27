@@ -169,6 +169,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
                 if(!error)
                 {
                     self.set(data);
+                    self.set("userId",data.userId);
                     self.saveLocalSession();
                 }
                 else
@@ -191,21 +192,12 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         var self = this;
         accessdb.API.TESTINGSESSION.logout(self, function(error, data){
             if(!error){
+                self.set("sessionId", null)
                 self.resetLocalSession();
-                console.log("doLogout");
-                //$("#logoutInfo").hide();
-                //$(".loginhidden").hide();
-                //$("#loginform").show();
-                self.resetLocalSession();
-                //accessdb.session.updateUI();
+                console.log("logout success");
             }
             callback(error, data);
         });
-        
-        Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_LOGOUT + obj.sessionId, 'POST', null,
-            function (error, data) {
-                
-            });
     },
     saveLocalSession: function () {
         /*if(this.get("sessionId"))
@@ -227,8 +219,8 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         $.removeCookie('accessdb-session-id');
         $.removeCookie('accessdb-session-userId');
         $.removeCookie('accessdb-session-userRole');
-        accessdb.session = new TestingSession();
-        accessdb.session.sessionId = accessdb.config.sessionId;
+        accessdb.session = new accessdb.Models.testingSession();
+        accessdb.session.set("sessionId", accessdb.config.sessionId);
         this.saveLocalSession();
         console.log("session reset in local storage");
     }

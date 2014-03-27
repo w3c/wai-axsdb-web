@@ -1,3 +1,6 @@
+<?php
+	session_start();
+?>
 <!doctype html>
 <html>
 <head>
@@ -9,6 +12,8 @@
     <script type="text/javascript" src="js/lib/modernizr.min.js"></script>
     <script type="text/javascript" src="js/lib/underscore-min.js"></script>
     <script type="text/javascript" src="js/lib/jquery-2.1.0.min.js"></script>
+    <script type="text/javascript" src="js/lib/jquery.cookie.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/lib/jquery.form.js"></script>
     <script type="text/javascript" src="js/lib/backbone-min.js"></script>
     <script type="text/javascript" src="js/lib/jquery.treevue.js"></script>
     <script type="text/javascript" src="js/lib/jquery.treevue.export.js"></script>
@@ -17,12 +22,15 @@
     <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript" src="js/API.js"></script>
     <script type="text/javascript" src="js/testing-session.js"></script>
+    <script type="text/javascript" src="js/testing-manager.js"></script>
     <script type="text/javascript" src="js/filter.js"></script>
     <script type="text/javascript" src="js/tree-helper.js"></script>
     <script type="text/javascript" src="js/testunit.js"></script>
 
     <script type="text/javascript" src="js/mockup.js"></script>
-
+ <script type="text/javascript">
+ 	accessdb.config.sessionId = "<?php echo session_id();?>";
+ </script>
 </head>
 <body>
 <header role="banner">
@@ -32,12 +40,30 @@
     </div>
 </header>
 <main role="main" aria-live="assertive">
-
+<?php
+	foreach (glob("pages/*.html") as $filename)
+	{
+		include $filename;
+	}
+	?>
 </main>
 <footer role="complimentary" aria-label="Document info">
 
 </footer>
-<script type="text/javascript" src="js/router.js"></script>
+<script type="text/template" id="test-selected-list-template">
+    <li>
+        <button class="btn-icon">
+                        <span class="icon icon-remove">
+                            <span class="visuallyhidden" aria-described-by="<%= test.testUnitId %>">
+                                Remove
+                            </span>
+                        </span>
+        </button>
+        <span id="#<%= test.testUnitId %>"><%= test.title %> (<%= test.testUnitId %>)</span>
+    </li>
+</script>
 <script type="text/javascript" src="js/boot.js"></script>
+<script type="text/javascript" src="js/router.js"></script>
+
 </body>
 </html>

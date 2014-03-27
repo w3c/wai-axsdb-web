@@ -4,6 +4,7 @@
         Collections: {},
         Views: {},
         config: {
+            PAGE_ID_PREFIX: "axsdb-page-",
             URL_API_ROOT : "http://www.w3.org/WAI/accessibility-support/api_dev/",
             URL_WEBAPP_ROOT: "http://www.w3.org/WAI/accessibility-support/axsdb/",
             URL_SITE_ROOT: "",

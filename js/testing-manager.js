@@ -1,11 +1,11 @@
 accessdb.TestingManager = {};
-TestingManager.loadLocalSession = function()
+accessdb.TestingManager.loadLocalSession = function()
 {
-    if (accessdb.session == undefined)
-        accessdb.session = new TestingManager();
+    if (!accessdb.session)
+        accessdb.session =  new accessdb.Models.testingSession();
     if (Utils.supports_html5_storage() && sessionStorage["accessdb-session"])
     {
-        accessdb.session.setData(JSON.parse(sessionStorage["accessdb-session"]));
+        accessdb.session.set(sessionStorage["accessdb-session"]);
     }
     else
     {
@@ -14,13 +14,13 @@ TestingManager.loadLocalSession = function()
     /*accessdb.session.sessionId = $.cookie("accessdb-session-id") || eval(accessdb.session.sessionId);
      accessdb.session.userId = $.cookie("accessdb-session-userId") || eval(accessdb.session.userId);
      accessdb.session.userRole = $.cookie("accessdb-session-userRole") || eval(accessdb.session.userRole);*/
-    debug("session loaded from local storage");
+    console.log("session loaded from local storage");
 
 };
-TestingManager.create = function loadTestingManager()
+accessdb.TestingManager.create = function ()
 {
-    TestingManager.loadLocalSession();
-    if (accessdb.session.sessionId  && accessdb.session.userId!=null)
+    accessdb.TestingManager.loadLocalSession();
+    if (accessdb.session.get("sessionId") && accessdb.session.get("userId")!=null)
     {
         if (accessdb.session.isSessionAuthenticated())
         {
@@ -28,10 +28,10 @@ TestingManager.create = function loadTestingManager()
         }
     }
     else
-        accessdb.session.sessionId = accessdb.config.sessionId;
-
+        accessdb.session.set("sessionId", accessdb.config.sessionId);
+    accessdb.session.set("profiles_index", 0);
 };
-TestingManager.run = function(lastTestUnit, skipme)
+accessdb.TestingManager.run = function(lastTestUnit, skipme)
 {
     skipme = skipme || false;
     var nextTestUnit = null;
