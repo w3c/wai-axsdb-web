@@ -11,6 +11,8 @@ window.accessdb.Models.AppRouter = Backbone.Router.extend({
         "tests-run.html": "tests-run",
         "tests-run-submit.html": "tests-run-submit",
         "user-profiles.html": "user-profiles",
+        "user-profile-form.html": "user-profile-form-add",
+        "user-profile-form.html/;id": "user-profile-form-edit",
         "test.html/:id": "test",
         "log-in.html": "log-in",
         "log-out.html": "log-out",
@@ -44,6 +46,17 @@ window.accessdb.appRouter.on('route:log-in', function () {
 });
 window.accessdb.appRouter.on('route:results', function () {
     window.accessdb.appRouter.loadPage("results");
+});
+window.accessdb.appRouter.on('route:user-profile-form-add', function () {
+    window.accessdb.appRouter.loadPage("user-profile-form");
+    var p = new UserTestingProfile();
+    p.prepareAddForm();
+});
+window.accessdb.appRouter.on('route:user-profile-form-edit', function (id) {
+    window.accessdb.appRouter.loadPage("user-profile-form");
+    var p = new UserTestingProfile();
+    p.setData(UserTestingProfile.getUserProfileById(accessdb.session.get("testProfileId")));
+    p.prepareEditForm();
 });
 window.accessdb.appRouter.on('route:test-run', function (id) {
     window.accessdb.appRouter.loadPage("test-run");
