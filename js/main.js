@@ -22,13 +22,6 @@ $(document).ready(function () {
     $("#thetestsTreeDiv").on('treevue:change', function (event) {
         accessdb.TreeHelper.importTests($("#thetestsTreeDiv ul"));
     });
-    /*
-    $("#selected").find("ul").on('treevue:change', function (event) {
-        event.preventDefault();
-        var id = $(event.target).attr("value");
-        accessdb.session.removeFromQueue(id);
-    });
-    */
     // on remove from the selected tests
     $(document).on("click", "span.icon.icon-remove", function (event) {
         event.preventDefault();
@@ -49,27 +42,26 @@ $(document).ready(function () {
             if(lData.userId.length>0 && lData.pass.length>0)
                 pass = true;
             if(!pass)
-            {
                 Utils.msg2user("Invalid input. Please try again.");
-            }
         }
-        if(!pass)
+        if(pass)
         {
+            accessdb.session.login(lData, function (result) {
+                if (result) {
+                    console.log("login success");
+                    $("#logoutInfo").show();
+                    $("#loginform").hide();
+                    //accessdb.appRouter.loadPage("home");
+                }
+                else
+                {
+                    Utils.msg2user("User failed to login. Please try again.");
+                }
+            });
             return false;
         }
-        event.preventDefault();
-        accessdb.session.login(lData, function (result) {
-            if (result) {
-                console.log("login success");
-                $("#logoutInfo").show();
-                $("#loginform").hide();
-                //accessdb.appRouter.loadPage("home");
-            }
-            else
-            {
-                Utils.msg2user("User failed to login. Please try again.");
-            }
-        });
+
+
     });
     $('#login').on("keydown", function (e) {
         if (e.keyCode == $.ui.keyCode.ENTER) {

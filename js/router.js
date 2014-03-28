@@ -30,6 +30,8 @@ window.accessdb.appRouter.on('route:log-out', function () {
             // hack for triggering the useId change event
             accessdb.session.set("userId", "anon");
             accessdb.session.set("userId", null);
+            $("#logoutInfo").hide();
+            $("#loginform").show();
             window.accessdb.appRouter.loadPage("home");
         });
     }
