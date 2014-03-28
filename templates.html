@@ -1,0 +1,25 @@
+<script type="text/template" id="test-selected-list-template">
+    <li>
+        <button class="btn-icon">
+            <span class="icon icon-remove">
+                <span class="visuallyhidden" aria-described-by="<%= test.testUnitId %>">
+                    Remove
+                </span>
+            </span>
+        </button>
+        <span id="#<%= test.testUnitId %>"><%= test.title %> (<%= test.testUnitId %>)</span>
+    </li>
+</script>
+<script type="text/template" id="user-profile-template">
+    <div class="ui-radio">
+        <input name="testprofilesin" id="testprofile-21" value="21" type="radio">
+        <label class="ui-radio-on ui-btn ui-btn-corner-all ui-fullsize ui-btn-icon-left ui-btn-up-c" for="testprofile-21">
+            <span class="ui-btn-inner">
+                <span class="ui-btn-text">
+                    OS: Mac <br>Browser: Firefox 30<br>Assistive Technology:  <br>   Plugin: <br>
+                </span>
+                <span class="ui-icon ui-icon-radio-on ui-icon-shadow">&nbsp;</span>
+            </span>
+        </label>
+    </div>
+</script>

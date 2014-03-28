@@ -13,6 +13,7 @@
     <script type="text/javascript" src="js/lib/modernizr.min.js"></script>
     <script type="text/javascript" src="js/lib/underscore-min.js"></script>
     <script type="text/javascript" src="js/lib/jquery-2.1.0.min.js"></script>
+
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/lib/jquery.form.js"></script>
     <script type="text/javascript" src="js/lib/backbone-min.js"></script>
@@ -52,18 +53,8 @@
 <footer role="complimentary" aria-label="Document info">
 
 </footer>
-<script type="text/template" id="test-selected-list-template">
-    <li>
-        <button class="btn-icon">
-                        <span class="icon icon-remove">
-                            <span class="visuallyhidden" aria-described-by="<%= test.testUnitId %>">
-                                Remove
-                            </span>
-                        </span>
-        </button>
-        <span id="#<%= test.testUnitId %>"><%= test.title %> (<%= test.testUnitId %>)</span>
-    </li>
-</script>
+<?php include "templates.html"; ?>
+
 <script type="text/javascript" src="js/router.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 
