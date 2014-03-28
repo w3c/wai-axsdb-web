@@ -47,6 +47,11 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
             console.log("change:testResultList");
             //update UI for results
         });
+        this.on('change:userTestingProfiles', function (o) {
+            console.log("change:userTestingProfiles");
+            UserTestingProfile.showTestingProfiles();
+            //update UI for results
+        });
         this.on('change:testUnitIdList', function (o) {
             console.log("change:testUnitIdList");
             $(".inqueuetest").html(self.get("testUnitIdList").length);
@@ -218,8 +223,14 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
                         self.set(data);
                         self.set("userId",data.userId);
                         self.load();
-                        callback(true);
-                        return;
+                        UserTestingProfile.loadUserProfilesByUserId(function(error, data1){
+                            accessdb.session.userTestingProfiles = data1;
+                            accessdb.session.saveLocalSession();
+                           // UserTestingProfile.showTestingProfiles();
+                            callback(true);
+                            return;
+                        });
+
                     }
                 }
                 else

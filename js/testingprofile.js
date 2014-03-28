@@ -85,21 +85,21 @@ UserTestingProfile.toString = function(testProfile)
 
 UserTestingProfile.loadUserProfilesByUserId = function(callback)
 {
-    var sessionId = accessdb.session.sessionId;
-    var userId = accessdb.session.userId;
+    var sessionId = accessdb.session.get("sessionId");
+    var userId = accessdb.session.get("userId");
     if (userId)
     {
         // profiles/{userId}/{sessionId}
         Utils.ajaxAsyncWithCallBack(
                 accessdb.config.services.URL_SERVICE_GET_ALLUSERPROFILES + userId + "/" + sessionId, "GET", null,
-                function(data)
+                function(error, data)
                 {
-                    callback(data);
+                    callback(error, data);
                 });
     }
     else
     {
-        callback(accessdb.session.userTestingProfiles);
+        callback(null, accessdb.session.userTestingProfiles);
     }
 };
 UserTestingProfile.persistUserProfile = function(p, callback)
@@ -211,11 +211,11 @@ UserTestingProfile.showTestingProfiles = function()
 {
     var session = accessdb.session;
     $(".userProfilesDiv").empty();
-    if (session.userTestingProfiles.length > 0)
+    if (session.get("userTestingProfiles").length > 0)
     {
-        for ( var testProfileId in session.userTestingProfiles)
+        for ( var testProfileId in session.get("userTestingProfiles"))
         {
-            var userProfile = session.userTestingProfiles[testProfileId];
+            var userProfile = session.get("userTestingProfiles")[testProfileId];
             var testProfile = userProfile.profile;
             testProfile.platform = testProfile.platform || new Product();
             testProfile.userAgent = testProfile.userAgent || new Product();
@@ -292,11 +292,9 @@ UserTestingProfile.showTestingProfiles = function()
                 $(input).prop("checked", true);
             else
                 $(input).prop("checked", false);
-            $(input).checkboxradio();
         }
-        $(".userProfilesDiv input").checkboxradio("refresh");
     }
-    return session.userTestingProfiles.length;
+    return session.get("userTestingProfiles").length;
 
 };
 

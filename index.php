@@ -27,6 +27,7 @@
     <script type="text/javascript" src="js/filter.js"></script>
     <script type="text/javascript" src="js/tree-helper.js"></script>
     <script type="text/javascript" src="js/testunit.js"></script>
+    <script type="text/javascript" src="js/testingprofile.js"></script>
 
     <script type="text/javascript" src="js/mockup.js"></script>
  <script type="text/javascript">
