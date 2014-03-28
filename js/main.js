@@ -1,71 +1,83 @@
-$(function()
-{
-    $("input").on("keypress", function(e)
-    {
-        var form = $(this).parents('form:first');
-        if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13))
+$(document).ready(function () {
+    for (var property in accessdb.config.services) {
+        accessdb.config.services[property] = accessdb.config.URL_API_ROOT + accessdb.config.services[property];
+    }
+    // Start Backbone history a necessary step for bookmarkable URL's
+    Backbone.history.start();
+    // session initialization
+    accessdb.session = new accessdb.Models.testingSession();
+    accessdb.session.load();
+    accessdb.session.save();
+
+
+    $(".webTechTreeDiv").on('treevue:change', function (event) {
+        accessdb.testsFilter.loadTrees(true, ["WCAG", "TESTS"]);
+    });
+    $("input[name=conformance]").on('change', function (event) {
+        accessdb.testsFilter.loadTrees(true, ["WCAG", "WEBTECHS", "TESTS"]);
+    });
+    $(".criteriaTreeDiv").on('treevue:change', function (event) {
+        accessdb.testsFilter.loadTrees(true, ["TESTS", "WEBTECHS"]);
+    });
+    $("#thetestsTreeDiv").on('treevue:change', function (event) {
+        accessdb.TreeHelper.importTests($("#thetestsTreeDiv ul"));
+    });
+    /*
+    $("#selected").find("ul").on('treevue:change', function (event) {
+        event.preventDefault();
+        var id = $(event.target).attr("value");
+        accessdb.session.removeFromQueue(id);
+    });
+    */
+    // on remove from the selected tests
+    $(document).on("click", "span.icon.icon-remove", function (event) {
+        event.preventDefault();
+        var id = $(event.target).find("span").attr("aria-described-by");
+        accessdb.session.removeFromQueue(id);
+    });
+    $("#doLogin").on("click", function (event) {
+        var lData = {
+            userId: $("#userId").val(),
+            pass: $("#pass").val(),
+            sessionId: accessdb.session.get("sessionId")
+        };
+        var pass = false;
+        try{
+            pass = document.getElementById("loginform").checkValidity();
+        }
+        catch(e){
+            if(lData.userId.length>0 && lData.pass.length>0)
+                pass = true;
+            if(!pass)
+            {
+                Utils.msg2user("Invalid input. Please try again.");
+            }
+        }
+        if(!pass)
         {
-            $(form).find(".default-enter").click();
             return false;
         }
-        else
-        {
-            return true;
+        event.preventDefault();
+        accessdb.session.login(lData, function (result) {
+            if (result) {
+                console.log("login success");
+                $("#logoutInfo").show();
+                $("#loginform").hide();
+                //accessdb.appRouter.loadPage("home");
+            }
+            else
+            {
+                Utils.msg2user("User failed to login. Please try again.");
+            }
+        });
+    });
+    $('#login').on("keydown", function (e) {
+        if (e.keyCode == $.ui.keyCode.ENTER) {
+            if (accessdb.session.userId == null)
+                $("#doLogin").trigger("click");
+            else
+                $("#doLogout").trigger("click");
         }
     });
-    $(document).bind('mobileinit', function()
-    {
-        $.mobile.selectmenu.prototype.options.nativeMenu = false;
-        $.mobile.selectmenu.prototype.options.hidePlaceholderMenuItems = false;
-        $.mobile.loader.prototype.options.text = "loading";
-        $.mobile.loader.prototype.options.textVisible = true;
-        $.mobile.loader.prototype.options.theme = "d";
-        $.mobile.loader.prototype.options.html = "";
-        $.mobile.pushStateEnabled = false;
-        $.mobile.ignoreContentEnabled = true;
-        $.mobile.initializePage = false;
-    });
-    $(document).bind("pagebeforechange", function(event, data)
-    {
-        $.mobile.pageData = (data && data.options && data.options.pageData) ? data.options.pageData : null;
-    });
-    $(".loginbox").on("click", function(event)
-    {
-        if (accessdb.session.userId != null)
-        {
-            event.preventDefault();
-            accessdb.session.logout();
-            $.mobile.changePage("#home");
-        }
-    });
-    $(window).unload(function()
-    {
-        accessdb.session.saveLocalSession();
-    });
-
-    // handle custom UI events
-    $("body").bind("accessdb-loggedout", function(e, id)
-    {
-        debug("accessdb-loggedout");
-        msg2user("User logged out!");
-        $(".userid").html("Login");
-    });
-    $("body").bind("accessdb-updateui, accessdb-loggedin, accessdb-loggedout", function(e, id)
-    {
-        debug("updateUI");
-        accessdb.session.updateUI();
-    });
-
-    var initaccessdb = function()
-    {
-        for ( var property in accessdb.config.services)
-        {
-            accessdb.config.services[property] = accessdb.config.URL_WEBAPP_ROOT + accessdb.config.services[property];
-        }
-    }();
-    //$.cookie.json = true;
-    TestingSession.create();
-    accessdb.session.updateUI();
-    accessdb.session.profiles_index = 0;
-
 });
+

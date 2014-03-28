@@ -225,7 +225,7 @@ UserTestingProfile.showTestingProfiles = function()
             testProfile.userAgent.name = testProfile.userAgent.name || "";
             testProfile.assistiveTechnology.name = testProfile.assistiveTechnology.name || "";
             testProfile.plugin.name = testProfile.plugin.name || "";
-            debug(testProfile);
+            console.log(testProfile);
             var text = // "ID: " + Utils.randomUUID()+"<br />" +
             "OS: " + testProfile.platform.name + " " + testProfile.platform.version.text + "<br />" + "Browser: " +
                     testProfile.userAgent.name + " " + testProfile.userAgent.version.text + "<br />" +
@@ -398,7 +398,7 @@ function initAutoCompleteField(holder, url)
         select : function(event, ui)
         {
             $(holder).val(ui.item.value);
-            // debug($(holder).val());
+            // console.log($(holder).val());
             return false;
         },
         source : function(request, response)
@@ -424,7 +424,7 @@ function initAutoCompleteField(holder, url)
         }
     }).data("ui-autocomplete")._renderItem = function(ul, item)
     {
-        // debug(item);
+        // console.log(item);
         item.label += '';// make sure it is string
         // if ( !typeof item === "string" )
         // return false;

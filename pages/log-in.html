@@ -7,16 +7,14 @@
     </nav>
     <div>
         <div role="alert" id="infodiv"></div>
-        <div role="alert" id="msg"></div>
 
-        <form id="loginform" method="post">
+        <form id="loginform" method="post" action="">
             <input type="hidden" name="sessionid" value="">
-
             <label for="userId">Username:</label>
-            <input type="text" name="userId" id="userId" title="Your W3C account username" value="">
-            <label for="pass" class="ui-input-text">Password:</label>
+            <input type="text" placeholder="Your W3C username" required aria-required=”true”  name="userId" id="userId" title="Your W3C account username" >
+            <label for="pass" class="ui-input-text" required>Password:</label>
             <input type="password" name="pass" id="pass" value="" class="ui-input-text ui-body-c">
-            <button id="doLogin">Login</button>
+            <input type="submit" id="doLogin" value="Login" />
         </form>
         <p>Note that login is not required to use and contribute to this database. <a href="#why-login" class="ui-link">Then, why login?</a></p>
 

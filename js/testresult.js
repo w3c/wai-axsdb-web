@@ -207,7 +207,7 @@ TestResultDataOverview.loadResultArray = function(filter, callback)
     var data = [ new TestResultDataOverview("H2", "12", "15", "2", "4"),
                  new TestResultDataOverview("H3", "12", "15", "2", "4"),
                  new TestResultDataOverview("H4", "12", "5", "2", "4"),
-                 new TestResultDataOverview("H5", "12", "15", "2", "4"),
+                 new TestResultDataOverview("H5", "12", "15", "2", "4")
                 ];
     
     if(!filter)
@@ -284,7 +284,7 @@ function TestResult(unitId, resultValue, testingProfile, rating) {
               dataType: "json",
               statusCode: {
                     404: function() {
-                        debug(URL_SERVICE_COMMIT_RATING + " error");
+                        console.log(URL_SERVICE_COMMIT_RATING + " error");
                     }
                   },
               data: testUnitDescription,

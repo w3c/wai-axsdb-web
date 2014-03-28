@@ -12,12 +12,12 @@ Results.getATVersionsOfATName=function(){
 
 Results.getAllResults=function(where)
 {
-	debug(reqFilter);
+	console.log(reqFilter);
 	if(where==null)
 		query = encodeURI("select count(u) from TestUnitDescription as u ");
 	else
 		query = encodeURI("select count(u) from TestUnitDescription as u where "+where);
 	var no = Utils.doSelectQuery(accessdb.config.services.URL_SERVICE_QUERY, query, false).list;
-	debug(no);
+	console.log(no);
 	return no;
 };

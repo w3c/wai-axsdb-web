@@ -187,7 +187,7 @@ TestUnit.prototype.buildFromForm = function()
     this.testProcedure = testProcedure;
     this.subject.resourceFiles = [];
     this.comment = $("#testform_comment").val();
-    debug(this);    
+    console.log(this);
 };
 
 TestUnit.loadStepsData = function(testProcedure)
@@ -302,7 +302,7 @@ TestUnit.prototype.showResourceFilesList = function (edit)
                     var testUnitId = accessdb.session.currentTestUnit.testUnitId;
                     var sessionId = accessdb.session.sessionId;
                     TestUnit.deleteResourceFile(sessionId,fileId,testUnitId, function(error, data){
-                        debug(data.status);
+                        console.log(data.status);
                         if(data.status===200)
                         {
                             accessdb.session.currentTestUnit.subject.resources = jQuery.grep(accessdb.session.currentTestUnit.subject.resources, function( a ) {
@@ -400,7 +400,7 @@ TestUnit.prototype.isValid = function()
 TestUnit.prototype.reportValidation = function(errors){
     $("#testformValidation").empty();
     if(errors.length>0){
-        var h = $("<h3></h3");
+        var h = $("<h3></h3>");
         h.text(errors.length+ " error(s) in Submission");
         $("#testformValidation").append(h);     
         var ul = $("<ol></ol>");
@@ -421,7 +421,7 @@ TestUnit.prototype.submitForm = function ()
     if(this.isValid())
     {
         var json_text = JSON.stringify(this, null, 2);
-        //debug(json_text);
+        //console.log(json_text);
         $("#TestUnitDescription").val(json_text); 
         $("#testunitform").submit();    
         return true;
@@ -445,10 +445,10 @@ TestUnit.getXmlMetaById=function(id) {
         cache: false,
         timeout: 3000,
         error: function(){
-           debug("testunit loading error");
+           console.log("testunit loading error");
         },
         success: function(error, data){ 
-            debug(data);            
+            console.log(data);
             out = data;
         }
     });
@@ -463,7 +463,7 @@ TestUnit.updateMetaFromXml = function(xml, sessionid)
         async: false,
         statusCode : {
             404 : function() {
-                debug("page not found");
+                console.log("page not found");
             }
         },
         data : xml,

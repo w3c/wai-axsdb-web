@@ -17,7 +17,7 @@ function Rating() {
 			dataType : "json",
 			data : obj,
 			error : function() {
-				debug("testunit rating error");
+				console.log("testunit rating error");
 			},
 			success : function(data) {
 				// obj.setData(data);
@@ -32,10 +32,10 @@ Rating.prototype.calculateRatingByRatedId = function(ratedId, holdername) {
 		type : 'GET',
 		dataType : "json",
 		error : function() {
-			debug("rating rating error");
+			console.log("rating rating error");
 		},
 		success : function(data) {
-			debug(data);
+			console.log(data);
 			msg2user("ok");
 			if(data==null)
 				return data="no rating yet";
@@ -49,10 +49,10 @@ Rating.prototype.findRatingsByRatedId = function(ratedId) {
 		type : 'GET',
 		dataType : "json",
 		error : function() {
-			debug("rating rating error");
+			console.log("rating rating error");
 		},
 		success : function(data) {
-			debug(data);
+			console.log(data);
 			msg2user("ok");
 		}
 	});

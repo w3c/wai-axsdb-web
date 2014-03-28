@@ -46,8 +46,8 @@ Deprecated
  Requirements.getSCAsListSelect = function(holder,reqFilter,callback) {
  $(holder).empty();
  var q = reqFilter.getCriteriaWithTestsByLevelQuery();
- //debug(q);
- //debug("updating sc select");
+ //console.log(q);
+ //console.log("updating sc select");
  query = encodeURI(q);
  var option = $("<option data-placeholder='true' >Select Success Criteria</option>");
  $(holder).append(option);
@@ -75,8 +75,8 @@ Deprecated
  Requirements.getTechniquesAsListSelect = function(holder,reqFilter,callback) {
  $(holder).empty();
  var q = reqFilter.getTechniquesWithTestsByLevelQuery();
- debug(q);
- debug("updating tech select");
+ console.log(q);
+ console.log("updating tech select");
  query = encodeURI(q);
  var option = $("<option data-placeholder='true' >Select Techniques</option>");
  $(holder).append(option);
@@ -103,8 +103,8 @@ Deprecated
  {
  $(holder).empty();
  var q = reqFilter.buildQueryForTestCases();
- debug(q);
- debug("updating tests select");
+ console.log(q);
+ console.log("updating tests select");
  query = encodeURI(q);
  Utils.doSelectQueryWithCallBack(accessdb.config.services.URL_SERVICE_TECHNIQUES_BYQUERY, query, function(data){
  var tests = data.list;

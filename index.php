@@ -7,12 +7,13 @@
     <meta charset="utf-8">
     <title>Accessibility Support Database</title>
     <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="css/wai-act.css">
     <link rel="stylesheet" href="css/icomoon/style.css">
     <script type="text/javascript" src="js/lib/modernizr.min.js"></script>
     <script type="text/javascript" src="js/lib/underscore-min.js"></script>
     <script type="text/javascript" src="js/lib/jquery-2.1.0.min.js"></script>
-    <script type="text/javascript" src="js/lib/jquery.cookie.js"></script>
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/lib/jquery.form.js"></script>
     <script type="text/javascript" src="js/lib/backbone-min.js"></script>
     <script type="text/javascript" src="js/lib/jquery.treevue.js"></script>
@@ -22,7 +23,6 @@
     <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript" src="js/API.js"></script>
     <script type="text/javascript" src="js/testing-session.js"></script>
-    <script type="text/javascript" src="js/testing-manager.js"></script>
     <script type="text/javascript" src="js/filter.js"></script>
     <script type="text/javascript" src="js/tree-helper.js"></script>
     <script type="text/javascript" src="js/testunit.js"></script>
@@ -40,6 +40,8 @@
     </div>
 </header>
 <main role="main" aria-live="assertive">
+        <div role="alert" id="msg2user" title="Feedback dialog"></div>
+
 <?php
 	foreach (glob("pages/*.html") as $filename)
 	{
@@ -62,8 +64,8 @@
         <span id="#<%= test.testUnitId %>"><%= test.title %> (<%= test.testUnitId %>)</span>
     </li>
 </script>
-<script type="text/javascript" src="js/boot.js"></script>
 <script type="text/javascript" src="js/router.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
 
 </body>
 </html>

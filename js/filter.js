@@ -8,24 +8,21 @@ function Filter(page){
 	this.ats=[];
 	this.uas=[];
 	this.oss=[];
-	
-	this.populate = function(){
-		this.criteriosLevel =  $('input[name=conformance]:checked', "#"+this.page).val() || this.criteriosLevel;
-		this.criterios = Filter.importCriteria("#"+this.page + " .criteriaTreeDiv > ul");
-		if(this.page=="results"){
-		    this.ats = Filter.importProducts("#"+this.page + " .atTreeDiv > ul", "AssistiveTechnology");
-	        this.uas = Filter.importProducts("#"+this.page + " .uaTreeDiv > ul", "UAgent");
-	        this.oss = Filter.importProducts("#"+this.page + " .osTreeDiv > ul", "Platform");
-		}
-		if($("#"+this.page + " .webTechTreeDiv > ul").length>0)
-		this.technologies = Filter.importTechnologies("#"+this.page + " .webTechTreeDiv > ul");
-		$(".scSelected").html(this.criterios.length);
-        debug(this);
-        debug(this.criterios.length);
-	};
- 	
 }
-
+Filter.prototype.populate = function(){
+    this.criteriosLevel =  $('input[name=conformance]:checked', "#"+this.page).val() || this.criteriosLevel;
+    this.criterios = Filter.importCriteria("#"+this.page + " .criteriaTreeDiv > ul");
+    if(this.page=="results"){
+        this.ats = Filter.importProducts("#"+this.page + " .atTreeDiv > ul", "AssistiveTechnology");
+        this.uas = Filter.importProducts("#"+this.page + " .uaTreeDiv > ul", "UAgent");
+        this.oss = Filter.importProducts("#"+this.page + " .osTreeDiv > ul", "Platform");
+    }
+    if($("#"+this.page + " .webTechTreeDiv > ul").length>0)
+        this.technologies = Filter.importTechnologies("#"+this.page + " .webTechTreeDiv > ul");
+    $(".scSelected").html(this.criterios.length);
+    console.log(this);
+    console.log(this.criterios.length);
+};
 Filter.prototype.loadTree=function(treeIds, callback){
     var that = this;
     if(treeIds.indexOf("WCAG")>=0){
@@ -46,6 +43,7 @@ Filter.prototype.loadTree=function(treeIds, callback){
             $.treevue([treeData], that.page, processDatafn).appendTo('.criteriaTreeDiv');
             Utils.loadingEnd(".criteriaTreeDiv");
             that.populate();
+            accessdb.TreeHelper.updateTreeFromTestList();
             callback("WCAG");
         }, this.criteriosLevel);  
     }
@@ -126,8 +124,8 @@ Filter.prototype.loadTree=function(treeIds, callback){
                 }
             }
             $(".testsOnPage").html(countTests);
-            debug(data);
-            debug(accessdb.testsFilter);
+            console.log(data);
+            console.log(accessdb.testsFilter);
             accessdb.API.TEST.countAll(function(error, data){
                 if(data)
                     $(".tests_count_all").html(data);
@@ -155,36 +153,8 @@ Filter.prototype.loadTrees=function(populate, treeIds){
         else
             $("#"+that.page +" [role=alert]").html(feedback); 
     };
-    next();   
-
+    next();
 };
-Filter.prototype.getATTree = function(callback){
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_AT, "POST", this, function(error, data){
-        callback(error, data);
-    });     
-};
-Filter.prototype.getUATree = function(callback){
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_UA, "POST", this, function(error, data){
-        callback(error, data);
-    });     
-};
-Filter.prototype.getOSTree = function(callback){
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_OS, "POST", this, function(error, data){
-        callback(error, data);
-    });     
-};
-Filter.getWCAG2TreeData = function(callback,level){
-    level = level || "AA";
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TECHNIQUES_WCAG2  + level, "GET", null, function(error, data){
-        callback(error, data);
-    }); 
-};
-Filter.getWebtechsTreeData = function(callback){
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TECHNIQUES_TECHS , "GET", null, function(error, data){
-        callback(error, data);
-    }); 
-};
-
 Filter.importProducts = function(holder,type){
 	var nodeList = $(holder).treevueJson();
 	nodeList = nodeList[0].children;
@@ -206,25 +176,6 @@ Filter.importProducts = function(holder,type){
 	}
 	return list;
 };
-Filter.importTests = function(holder){
-    var nodeList = $(holder).treevueJson();
-    var list = [];
-    for ( var ind in nodeList) {
-        var techniqueNode = nodeList[ind];
-        for ( var i in techniqueNode.children) {
-            var testNode = techniqueNode.children[i];
-            if(testNode.selected && testNode.type=="TestUnitDescription"){
-                list.push(testNode.value);
-                accessdb.session.addToQueue(testNode.value);
-            }
-            else
-                accessdb.session.removeFromQueue(testNode.value);
-
-        }
-    }
-    return list;
-};
-
 Filter.importTechnologies = function(holder){
 	var nodeList = $(holder).treevueJson();
     var nodeListChildren = nodeList[0].children;
@@ -242,7 +193,34 @@ Filter.importCriteria = function(holder){
 	var nodeListChildren = nodeList[0].children;
 	var list = [];
 	for ( var ind in nodeListChildren) {
-		Utils.treeNodeTolist(nodeListChildren[ind], "SuccessCriterio", list);
+		accessdb.TreeHelper.treeNodeTolist(nodeListChildren[ind], "SuccessCriterio", list);
 	}
 	return list;	
+};
+//TODO: move to API
+Filter.prototype.getATTree = function(callback){
+    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_AT, "POST", this, function(error, data){
+        callback(error, data);
+    });
+};
+Filter.prototype.getUATree = function(callback){
+    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_UA, "POST", this, function(error, data){
+        callback(error, data);
+    });
+};
+Filter.prototype.getOSTree = function(callback){
+    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_OS, "POST", this, function(error, data){
+        callback(error, data);
+    });
+};
+Filter.getWCAG2TreeData = function(callback,level){
+    level = level || "AA";
+    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TECHNIQUES_WCAG2  + level, "GET", null, function(error, data){
+        callback(error, data);
+    });
+};
+Filter.getWebtechsTreeData = function(callback){
+    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TECHNIQUES_TECHS , "GET", null, function(error, data){
+        callback(error, data);
+    });
 };

@@ -12,57 +12,7 @@ Utils.loadingStart=function(holder){
 Utils.loadingEnd=function(holder){
 	$(holder).find(".progress").remove();
 };
-Utils.treeNodeTolist=function(node, nodeType, list, parent){
-	list = list || [];
-	parent = $.trim($(node).parent().parent().parent().children().closest("label").text()) || null;
-	if(node.type==nodeType && node.selected)
-		list.push(node.value);
-	if(node.children && node.children.length>0){
-		var children = node.children;
-		for ( var ind in children) {
-			Utils.treeNodeTolist(children[ind], nodeType, list, parent);
-		}
-	}
-	else
-		return list;
-};
-Utils.listToTreeNode= function(list, collapsed){
-    collapsed = collapsed || false;
-    list = list || [];
-    list = list.sort();
-    var root = {
-        children: [],
-        collapsed: collapsed,
-        description: null,
-        disabled: false,
-        label: list.length + " selected test cases",
-        noOfChildren: 242,
-        selectable: false,
-        selected: true,
-        subselector: true,
-        type: "ROOT",
-        value: null    
-    };
-    for ( var int = 0; int < list.length; int++)
-    {
-        var el = list[int];
-        var node = {
-                children: null,
-                collapsed: true,
-                description: el,
-                disabled: false,
-                label: el,
-                noOfChildren: 242,
-                selectable: true,
-                selected: true,
-                subselector: false,
-                type: "testunit",
-                value: el    
-            };
-        root.children.push(node);
-    }
-    return root;
-};
+
 Utils.UIRoleAdapt = function(){
 	accessdb.session.userRoles = accessdb.session.userRoles || [];
 	$(".accessdbUserMessage").html("");
@@ -87,14 +37,6 @@ Utils.UIRoleAdapt = function(){
 		$("#" + currentPageId + " .roleAdminOnly").parent().append(msg);
 	}
 };
-Utils.getIDParam=function(){
-	var id = Utils.getUrlVars()["id"];
-	if((!id) && $.mobile.pageData!=null)
-		id = $.mobile.pageData.id;
-	if(!id)
-	    id = accessdb.paramId;
-	return id;
-};
 Utils.getUrlVars = function()
 {
     var vars = [], hash;
@@ -107,12 +49,30 @@ Utils.getUrlVars = function()
     }
     return vars;
 };
-Utils.goBack=function(){
-	//$.mobile.back();
+
+Utils.eraseCookie = function (name) {
+    Utils.createCookie(name,"",-1);
+}
+Utils.readCookie = function (name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
 };
-Utils.activePageReload=function(){
-	//$.mobile.activePage.trigger("refresh");
+Utils.createCookie = function (name,value,days) {
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime()+(days*24*60*60*1000));
+        var expires = "; expires="+date.toGMTString();
+    }
+    else var expires = "";
+    document.cookie = name+"="+value+expires+"; path=/";
 };
+
 Utils.resetForm=function(id) {
 	$(id).find("input[type=text], textarea").val("");
 	$(id).find("select").prop('selectedIndex',0).selectmenu('refresh');;
@@ -134,7 +94,6 @@ Utils.getUniqCol=function(matrix, col){
     }
     return column;
  };
-
  Utils.removeDuplicates=function(inputArray) {
      var i;
      var len = inputArray.length;
@@ -154,31 +113,17 @@ function getURLParameter(name) {
 	return decodeURI((RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [
 			, null ])[1]);
 }
-function msg2user(msg) {
-	$("#msg").html(msg);
+Utils.msg2user = function (msg) {
+    //window.alert(msg);
+	$("#msg2user").html(msg);
+    $("#msg2user" ).dialog();
 }
 
-function dialog2user(holder,msg) {
-	$(holder).html(msg);
-	//$(holder).dialog("destroy");
-	$(holder).dialog({
-		modal : true,
-		buttons : {
-			Ok : function() {
-				$(this).dialog("close");
-			}
-		}
-	});
-}
 function split( val ) {
 	return val.split( /,\s*/ );
 }
 function extractLast( term ) {
 	return split( term ).pop();
-}
-function debug(msg) {
-	if(accessdb.config.DEBUG)
-		console.log(msg);
 }
 function getFileNameWithNoExt(x) {
 	return x.substr(0, x.lastIndexOf('.'));
@@ -194,7 +139,7 @@ function removeItemFromArray(thearray, itemtoRemove) {
 Utils.doSelectQuery = function(url, q, async)
 {
 	$("#img_loading").show();
-	debug(q);
+	console.log(q);
 	q = encodeURI(q);
 	var out = new Array();
 	$.ajax({
@@ -205,16 +150,16 @@ Utils.doSelectQuery = function(url, q, async)
 		statusCode : {
 			404 : function() {
 				$("#img_loading").hide();
-				debug("Problem with query "); 
+				console.log("Problem with query ");
 			},
 			500 : function() {
 				$("#img_loading").hide();
-				debug("500");
-				debug("Problem with query "); 
+				console.log("500");
+				console.log("Problem with query ");
 			}
 		},
 		success : function(data) {
-			//debug(data);
+			//console.log(data);
 			out = data;		
 			$("#img_loading").hide();
 		}		
@@ -263,7 +208,7 @@ Utils.ajaxSync = function (url, method, data)
         timeout: 30000,
         processData: false,
         error: function(data){
-        	debug("ajax error: "+arguments.callee.caller.toString());
+        	console.log("ajax error: "+arguments.callee.caller.toString());
         },
         success: function(data){ 
         	out=data;
@@ -273,7 +218,7 @@ Utils.ajaxSync = function (url, method, data)
 };
 Utils.doSelectQueryWithCallBack = function(url, q, callback)
 {
-	debug(q);
+	console.log(q);
 	q = encodeURI(q);
 	$.ajax({
 		beforeSend: function() { 
@@ -289,11 +234,11 @@ Utils.doSelectQueryWithCallBack = function(url, q, callback)
 		dataType : "json",
 		async: true,
 		error: function(error){
-        	debug("ajax query error: "+arguments.callee.caller.toString());
+        	console.log("ajax query error: "+arguments.callee.caller.toString());
             callback(error, null);
         },
 		success : function(data) {
-			//debug(data);
+			//console.log(data);
 			callback(null, data);
 		}		
 	});	

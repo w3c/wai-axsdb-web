@@ -20,18 +20,22 @@ window.accessdb.Models.AppRouter = Backbone.Router.extend({
 // Initiate the router
 window.accessdb.appRouter = new window.accessdb.Models.AppRouter;
 
-window.accessdb.appRouter.loadPage = function(id){
-    $("article").hide();
-    $("#"+accessdb.config.PAGE_ID_PREFIX + id).show();
-};
-
 window.accessdb.appRouter.on('route:home', function () {
     window.accessdb.appRouter.loadPage("home");
 });
 window.accessdb.appRouter.on('route:log-out', function () {
-    window.accessdb.session.logout(function(error, data){
+    if(window.accessdb.session){
+        window.accessdb.session.logout(function(error, data){
+            accessdb.session = new accessdb.Models.testingSession();
+            // hack for triggering the useId change event
+            accessdb.session.set("userId", "anon");
+            accessdb.session.set("userId", null);
+            window.accessdb.appRouter.loadPage("home");
+        });
+    }
+    else{
         window.accessdb.appRouter.loadPage("home");
-    });
+    }
 });
 window.accessdb.appRouter.on('route:log-in', function () {
     window.accessdb.appRouter.loadPage("log-in");
@@ -55,6 +59,7 @@ window.accessdb.appRouter.on('route:tests-run', function () {
     window.accessdb.appRouter.loadPage("tests-run");
     accessdb.testsFilter = accessdb.testsFilter || new Filter(window.accessdb.config.PAGE_ID_PREFIX + "tests-run");
     accessdb.testsFilter.loadTrees(false,["WCAG","WEBTECHS","TESTS"]);
+
 });
 window.accessdb.appRouter.on('route:tests-run-submit', function () {
     window.accessdb.appRouter.loadPage("tests-run-submit");
@@ -69,7 +74,9 @@ window.accessdb.appRouter.on('route:test', function (id) {
 window.accessdb.appRouter.on('route:defaultRoute', function(actions) {
     window.accessdb.appRouter.loadPage("notfound");
     console.log(actions);
-})
+});
 
-// Start Backbone history a necessary step for bookmarkable URL's
-Backbone.history.start();
+window.accessdb.appRouter.loadPage = function(id){
+    $("article").hide();
+    $("#"+accessdb.config.PAGE_ID_PREFIX + id).show();
+};

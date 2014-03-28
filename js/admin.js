@@ -28,7 +28,7 @@ AccessDBAdmin.ajaxAsyncWithCallBack = function (url, method, data, callback, sho
         timeout: 30000000,
         processData: false,
         error: function(jqXHR, textStatus, errorThrown ){
-        	debug("accessdb ajax error: "+errorThrown);
+        	console.log("accessdb ajax error: "+errorThrown);
             if(showloading)
                 $.mobile.loading( 'hide' ) ;
             callback(jqXHR, jqXHR.status);

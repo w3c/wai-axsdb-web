@@ -51,7 +51,7 @@ TestForm.buildTestUnitDescription = function ()
 TestForm.testUnitDescriptionSubmit = function ()
 {	
 	var json_text = JSON.stringify(testUnitDescription, null, 2);
-	debug(json_text);
+	console.log(json_text);
 	$.ajax({ 
 		  type: "POST",
 		  url: URL_SERVICE_INSERT_TESTUNIT,
@@ -65,14 +65,14 @@ TestForm.testUnitDescriptionSubmit = function ()
 			  },
 		  data: testUnitDescription,
 		  success: function(data) {
-			  	debug( "Data Saved ");
+			  	console.log( "Data Saved ");
 			  	testUnitDescription = data; //get stored one
-			  	debug(testUnitDescription);
+			  	console.log(testUnitDescription);
 			  }		
 		});	
-	debug("start file uploading");
+	console.log("start file uploading");
 	uploadFiles(testUnitDescription);
-	debug("done");
+	console.log("done");
 };
 TestForm.uploadFiles = function (testUnitDescription)
 {
@@ -89,9 +89,9 @@ TestForm.uploadFiles = function (testUnitDescription)
 			  },
 		  data: testUnitDescription,
 		  success: function(data) {
-			  	debug( "Data Saved ");
+			  	console.log( "Data Saved ");
 			  	testUnitDescription = data; //get stored one
-			  	debug(testUnitDescription);
+			  	console.log(testUnitDescription);
 			  }		
 		});	
 	
@@ -99,9 +99,9 @@ TestForm.uploadFiles = function (testUnitDescription)
 TestForm.submitForm = function ()
 {
 	var testUnitDescription = buildTestUnitDescription();
-	debug(testUnitDescription);
+	console.log(testUnitDescription);
 	var json_text = JSON.stringify(testUnitDescription, null, 2);
-	debug(json_text);
+	console.log(json_text);
 	$("#TestUnitDescription").val(json_text);
 	$("#testunitform").submit();
 };
