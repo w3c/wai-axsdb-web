@@ -28,6 +28,12 @@ $(document).ready(function () {
         var id = $(event.target).find("span").attr("aria-described-by");
         accessdb.session.removeFromQueue(id);
     });
+    $(document).on("click", ".userProfilesDiv input", function (event) {
+        var id = $(event.target).attr("value");
+        console.log(id);
+        accessdb.session.set("testProfileId",id);
+    });
+
     $("#doLogin").on("click", function (event) {
         var lData = {
             userId: $("#userId").val(),

@@ -1,17 +1,14 @@
-function Product(name, textVer)
-{
+function Product(name, textVer) {
     this.name = name || "";
     this.version =
     {
-        text : textVer || "",
-        major : 0,
-        minor : 0,
-        revision : textVer || 0
+        text: textVer || "",
+        major: 0,
+        minor: 0,
+        revision: textVer || 0
     };
-
 };
-function TestingProfile()
-{
+function TestingProfile() {
     this.id = -1;
     this.profileComment = null;
     this.type = null;
@@ -23,10 +20,8 @@ function TestingProfile()
     this.platform.architecture = getPlaformArchitecture();
     this.assistiveTechnology = new Product();
     this.plugin = new Product();
-    this.setData = function(data)
-    {
-        for ( var property in data)
-        {
+    this.setData = function (data) {
+        for (var property in data) {
             this[property] = data[property];
             if (this.plugin == null)
                 this.plugin = new Product();
@@ -34,8 +29,7 @@ function TestingProfile()
                 this.assistiveTechnology = new Product();
         }
     };
-    this.setDataWithNoId = function(data)
-    {
+    this.setDataWithNoId = function (data) {
         this.profileComment = data.profileComment;
         this.type = data.type;
         this.userAgent = data.userAgent;
@@ -53,15 +47,11 @@ function TestingProfile()
         this.plugin.id = -1;
     };
 };
-
-function UserTestingProfile()
-{
+function UserTestingProfile() {
     this.profileName = "Temp Profile";
     this.profile = new TestingProfile();
-    this.setData = function(data)
-    {
-        for ( var property in data)
-        {
+    this.setData = function (data) {
+        for (var property in data) {
             this[property] = data[property];
             if (this.plugin == null)
                 this.plugin = new Product();
@@ -70,9 +60,7 @@ function UserTestingProfile()
         }
     };
 };
-
-UserTestingProfile.toString = function(testProfile)
-{
+UserTestingProfile.toString = function (testProfile) {
     var text = testProfile.platform.name + "  " + testProfile.platform.version.text;
     if (testProfile.userAgent.name)
         text = text + ", " + testProfile.userAgent.name + " " + testProfile.userAgent.version.text;
@@ -82,139 +70,103 @@ UserTestingProfile.toString = function(testProfile)
         text = text + ", " + testProfile.plugin.name + " " + testProfile.plugin.version.text;
     return text;
 };
-
-UserTestingProfile.loadUserProfilesByUserId = function(callback)
-{
+UserTestingProfile.loadUserProfilesByUserId = function (callback) {
     var sessionId = accessdb.session.get("sessionId");
     var userId = accessdb.session.get("userId");
-    if (userId)
-    {
+    if (userId) {
         // profiles/{userId}/{sessionId}
         Utils.ajaxAsyncWithCallBack(
                 accessdb.config.services.URL_SERVICE_GET_ALLUSERPROFILES + userId + "/" + sessionId, "GET", null,
-                function(error, data)
-                {
-                    callback(error, data);
-                });
+            function (error, data) {
+                callback(error, data);
+            });
     }
-    else
-    {
-        callback(null, accessdb.session.userTestingProfiles);
+    else {
+        callback(null, accessdb.session.get("userTestingProfiles"));
     }
 };
-UserTestingProfile.persistUserProfile = function(p, callback)
-{
-    var sessionId = accessdb.session.sessionId;
-    var userId = accessdb.session.userId;
-    if (userId)
-    {
-        if (p.id > 0)
-        {
+UserTestingProfile.persistUserProfile = function (p, callback) {
+    var sessionId = accessdb.session.get("sessionId");
+    var userId = accessdb.session.get("userId");
+    if (userId) {
+        if (p.id > 0) {
             // PUT profiles/{sessionId}
             Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_PUT_PROFILE + sessionId, "PUT", p,
-                    function(data)
-                    {
-                        callback(data);
-                    });
+                function (error, data) {
+                    callback(error, data);
+                });
         }
-        else
-        {
+        else {
             // POST profiles/{userId}/{sessionId}
             Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_POST_PROFILE + userId + "/" + sessionId,
-                    "POST", p, function(data)
-                    {
-                        callback(data);
-                    });
+                "POST", p, function (error, data) {
+                    callback(error, data);
+                });
         }
     }
-    else
-    {
-        if (p.id < -10)
-        {
+    else {
+        if (p.id < -10) {
             UserTestingProfile.updateTestingProfile(p);
         }
-        else
-        {
-            accessdb.session.pCounter = accessdb.session.pCounter - 1;
-            p.id = accessdb.session.pCounter;
-            accessdb.session.userTestingProfiles.push(p);
+        else {
+            accessdb.session.set("pCounter", accessdb.session.get("pCounter") - 1);
+            p.id = accessdb.session.get("pCounter");
+            accessdb.session.get("userTestingProfiles").push(p);
+            accessdb.session.set("userTestingProfiles", accessdb.session.get("userTestingProfiles"));
         }
-        accessdb.session.save(function(data)
-        {
+        accessdb.session.save(function (data) {
             callback(data.userTestingProfiles);
         });
     }
 };
-UserTestingProfile.updateTestingProfile = function(p)
-{
-    for ( var int = 0; int < accessdb.session.userTestingProfiles.length; int++)
-    {
-        var pp = accessdb.session.userTestingProfiles[int];
-        if (parseInt(pp.id) == parseInt(p.id))
-        {
-            accessdb.session.userTestingProfiles[int] = p;
+UserTestingProfile.updateTestingProfile = function (p) {
+    var userTestingProfiles = _.clone(accessdb.session.get("userTestingProfiles"));
+    for (var int = 0; int < userTestingProfiles.length; int++) {
+        var pp = userTestingProfiles[int];
+        if (parseInt(pp.id) == parseInt(p.id)) {
+            userTestingProfiles[int] = p;
             break;
         }
     }
-    accessdb.session.saveLocalSession();
+    accessdb.session.set("userTestingProfiles", userTestingProfiles);
 };
-
-UserTestingProfile.deleteUserProfilesById = function(pid, callback)
-{
-    var sessionId = accessdb.session.sessionId;
-    var userId = accessdb.session.userId;
-    if (userId)
-    {
+UserTestingProfile.deleteUserProfilesById = function (pid, callback) {
+    var sessionId = accessdb.session.get("sessionId");
+    var userId = accessdb.session.get("userId");
+    if (userId) {
         Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_DELETE_PROFILE + pid + "/" + sessionId,
-                "DELETE", null, function(data)
-                {
-                    callback(data);
-                });
+            "DELETE", null, function (error, data) {
+                callback(error, data);
+            });
     }
-    else
-    {
+    else {
         UserTestingProfile.removeTestingProfile(pid);
-        accessdb.session.save(function(data)
-        {
+        accessdb.session.save(function (data) {
             callback(data.userTestingProfiles);
         });
     }
-
 };
-UserTestingProfile.removeTestingProfile = function(id)
-{
-    var session = accessdb.session;
-    session.userTestingProfiles = jQuery.grep(session.userTestingProfiles, function(el, i)
-    {
+UserTestingProfile.removeTestingProfile = function (id) {
+    var userTestingProfiles = _.clone(accessdb.session.get("userTestingProfiles"));
+    userTestingProfiles = jQuery.grep(userTestingProfiles, function (el, i) {
         return (el.id !== parseInt(id));
     });
-    UserTestingProfile.showTestingProfiles(function()
-    {
-        $("#testingProfiles").trigger("create");
-        session.saveLocalSession();
-    });
-
+    accessdb.session.set("userTestingProfiles", userTestingProfiles);
+    UserTestingProfile.showTestingProfiles();
 };
-
-UserTestingProfile.getUserProfileById = function(id)
-{
+UserTestingProfile.getUserProfileById = function (id) {
     var session = accessdb.session;
-    for ( var int = 0; int < session.userTestingProfiles.length; int++)
-    {
+    for (var int = 0; int < session.userTestingProfiles.length; int++) {
         if (session.userTestingProfiles[int].id == id)
             return session.userTestingProfiles[int];
     }
     return null;
 };
-
-UserTestingProfile.showTestingProfiles = function()
-{
+UserTestingProfile.showTestingProfiles = function () {
     var session = accessdb.session;
     $(".userProfilesDiv").empty();
-    if (session.get("userTestingProfiles").length > 0)
-    {
-        for ( var testProfileId in session.get("userTestingProfiles"))
-        {
+    if (session.get("userTestingProfiles").length > 0) {
+        for (var testProfileId in session.get("userTestingProfiles")) {
             var userProfile = session.get("userTestingProfiles")[testProfileId];
             var testProfile = userProfile.profile;
             testProfile.platform = testProfile.platform || new Product();
@@ -226,108 +178,43 @@ UserTestingProfile.showTestingProfiles = function()
             testProfile.assistiveTechnology.name = testProfile.assistiveTechnology.name || "";
             testProfile.plugin.name = testProfile.plugin.name || "";
             console.log(testProfile);
-            var text = // "ID: " + Utils.randomUUID()+"<br />" +
-            "OS: " + testProfile.platform.name + " " + testProfile.platform.version.text + "<br />" + "Browser: " +
-                    testProfile.userAgent.name + " " + testProfile.userAgent.version.text + "<br />" +
-                    "Assistive Technology: " + testProfile.assistiveTechnology.name + " " +
-                    testProfile.assistiveTechnology.version.text + "<br />   " + "Plugin:" + testProfile.plugin.name +
-                    " " + testProfile.plugin.version.text + "<br />";
-
-            var input = $('<input type="radio" name="radio-choice-1" id="radio-choice-2" value="choice-2"  />');
-            input.attr("value", testProfile.id).attr("id", "testprofile-" + userProfile.id).attr("value",
-                    userProfile.id).attr("name", "testprofilesin");
-
-            var label = $('<label />').attr("for", "testprofile-" + userProfile.id).append(text);
-            if (parseInt(accessdb.session.testProfileId) == userProfile.id)
-            {
-                input.prop("checked", true);
-                input.attr("checked", "checked");
+            var pTemplate = _.template($('#user-profile-template').html(), {
+                p: testProfile,
+                id: userProfile.id
+            });
+            if(accessdb.session.get("testProfileId")===userProfile.id){
+                $(pTemplate).prop('checked', true);
+                selected = true;
             }
-            else
-            {
-                input.prop("checked", false);
-                input.attr("checked", false);
-            }
-            
-            $(input).keyup(function(e)
-            {
-                if (e.keyCode == 32)
-                {
-                    // user has pressed backspace
-                    $(this).prop("checked", true);
-                    $(this).attr("checked", true);
-                    accessdb.session.testProfileId = $(this).attr("value");
-                    $(".userProfilesDiv input").checkboxradio("refresh");
-                }
-            });
-
-            $(input).click(function(e)
-            {
-
-                e.preventDefault();
-                $(this).prop("checked", true);
-                accessdb.session.testProfileId = $(this).attr("value");
-                $(".userProfilesDiv input").checkboxradio("refresh");
-            });
-
-            $(input).focus(function(e)
-            {
-                if (parseInt(accessdb.session.testProfileId) == parseInt($(this).attr("value")))
-                {
-                    $(this).prop("checked", true);
-                    $(this).attr("checked", "checked");
-                }
-                else
-                {
-                    $(this).prop("checked", false);
-                    $(this).attr("checked", false);
-                }
-                $(".userProfilesDiv input").checkboxradio("refresh");
-            });
-            
-            $(".userProfilesDiv").append(input);
-            $(".userProfilesDiv").append(label);
-
-            if (accessdb.session.testProfileId == userProfile.id)
-                $(input).prop("checked", true);
-            else
-                $(input).prop("checked", false);
+            $(".userProfilesDiv").append(pTemplate);
         }
     }
     return session.get("userTestingProfiles").length;
-
 };
-
-UserTestingProfiletoDetailsText = function(p)
-{
+UserTestingProfiletoDetailsText = function (p) {
     var s = "";
-    if (p.platform != null)
-    {
+    if (p.platform != null) {
         s = s + p.platform.name;
         if (p.platform.architecture != undefined)
             s = s + " " + p.platform.architecture;
     }
     if (p.userAgent != null)
         s = s + ", " + p.userAgent.name + " " + p.userAgent.version.text;
-    if (p.assistiveTechnology != null && p.assistiveTechnology.name != undefined)
-    {
+    if (p.assistiveTechnology != null && p.assistiveTechnology.name != undefined) {
         s = s + ", " + p.assistiveTechnology.name;
         if (p.assistiveTechnology.version.text != undefined)
             s = s + " " + p.assistiveTechnology.version.text;
     }
-    if (p.plugin != null && p.plugin.name != undefined)
-    {
+    if (p.plugin != null && p.plugin.name != undefined) {
         s = s + ", " + p.plugin.name;
         if (p.plugin.version.text != undefined)
             s = s + " " + p.plugin.version.text;
     }
-
     // Windows X.Y.Z, Firefox X.Y.Z, Assistive Technology X.Y.Z
     return s;
 };
 
-UserTestingProfile.prototype.prepareAddForm = function()
-{
+UserTestingProfile.prototype.prepareAddForm = function () {
     initAutoCompleteField("#assistiveTechnology", accessdb.config.services.URL_SERVICE_GET_ASSISTIVETECHNOLOGIES);
     initAutoCompleteField("#os", accessdb.config.services.URL_SERVICE_GET_OSS);
     initAutoCompleteField("#userAgent", accessdb.config.services.URL_SERVICE_GET_USERAGENTS);
@@ -342,8 +229,7 @@ UserTestingProfile.prototype.prepareAddForm = function()
     $(".testprofileSave").removeClass("testprofileEdit");
     $("#testProfileId").val("-1");
 };
-UserTestingProfile.prototype.prepareEditForm = function()
-{
+UserTestingProfile.prototype.prepareEditForm = function () {
     initAutoCompleteField("#assistiveTechnology", accessdb.config.services.URL_SERVICE_GET_ASSISTIVETECHNOLOGIES);
     initAutoCompleteField("#os", accessdb.config.services.URL_SERVICE_GET_OSS);
     initAutoCompleteField("#userAgent", accessdb.config.services.URL_SERVICE_GET_USERAGENTS);
@@ -360,8 +246,7 @@ UserTestingProfile.prototype.prepareEditForm = function()
     $(".testprofileSave").addClass("testprofileEdit");
     $("#testProfileId").val(this.id);
 };
-UserTestingProfile.prototype.loadDataFromForm = function()
-{
+UserTestingProfile.prototype.loadDataFromForm = function () {
     this.profile.assistiveTechnology = extractProductInfo("#assistiveTechnology");
     this.profile.platform = extractProductInfo("#os");
     this.profile.userAgent = extractProductInfo("#userAgent");
@@ -371,8 +256,7 @@ UserTestingProfile.prototype.loadDataFromForm = function()
     this.id = parseInt($("#testProfileId").val());
 };
 
-function extractProductInfo(iNselector)
-{
+function extractProductInfo(iNselector) {
     if ($(iNselector).val() == null || $(iNselector).val() == "")
         return new Product();
     var p = new Product();
@@ -381,47 +265,38 @@ function extractProductInfo(iNselector)
     return p;
 }
 
-function initAutoCompleteField(holder, url)
-{
+function initAutoCompleteField(holder, url) {
     var cache =
     {}, lastXhr;
     $(holder).autocomplete(
-    {
-        minLength : 1,
-        focus : function(event, ui)
         {
-            $(holder).val(ui.item.value);
-            return false;
-        },
-        select : function(event, ui)
-        {
-            $(holder).val(ui.item.value);
-            // console.log($(holder).val());
-            return false;
-        },
-        source : function(request, response)
-        {
-            var term = request.term;
-            if (term in cache)
-            {
-                response(cache[term]);
-                return;
-            }
-            lastXhr = $.getJSON(url + term, request, function(data, status, xhr)
-            {
-                list = data.list.filter(function(element, index, array)
-                {
-                    return element != null;
-                });
-                cache[term] = list;
-                if (xhr === lastXhr)
-                {
-                    response(list);
+            minLength: 1,
+            focus: function (event, ui) {
+                $(holder).val(ui.item.value);
+                return false;
+            },
+            select: function (event, ui) {
+                $(holder).val(ui.item.value);
+                // console.log($(holder).val());
+                return false;
+            },
+            source: function (request, response) {
+                var term = request.term;
+                if (term in cache) {
+                    response(cache[term]);
+                    return;
                 }
-            });
-        }
-    }).data("ui-autocomplete")._renderItem = function(ul, item)
-    {
+                lastXhr = $.getJSON(url + term, request, function (data, status, xhr) {
+                    list = data.list.filter(function (element, index, array) {
+                        return element != null;
+                    });
+                    cache[term] = list;
+                    if (xhr === lastXhr) {
+                        response(list);
+                    }
+                });
+            }
+        }).data("ui-autocomplete")._renderItem = function (ul, item) {
         // console.log(item);
         item.label += '';// make sure it is string
         // if ( !typeof item === "string" )

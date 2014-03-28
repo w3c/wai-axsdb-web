@@ -12,16 +12,15 @@
 </script>
 <script type="text/template" id="user-profile-template">
     <div class="ui-radio">
-        <input name="testprofilesin" id="testprofile-<%= p.id %>"> value="<%= p.id %>" type="radio">
-        <label class="ui-radio-on ui-btn ui-btn-corner-all ui-fullsize ui-btn-icon-left ui-btn-up-c" for="testprofile-<%= p.id %>">
+        <input name="testprofilesin" id="testprofile-<%= id %>" value="<%= id %>" type="radio">
+        <label class="ui-radio-on ui-btn ui-btn-corner-all ui-fullsize ui-btn-icon-left ui-btn-up-c" for="testprofile-<%= id %>">
             <span class="ui-btn-inner">
                 <span class="ui-btn-text">
-                    OS: <%= p.platform %> <br>
-                    Browser: <%= p.userAgent %> <br>
-                    Assistive Technology:<%= p.assistiveTechnology %> <br>
-                    Plugin: <%= p.plugin %>
+                    OS: <%= p.platform.name %> <%= p.assistiveTechnology.version.text %><br>
+                    Browser: <%= p.userAgent.name %> <%= p.userAgent.version.text %><br>
+                    Assistive Technology: <%= p.assistiveTechnology.name %> <%= p.assistiveTechnology.version.text %> <br>
+                    Plugin: <%= p.plugin.name %> <%= p.plugin.version.text %>
                 </span>
-                <span class="ui-icon ui-icon-radio-on ui-icon-shadow">&nbsp;</span>
             </span>
         </label>
     </div>
