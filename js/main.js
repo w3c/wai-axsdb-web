@@ -77,5 +77,17 @@ $(document).ready(function () {
                 $("#doLogout").trigger("click");
         }
     });
+    $(".testprofileSave").on("click", function(event){
+        var p = new UserTestingProfile();
+        p.loadDataFromForm();
+        UserTestingProfile.persistUserProfile(p, function(out){
+            UserTestingProfile.loadUserProfilesByUserId(function(error, data){
+                accessdb.session.set("userTestingProfiles", data);
+            });
+        });
+        if(1==2)
+            event.preventDefault();
+    });
+
 });
 

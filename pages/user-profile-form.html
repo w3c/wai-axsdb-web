@@ -8,52 +8,43 @@
     </nav>
     <form>
         <input type="hidden" id="testProfileId" value="-1" />
-        <ul>
-            <li>
-                <fieldset>
-                    <legend>User Agent:</legend>
-                    <label for="userAgent">Name: </label>
-                    <input type="text" name="userAgent" id="userAgent" />
-                    <label for="userAgent_ver">Version: </label>
-                    <input type="text" name="userAgent_ver" id="userAgent_ver" />
-                </fieldset>
-            </li>
-            <li>
-                <fieldset>
-                    <legend>Assistive Technology:</legend>
-                    <label for="assistiveTechnology">Name: </label>
-                    <input type="text" name="assistiveTechnology" id="assistiveTechnology" />
-                    <label for="assistiveTechnology_ver">Version: </label>
-                    <input type="text" name="assistiveTechnology_ver" id="assistiveTechnology_ver" />
-                </fieldset>
-            </li>
-            <li>
-                <fieldset>
-                    <legend>Operating System :</legend>
-                    <label for="os">Name: </label>
-                    <input type="text" name="os" id="os" />
-                    <label for="os_ver">Version: </label>
-                    <input type="text"name="os_ver" id="os_ver" />
-                </fieldset>
-            </li>
-            <li>
-                <fieldset>
-                    <legend>Plugin :</legend>
-                    <label for="plugin">Plugin: </label>
-                    <input type="text" name="plugin" id="plugin" />
-                    <label for="plugin_ver">Version: </label>
-                    <input type="text" name="plugin_ver" id="plugin_ver" />
-                </fieldset>
-            </li>
-            <li>
-                <label title="A user friendly name for user to identify it" for="profileName">Profile Name: </label>
-                <input type="text" name="profileName"  id="profileName" value=""/>
-            </li>
-            <li>
-                <label for="profileComment">Profile Comment: </label>
-                <textarea name="profileComment" id="profileComment" ></textarea>
-            </li>
-        </ul>
+        <fieldset>
+            <legend>User Agent:</legend>
+            <label for="userAgent" required>Name: </label>
+            <input type="text" name="userAgent" id="userAgent" />
+            <label for="userAgent_ver" required>Version: </label>
+            <input type="text" name="userAgent_ver" id="userAgent_ver" />
         </fieldset>
+        <fieldset>
+            <legend>Assistive Technology:</legend>
+            <label for="assistiveTechnology">Name: </label>
+            <input type="text" name="assistiveTechnology" id="assistiveTechnology" />
+            <label for="assistiveTechnology_ver">Version: </label>
+            <input type="text" name="assistiveTechnology_ver" id="assistiveTechnology_ver" />
+        </fieldset>
+        <fieldset>
+            <legend>Operating System :</legend>
+            <label for="os" required>Name: </label>
+            <input type="text" name="os" id="os" />
+            <label for="os_ver" required>Version: </label>
+            <input type="text"name="os_ver" id="os_ver" />
+        </fieldset>
+        <fieldset>
+            <legend>Plugin :</legend>
+            <label for="plugin">Plugin: </label>
+            <input type="text" name="plugin" id="plugin" />
+            <label for="plugin_ver">Version: </label>
+            <input type="text" name="plugin_ver" id="plugin_ver" />
+        </fieldset>
+        <fieldset>
+            <legend>Additional Information :</legend>
+            <label title="A user friendly name for user to identify it" for="profileName">Profile Name: </label>
+            <input style="width: 30em;" placeholder="An optional human readable name for easier identification" type="text" name="profileName"  id="profileName" value=""/>
+            <br/>
+            <label for="profileComment">Profile Comment: </label>
+            <textarea name="profileComment" id="profileComment" cols="60" placeholder="Some comment" ></textarea>
+            <br/>
+        </fieldset>
+        <a style="width: 10em;height: 1.5em;display: block;text-align: center;vertical-align: middle;" href="#/user-profiles.html" class="btn testprofileSave">Save profile</a>
     </form>
 </article>

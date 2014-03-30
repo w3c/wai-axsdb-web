@@ -220,7 +220,6 @@ UserTestingProfile.prototype.prepareAddForm = function () {
     initAutoCompleteField("#userAgent", accessdb.config.services.URL_SERVICE_GET_USERAGENTS);
     initAutoCompleteField("#plugin", accessdb.config.services.URL_SERVICE_GET_PLUGINS);
     // $("#profileName").val("A friendly name for identifying it");
-    $("#profileComment").val("Some comment");
     $("#userAgent").val(this.profile.userAgent.name);
     $("#userAgent_ver").val(this.profile.userAgent.version.text);
     $("#os").val(this.profile.platform.name);
