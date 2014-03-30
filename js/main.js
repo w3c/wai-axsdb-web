@@ -62,6 +62,7 @@ $(document).ready(function () {
                 else
                 {
                     Utils.msg2user("User failed to login. Please try again.");
+                    return false;
                 }
             });
             return false;

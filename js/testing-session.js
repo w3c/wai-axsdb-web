@@ -224,18 +224,18 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
                         self.set("userId",data.userId);
                         self.load();
                         UserTestingProfile.loadUserProfilesByUserId(function(error, data1){
-                            accessdb.session.userTestingProfiles = data1;
-                            accessdb.session.saveLocalSession();
-                           // UserTestingProfile.showTestingProfiles();
-                            callback(true);
-                            return;
+                            accessdb.session.set("userTestingProfiles", data1);
                         });
-
+                        callback(true);
+                    }
+                    else{
+                        callback(false);
                     }
                 }
-                else
+                else{
                     console.error(error);
-                callback(false);
+                    callback(false);
+                }
             });
         }
     },
