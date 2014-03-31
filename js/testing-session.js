@@ -3,7 +3,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
     defaults: {
         //Note that if this structure changes need to change server side object also
         sessionName: null,
-        sessionId: null,
+        sessionId: null, 
         testProfileId: "-1",
         testUnitIdList: [],
         testResultList: [],
@@ -68,8 +68,12 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
                 var testId = self.get("testUnitIdList")[testId];
                 accessdb.API.TEST.findById(testId, function (error, data, status) {
                     var test = data;
-                    var li = _.template($('#test-selected-list-template').html(), {test: test});
-                    $(ul).append(li);
+
+                    if(test){
+                        var li = _.template($('#test-selected-list-template').html(), {test: test});
+                        $(ul).append(li);
+                    }
+
                 })
             }
             accessdb.TreeHelper.updateTreeFromTestList();
@@ -129,8 +133,8 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
                 userId: "anon"
             }
         };
-        if (this.userId != null)
-            bunch.user.userId = this.userId;
+        if (this.get("userId") != null)
+            bunch.user.userId = this.get("userId");
         accessdb.API.TESTRESULT.persistBunch(bunch, function (error, data, status) {
             if (!eroor && data != null)
                 self.clearResults();
@@ -184,41 +188,6 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
             return unitId !== e;
         });
         this.set("testUnitIdList", newList);
-    },
-    saveTestingData: function (testUnit, skipme) {
-        if (testUnit.id > 0) {
-            TestResult.removeByUnitId(testUnit.testUnitId);
-            var testResult = new TestResult();
-            testResult.comment = $("#testing_comment").val();
-            var testUnit = new TestUnit();
-            testUnit.loadByIdSync(this.currentTestUnitId);
-            testResult.testUnitDescription =
-            {
-                id: testUnit.id
-            };
-            testResult.testUnitId = this.get("currentTestUnitId");
-            var p = UserTestingProfile.getUserProfileById(this.get("testProfileId"));
-            testResult.testingProfile = new TestingProfile();
-            testResult.testingProfile.setDataWithNoId(p.profile);
-            testResult.type = "RESULT";
-            var nowD = new Date();
-            testResult.runDate = nowD.toJSON();
-            removeItemFromArray(this.testUnitIdList, testUnit.testUnitId);
-            if (!skipme)
-                testResult.resultValue = $('input[name=result]:checked').val();
-            else {
-                this.testUnitIdList.unshift(testUnit.testUnitId);
-                return false; //skip test
-            }
-            if (testResult.resultValue === "skip")
-                return false;
-            this.get("testResultList").push(testResult);
-            $("#testUnitId").html("");
-            $("#testHref").attr("href", "");
-            $("#question").html("");
-            $("#steps").html("");
-            $("#result").val("");
-        }
     },
     login: function (lData, callback) {
         this.resetLocalSession();
@@ -301,45 +270,12 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         this.loadLocalSession();
         if (this.get("sessionId") && this.get("userId") != null) {
             if (this.isSessionAuthenticated()) {
-                $(".userid").html("Logout " + this.userId);
+                $(".userid").html("Logout " + this.get("userId"));
             }
         }
         else
             this.set("sessionId", accessdb.config.sessionId);
         this.set("profiles_index", 0);
-    },
-    run : function (lastTestUnit, skipme) {
-        skipme = skipme || false;
-        var nextTestUnit = null;
-        if (lastTestUnit != null) // not the first
-        {
-            // validate
-            if (!$("input[name='result']:checked").val() && !skipme) {
-                // change page
-                return lastTestUnit;
-            }
-            this.saveTestingData(lastTestUnit, skipme);
-            Utils.resetForm('#testingForm');
-        }
-        if (this.testUnitIdList.length > 0) {
-            $("#testing_msg").empty();
-            $("#testingForm").show();
-            nextTestUnit = new TestUnit();
-            this.currentTestUnitId = this.testUnitIdList.pop();
-            // put back in case of cancel and remove on save
-            this.testUnitIdList.push(this.currentTestUnitId);
-            nextTestUnit.loadByIdSync(this.currentTestUnitId);
-            nextTestUnit.showInTestingPage();
-            var moretests = this.testUnitIdList.length - 1;
-            $(".next_tests_count").attr("href", "#testing").html(moretests);
-        }
-        else { // finished
-            $("#testingForm").hide();
-            this.currentTestUnitId = -1;
-            $("#testing_msg").html("<p>No test in your list. Either <a href='#tests'>add more tests</a> or consider <a href='#testingresults'>submiting the existing ones</a></p>");
-           // this.updateUI();
-        }
-        return nextTestUnit;
     }
 })
 ;

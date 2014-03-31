@@ -76,19 +76,10 @@ TestUnit.getTestsTreeData = function(callback){
 
 TestUnit.prototype.showInTestingPage = function(){
     var testRef = this.getTestFileUrl();
-    $("#testing_testUnitId").html(this.testUnitId);
-    $("#testing_testHref").attr("href",testRef);        
-    $("#testing_question").html(this.testProcedure.yesNoQuestion);
-    $("#testing_testdescription").html(this.description);
-    $("#testing_title").html(this.title);
-    $("#testing_expectedResult").html(this.testProcedure.expectedResult);   
-    var steps = this.testProcedure.steps;
-    var stepsH = "";
-    for ( var stepId in steps) {
-        var step = steps[stepId].step; 
-        stepsH+="<li>"+step+"</li>";
-    }
-    $("#testing_steps").html(stepsH);
+    this.testFile = testRef;
+    var tmp = _.template($('#test-run-template').html(), {test: this});
+    $("#test-run-holder").empty();
+    $("#test-run-holder").append(tmp);
 };
 
 TestUnit.prototype.setData = function(data) {

@@ -20,6 +20,7 @@
     <script type="text/javascript" src="js/lib/jquery.treevue.js"></script>
     <script type="text/javascript" src="js/lib/jquery.treevue.export.js"></script>
     <script type="text/javascript" src="js/lib/jquery.treevue.import.js"></script>
+    <script type="text/javascript" src="js/lib/async.js"></script>
     <script type="text/javascript" src="js/accessdb.js"></script>
     <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript" src="js/API.js"></script>
@@ -29,6 +30,8 @@
     <script type="text/javascript" src="js/testunit.js"></script>
     <script type="text/javascript" src="js/testingprofile.js"></script>
     <script type="text/javascript" src="js/header.js"></script>
+    <script type="text/javascript" src="js/testing-helper.js"></script>
+    <script type="text/javascript" src="js/testresult.js"></script>
 
     <script type="text/javascript" src="js/mockup.js"></script>
  <script type="text/javascript">

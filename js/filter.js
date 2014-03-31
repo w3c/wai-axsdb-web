@@ -120,7 +120,8 @@ Filter.prototype.loadTree=function(treeIds, callback){
                         //set selected 
                         data.children[ind].children[i].selected = true;
                     }
-                    countTests++;
+                    if(data.children[ind].children[i].type === "TestUnitDescription")
+                        countTests++;
                 }
             }
             $(".testsOnPage").html(countTests);

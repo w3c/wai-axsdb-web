@@ -25,3 +25,65 @@
         </label>
     </div>
 </script>
+<script type="text/template" id="test-run-template">
+        <header>
+            <h3><span class="subheading">Test : <%= test.testUnitId %></span> <%= test.title %></h3>
+        </header>
+        <section>
+            <h4>Test Description</h4>
+            <p><%= test.testUnitId %></p>
+        </section>
+
+        <section>
+            <h4>Test Procedure</h4>
+            <ol>
+                <% _.each(test.testProcedure.steps, function(s) { %>
+                <li><%= s.step %></li>
+                <% }); %>
+            </ol>
+        </section>
+
+        <section>
+            <h4>Test File(s)</h4>
+            <a href="<%= test.testFile %>" class="btn" target="_blank">Open test file <span class="icon-new-window"><span class="visuallyhidden">in a new window</span></span></a>
+        </section>
+        <form action="#">
+            <section>
+                <h4>Test Results</h4>
+                <fieldset>
+                    <legend><%= test.testProcedure.yesNoQuestion %></legend>
+                    <div class="form-block">
+                        <div class="form-row radio">
+											<span>
+												<input type="radio" id="res" value="true" name="result">
+											</span>
+                            <label for="res">Yes/True</label>
+                        </div>
+                        <div class="form-row radio">
+											<span>
+												<input type="radio" id="res2" value="true" name="result">
+											</span>
+                            <label for="res2">No/False</label>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="form-block">
+                    <div class="form-row">
+                        <label for="cmnt">Comment:</label>
+										<span>
+											<textarea name="comment" id="cmnt" cols="30" rows="10"></textarea>
+										</span>
+                    </div>
+                </div>
+                <div class="form-submit">
+                    <button class="btn skipme" type="button"><span class="icon-skip-sign"></span> Skip Test and Load Next</button>
+                    <a href="#/test-run.html" class="btn-primary btn-next do_next" type="submit"><span class="icon-ok-sign"></span> Save Test and Load Next</a>
+                    <!--
+                        <button class="btn-primary btn-next" type="submit"><span class="icon-ok-sign"></span> Save Test and Load Next</button>
+                    -->
+                </div>
+            </section>
+        </form>
+
+
+</script>

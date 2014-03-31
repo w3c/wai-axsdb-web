@@ -195,7 +195,7 @@ function TestResultDataOverview(technique, noOfPass, noOfAll, noOfUniqueCombinat
 };
 TestResultDataOverview.loadTable = function(filter)
 {
-    TestResultDataOverview.loadResultArray(filter, function(data){
+    TestResultDataOverview.loadResultArray(filter, function(error, data, status){
         var dataRowsHTML = TestResultDataOverview.dataArrayToTableRows(data).html();
         $("#accessdbTestResultsOverviewTable tbody").empty();
         $(".resultsSummaryTechniquesFiltered").html(data.length);
@@ -214,7 +214,7 @@ TestResultDataOverview.loadResultArray = function(filter, callback)
         callback(data); 
     else
     {
-        Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_DATAOVERVIEW, "POST", filter, function(data){
+        Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_DATAOVERVIEW, "POST", filter, function(error, data, status){
             callback(data.list);
         });  
     }
@@ -432,13 +432,13 @@ TestResult.isInLocalResults = function(unitid){
 };
 TestResult.removeByUnitId = function(unitid){
     var indx = -1;
-    var filtered =   accessdb.session.testResultList.filter(function(element, index, array) {
+    var filtered =   accessdb.session.get("testResultList").filter(function(element, index, array) {
         if(element.testUnitId == unitid)
             indx = index;
             return (element.testUnitId == unitid);
     });
     if(indx>-1){
-        accessdb.session.testResultList.splice(indx , 1);
+        accessdb.session.get("testResultList").splice(indx , 1);
     }
     
 };

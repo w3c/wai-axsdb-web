@@ -169,6 +169,11 @@ UserTestingProfile.showTestingProfiles = function () {
         for (var testProfileId in session.get("userTestingProfiles")) {
             var userProfile = session.get("userTestingProfiles")[testProfileId];
             var testProfile = userProfile.profile;
+            if(!testProfile){
+                console.error("testprofile empty");
+                testProfile  = {};
+            }
+
             testProfile.platform = testProfile.platform || new Product();
             testProfile.userAgent = testProfile.userAgent || new Product();
             testProfile.assistiveTechnology = testProfile.assistiveTechnology || new Product();

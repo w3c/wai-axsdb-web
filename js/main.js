@@ -43,6 +43,19 @@ $(document).ready(function () {
             }
         });
     });
+    $(document).on("click", ".do_next", function (event) {
+        event.preventDefault();
+        accessdb.session.set("lastTestUnit", accessdb.TestingHelper.run(accessdb.session.get("lastTestUnit")));
+        $(".tests_done").html(accessdb.session.get("testResultList").length);
+        $(".tests_all").html(accessdb.session.get("testUnitIdList").length+accessdb.session.get("testResultList").length);
+    });
+    $(document).on("click", ".skipme", function (event) {
+        event.preventDefault();
+        accessdb.session.set("lastTestUnit", accessdb.TestingHelper.run(accessdb.session.get("lastTestUnit"), true));
+        $(".tests_done").html(accessdb.session.get("testResultList").length);
+        $(".tests_all").html(accessdb.session.get("testUnitIdList").length+accessdb.session.get("testResultList").length);
+    });
+
     $("#doLogin").on("click", function (event) {
         var lData = {
             userId: $("#userId").val(),

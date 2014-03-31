@@ -22,63 +22,9 @@
 						<h3 class="information"><span class="icon-info"></span> Information</h3>
 						<p>Please follow the testing procedure for each test case that you have previously selected. You can modify your selection of test cases and the testing profile anytime during the testing without losing results for the test you have carried out. You can also view and optionally submit these completed test results at any time.</p>
 					</aside>
-					<div class="column-second">
-						<header>
-							<h3><span class="subheading">Test H4_0000005:</span> Tabindex adjusts the order in which links and buttons receive focus</h3>
-						</header>
-						<section>
-							<h4>Test Description</h4>
-							<p>Tests if assistive technologies and user agents understands tabindex on links and buttons and puts them in the correct order. The test page contains ten links and buttons. Each of them is labeled with the words one through ten. The elements are in a random order, but tabindex is used to adjust the order in which they receive focus, counting up from one to ten.</p>
-						</section>
+                    <div id="test-run-holder" class="column-second">
+                    </div>
 
-						<section>
-							<h4>Test Procedure</h4>
-							<ol>
-								<li>Use tab to navigate through the links and buttons on the page.</li>
-							</ol>
-						</section>
-
-						<section>
-							<h4>Test File(s)</h4>
-							<a href="#/" class="btn" target="_blank">Open test file <span class="icon-new-window"><span class="visuallyhidden">in a new window</span></span></a>
-						</section>
-						<form action="#">
-							<section>
-								<h4>Test Results</h4>
-								<fieldset>
-									<legend>Do you go through the content starting at one and finishing at ten in the correct order?</legend>
-									<div class="form-block">
-										<div class="form-row radio">
-											<span>
-												<input type="radio" id="res" value="true" name="result">
-											</span>
-											<label for="res">Yes/True</label>
-										</div>
-										<div class="form-row radio">
-											<span>
-												<input type="radio" id="res2" value="true" name="result">
-											</span>
-											<label for="res2">No/False</label>
-										</div>
-									</div>
-								</fieldset>
-								<div class="form-block">
-									<div class="form-row">
-										<label for="cmnt">Comment:</label>
-										<span>
-											<textarea name="comment" id="cmnt" cols="30" rows="10"></textarea>
-										</span>
-									</div>
-								</div>
-								<div class="form-submit">
-									<button class="btn" type="button"><span class="icon-skip-sign"></span> Skip Test and Load Next</button>
-									<a href="#/tests-finish.html" class="btn-primary btn-next" type="submit"><span class="icon-ok-sign"></span> Save Test and Load Next</a>
-								<!--
-									<button class="btn-primary btn-next" type="submit"><span class="icon-ok-sign"></span> Save Test and Load Next</button>
-								-->
-							</div>
-						</section>
-					</form>
 				</div>
 			</div>
 		</div>

@@ -3,6 +3,18 @@ String.prototype.getNums= function(){
     mapN= this.match(rx) || [];
     return mapN.map(Number);
 };
+Array.prototype.remove = function() {
+    var what, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
+
+
 function Utils(){};
 
 Utils.loadingStart=function(holder){
@@ -75,9 +87,8 @@ Utils.createCookie = function (name,value,days) {
 
 Utils.resetForm=function(id) {
 	$(id).find("input[type=text], textarea").val("");
-	$(id).find("select").prop('selectedIndex',0).selectmenu('refresh');;
-	$(id).find("input:radio").attr("checked", false).checkboxradio("refresh");
-	//$(id).trigger("create");
+	$(id).find("select").prop('selectedIndex',0);
+	$(id).find("input:radio").attr("checked", false);
 };
 Utils.arrayToSqlVal=function(arr){
 	arr = Utils.removeDuplicates(arr);
