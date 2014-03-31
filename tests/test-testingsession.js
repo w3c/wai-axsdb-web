@@ -35,7 +35,7 @@ asyncTest( "TestingSession save", function() {
         console.warn("session invalid: "+ error); // printing the error message on console.
     });
     session.set("testProfileId","10");
-    session.save(function (error, data) {
+    session.save(function (error, data, status) {
         console.log(session.isValid());
         ok( session.get("testProfileId") === "10", "Session is saved!" );
         start();

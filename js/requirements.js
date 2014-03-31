@@ -9,7 +9,7 @@ Requirements.deleteDeepTechnique = function (nameId, callback){
 Requirements.getCountFilteredTests = function(reqFilter)
 {
 	$(".tests_count_filter").html("0");
-    accessdb.API.TEST.countFilteredTests(reqFilter, function(error, data){
+    accessdb.API.TEST.countFilteredTests(reqFilter, function(error, data, status){
         if(data){
             $(".tests_count_filter").html(data.list);
         }

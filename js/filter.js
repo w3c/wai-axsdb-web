@@ -28,7 +28,7 @@ Filter.prototype.loadTree=function(treeIds, callback){
     if(treeIds.indexOf("WCAG")>=0){
         $(".criteriaTreeDiv").empty();
         Utils.loadingStart(".criteriaTreeDiv");
-        Filter.getWCAG2TreeData(function(error, data){
+        Filter.getWCAG2TreeData(function(error, data, status){
             var treeData = data;
             treeData.label = "All Success Criteria";
             var processDatafn = function (data){
@@ -50,7 +50,7 @@ Filter.prototype.loadTree=function(treeIds, callback){
     else if(treeIds.indexOf("AT")>=0){
         $(".atTreeDiv").empty();
         Utils.loadingStart(".atTreeDiv");
-        this.getATTree(function(error, data){
+        this.getATTree(function(error, data, status){
             var treeData = data;
             treeData.label = "All";
             treeData.collapsed = false;
@@ -62,7 +62,7 @@ Filter.prototype.loadTree=function(treeIds, callback){
     else if(treeIds.indexOf("UA")>=0){
         $(".uaTreeDiv").empty();
         Utils.loadingStart(".uaTreeDiv");
-        this.getUATree(function(error, data){
+        this.getUATree(function(error, data, status){
             $(".uaTreeDiv").empty();
             var treeData = data;
             treeData.label = "All";
@@ -75,7 +75,7 @@ Filter.prototype.loadTree=function(treeIds, callback){
     else if(treeIds.indexOf("OS")>=0){
         $(".osTreeDiv").empty();
         Utils.loadingStart(".osTreeDiv");
-        this.getOSTree(function(error, data){
+        this.getOSTree(function(error, data, status){
             $(".osTreeDiv").empty();
             var treeData = null;
             if(that.oss.length<1)
@@ -91,7 +91,7 @@ Filter.prototype.loadTree=function(treeIds, callback){
     else if(treeIds.indexOf("WEBTECHS")>=0){ 
         $(".webTechTreeDiv").empty();
         Utils.loadingStart(".webTechTreeDiv");
-        Filter.getWebtechsTreeData(function(error, data){
+        Filter.getWebtechsTreeData(function(error, data, status){
             $(".webTechTreeDiv").empty();
             var treeData = data;
             treeData.label = "All";
@@ -104,7 +104,7 @@ Filter.prototype.loadTree=function(treeIds, callback){
     else if(treeIds.indexOf("TESTS")>=0){ 
         $("#thetestsTreeDiv").empty();
         Utils.loadingStart(".thetestsTreeDiv");
-        TestUnit.getTestsTreeData(function(error, data){
+        TestUnit.getTestsTreeData(function(error, data, status){
             $("#thetestsTreeDiv").empty();
             // select what is in queue
             var countTests = 0;
@@ -126,7 +126,7 @@ Filter.prototype.loadTree=function(treeIds, callback){
             $(".testsOnPage").html(countTests);
             console.log(data);
             console.log(accessdb.testsFilter);
-            accessdb.API.TEST.countAll(function(error, data){
+            accessdb.API.TEST.countAll(function(error, data, status){
                 if(data)
                     $(".tests_count_all").html(data);
             });
@@ -199,28 +199,28 @@ Filter.importCriteria = function(holder){
 };
 //TODO: move to API
 Filter.prototype.getATTree = function(callback){
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_AT, "POST", this, function(error, data){
-        callback(error, data);
+    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_AT, "POST", this, function(error, data, status){
+        callback(error, data, status);
     });
 };
 Filter.prototype.getUATree = function(callback){
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_UA, "POST", this, function(error, data){
-        callback(error, data);
+    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_UA, "POST", this, function(error, data, status){
+        callback(error, data, status);
     });
 };
 Filter.prototype.getOSTree = function(callback){
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_OS, "POST", this, function(error, data){
-        callback(error, data);
+    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_OS, "POST", this, function(error, data, status){
+        callback(error, data, status);
     });
 };
 Filter.getWCAG2TreeData = function(callback,level){
     level = level || "AA";
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TECHNIQUES_WCAG2  + level, "GET", null, function(error, data){
-        callback(error, data);
+    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TECHNIQUES_WCAG2  + level, "GET", null, function(error, data, status){
+        callback(error, data, status);
     });
 };
 Filter.getWebtechsTreeData = function(callback){
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TECHNIQUES_TECHS , "GET", null, function(error, data){
-        callback(error, data);
+    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TECHNIQUES_TECHS , "GET", null, function(error, data, status){
+        callback(error, data, status);
     });
 };

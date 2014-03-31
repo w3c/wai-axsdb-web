@@ -11,8 +11,8 @@ window.accessdb.Models.AppRouter = Backbone.Router.extend({
         "tests-run.html": "tests-run",
         "tests-run-submit.html": "tests-run-submit",
         "user-profiles.html": "user-profiles",
-        "user-profile-form.html": "user-profile-form-add",
-        "user-profile-form.html/;id": "user-profile-form-edit",
+        "user-profile-add.html": "user-profile-add",
+        "user-profile-edit.html/:id": "user-profile-edit",
         "test.html/:id": "test",
         "log-in.html": "log-in",
         "log-out.html": "log-out",
@@ -27,7 +27,7 @@ window.accessdb.appRouter.on('route:home', function () {
 });
 window.accessdb.appRouter.on('route:log-out', function () {
     if(window.accessdb.session){
-        window.accessdb.session.logout(function(error, data){
+        window.accessdb.session.logout(function(error, data, status){
             accessdb.session = new accessdb.Models.testingSession();
             // hack for triggering the useId change event
             accessdb.session.set("userId", "anon");
@@ -47,17 +47,29 @@ window.accessdb.appRouter.on('route:log-in', function () {
 window.accessdb.appRouter.on('route:results', function () {
     window.accessdb.appRouter.loadPage("results");
 });
-window.accessdb.appRouter.on('route:user-profile-form-add', function () {
+window.accessdb.appRouter.on('route:user-profiles', function () {
+    window.accessdb.appRouter.loadPage("user-profiles");
+    if(accessdb.session && accessdb.session.get("userTestingProfiles").length<1){
+        UserTestingProfile.loadUserProfilesByUserId(function(error, data, status){
+            accessdb.session.set("userTestingProfiles", data);
+        });
+    }
+    UserTestingProfile.showTestingProfiles();
+
+});
+
+window.accessdb.appRouter.on('route:user-profile-add', function () {
     window.accessdb.appRouter.loadPage("user-profile-form");
     var p = new UserTestingProfile();
     p.prepareAddForm();
 });
-window.accessdb.appRouter.on('route:user-profile-form-edit', function (id) {
+window.accessdb.appRouter.on('route:user-profile-edit', function (id) {
     window.accessdb.appRouter.loadPage("user-profile-form");
     var p = new UserTestingProfile();
     p.setData(UserTestingProfile.getUserProfileById(accessdb.session.get("testProfileId")));
     p.prepareEditForm();
 });
+
 window.accessdb.appRouter.on('route:test-run', function (id) {
     window.accessdb.appRouter.loadPage("test-run");
 });
@@ -79,9 +91,7 @@ window.accessdb.appRouter.on('route:tests-run', function () {
 window.accessdb.appRouter.on('route:tests-run-submit', function () {
     window.accessdb.appRouter.loadPage("tests-run-submit");
 });
-window.accessdb.appRouter.on('route:user-profiles', function () {
-    window.accessdb.appRouter.loadPage("user-profiles");
-});
+
 window.accessdb.appRouter.on('route:test', function (id) {
     window.accessdb.appRouter.loadPage("test");
     console.log( "Get post number " + id );

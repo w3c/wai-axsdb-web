@@ -178,11 +178,11 @@ Utils.ajaxAsyncWithCallBack = function (url, method, data, callback, showloading
         cache: false,
         timeout: 30000,
         processData: false,
-        success: function(res){
-            callback(null, res);
+        success: function(data, textStatus, jqXHR){
+            callback(null, data, jqXHR.status);
         },
-        error: function(request, status, error) {
-            callback(error, null);
+        error: function(jqXHR, textStatus, errorThrown) {
+            callback(jqXHR, null, null);
         }
     });
 };

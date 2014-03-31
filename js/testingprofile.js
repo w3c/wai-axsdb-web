@@ -77,8 +77,8 @@ UserTestingProfile.loadUserProfilesByUserId = function (callback) {
         // profiles/{userId}/{sessionId}
         Utils.ajaxAsyncWithCallBack(
                 accessdb.config.services.URL_SERVICE_GET_ALLUSERPROFILES + userId + "/" + sessionId, "GET", null,
-            function (error, data) {
-                callback(error, data);
+            function (error, data, status) {
+                callback(error, data, status);
             });
     }
     else {
@@ -92,15 +92,15 @@ UserTestingProfile.persistUserProfile = function (p, callback) {
         if (p.id > 0) {
             // PUT profiles/{sessionId}
             Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_PUT_PROFILE + sessionId, "PUT", p,
-                function (error, data) {
-                    callback(error, data);
+                function (error, data, status) {
+                    callback(error, data, status);
                 });
         }
         else {
             // POST profiles/{userId}/{sessionId}
             Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_POST_PROFILE + userId + "/" + sessionId,
-                "POST", p, function (error, data) {
-                    callback(error, data);
+                "POST", p, function (error, data, status) {
+                    callback(error, data, status);
                 });
         }
     }
@@ -135,15 +135,16 @@ UserTestingProfile.deleteUserProfilesById = function (pid, callback) {
     var userId = accessdb.session.get("userId");
     if (userId) {
         Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_DELETE_PROFILE + pid + "/" + sessionId,
-            "DELETE", null, function (error, data) {
-                callback(error, data);
+            "DELETE", {}, function (error, data, status) {
+                if(!error || (error && error.status===200)){ //TODO: check server side
+                    UserTestingProfile.removeTestingProfile(pid);
+                    accessdb.session.set("testProfileId", -1);
+                }
+                callback(null, null, status);
             });
-    }
-    else {
+    } else {
         UserTestingProfile.removeTestingProfile(pid);
-        accessdb.session.save(function (data) {
-            callback(data.userTestingProfiles);
-        });
+        callback(null, null, accessdb.session.get("userTestingProfiles"));
     }
 };
 UserTestingProfile.removeTestingProfile = function (id) {
@@ -152,13 +153,12 @@ UserTestingProfile.removeTestingProfile = function (id) {
         return (el.id !== parseInt(id));
     });
     accessdb.session.set("userTestingProfiles", userTestingProfiles);
-    UserTestingProfile.showTestingProfiles();
 };
 UserTestingProfile.getUserProfileById = function (id) {
-    var session = accessdb.session;
-    for (var int = 0; int < session.userTestingProfiles.length; int++) {
-        if (session.userTestingProfiles[int].id == id)
-            return session.userTestingProfiles[int];
+    var userTestingProfiles = accessdb.session.get("userTestingProfiles");
+    for (var int = 0; int < userTestingProfiles.length; int++) {
+        if (userTestingProfiles[int].id == id)
+            return userTestingProfiles[int];
     }
     return null;
 };

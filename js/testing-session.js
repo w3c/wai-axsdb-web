@@ -24,7 +24,8 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         if (self.get("sessionId") && self.get("userId") != null) {
             if (self.isSessionAuthenticated()) {
                 $(".login-info").html("Log out " + self.get("userId"));
-                $(".login-info").parent().attr("href","#/log-out.html")
+                $(".login-info").parent().attr("href","#/log-out.html");
+
             }
         }
         else
@@ -43,6 +44,12 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
             }
             $(".userid").html(self.get("userId") || "anon");
         });
+
+        this.on('change:testProfileId', function (o) {
+            console.log("change:testProfileId");
+            console.log("testProfileId: " + this.get("testProfileId"));
+
+        });
         this.on('change:testResultList', function (o) {
             console.log("change:testResultList");
             //update UI for results
@@ -59,7 +66,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
             $(ul).empty();
             for (testId in self.get("testUnitIdList")) {
                 var testId = self.get("testUnitIdList")[testId];
-                accessdb.API.TEST.findById(testId, function (error, data) {
+                accessdb.API.TEST.findById(testId, function (error, data, status) {
                     var test = data;
                     var li = _.template($('#test-selected-list-template').html(), {test: test});
                     $(ul).append(li);
@@ -101,7 +108,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
     save: function (callback) {
         this.saveLocalSession();
         var self = this;
-        accessdb.API.TESTINGSESSION.save(self, function (error, data) {
+        accessdb.API.TESTINGSESSION.save(self, function (error, data, status) {
             if (!error)
                 console.log("server session updated");
             else
@@ -124,10 +131,10 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         };
         if (this.userId != null)
             bunch.user.userId = this.userId;
-        accessdb.API.TESTRESULT.persistBunch(bunch, function (error, data) {
+        accessdb.API.TESTRESULT.persistBunch(bunch, function (error, data, status) {
             if (!eroor && data != null)
                 self.clearResults();
-            callback(error, data);
+            callback(error, data, status);
         });
     },
     persistAll: function (callback) {
@@ -142,7 +149,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
     },
     persist: function (callback) {
         var self = this;
-        accessdb.API.TESTINGSESSION.persist(self, function (error, data) {
+        accessdb.API.TESTINGSESSION.persist(self, function (error, data, status) {
             self.clearRatings();
             self.clearResults();
             callback(error, self);
@@ -217,9 +224,9 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         this.resetLocalSession();
         var self = this;
         if (self.isValid()) {
-            accessdb.API.TESTINGSESSION.login(lData, function (error, data) {
+            accessdb.API.TESTINGSESSION.login(lData, function (error, data, status) {
                 if (!error) {
-                    if (data.userId !== null) {
+                    if (data.userId !== null && status===200) {
                         self.set(data);
                         self.set("userId",data.userId);
                         self.load();
@@ -233,7 +240,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
                     }
                 }
                 else{
-                    console.error(error);
+                    console.error(error.status);
                     callback(false);
                 }
             });
@@ -241,12 +248,12 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
     },
     logout: function (callback) {
         var self = this;
-        accessdb.API.TESTINGSESSION.logout(self, function (error, data) {
+        accessdb.API.TESTINGSESSION.logout(self, function (error, data, status) {
             if (!error) {
                 self.resetLocalSession();
                 console.log("logout success");
             }
-            callback(error, data);
+            callback(error, data, status);
         });
     },
     isSessionAuthenticated: function () {

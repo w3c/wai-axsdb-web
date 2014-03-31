@@ -69,8 +69,8 @@ function TestUnit() {
     };
 };
 TestUnit.getTestsTreeData = function(callback){
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_TESTUNITS_TREE, "POST", accessdb.testsFilter, function(error, data){
-        callback(error, data);
+    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_TESTUNITS_TREE, "POST", accessdb.testsFilter, function(error, data, status){
+        callback(error, data, status);
     }); 
 };
 
@@ -119,7 +119,7 @@ TestUnit.prototype.getResourceFileUrl = function(src) {
 };
 TestUnit.prototype.loadById = function(id,callback) {
     var obj = this;
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_TESTUNITS + "/" + id, "GET", null, function(error, data){
+    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_TESTUNITS + "/" + id, "GET", null, function(error, data, status){
         obj.setData(data);
         callback(obj);
     }); 
@@ -301,7 +301,7 @@ TestUnit.prototype.showResourceFilesList = function (edit)
                     var fileId = $(event.target).closest(".removeMe").attr("data-accessdb-id");
                     var testUnitId = accessdb.session.currentTestUnit.testUnitId;
                     var sessionId = accessdb.session.sessionId;
-                    TestUnit.deleteResourceFile(sessionId,fileId,testUnitId, function(error, data){
+                    TestUnit.deleteResourceFile(sessionId,fileId,testUnitId, function(error, data, status){
                         console.log(data.status);
                         if(data.status===200)
                         {
@@ -447,7 +447,7 @@ TestUnit.getXmlMetaById=function(id) {
         error: function(){
            console.log("testunit loading error");
         },
-        success: function(error, data){ 
+        success: function(error, data, status){
             console.log(data);
             out = data;
         }

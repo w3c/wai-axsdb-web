@@ -2,13 +2,13 @@ $(document).ready(function () {
     for (var property in accessdb.config.services) {
         accessdb.config.services[property] = accessdb.config.URL_API_ROOT + accessdb.config.services[property];
     }
-    // Start Backbone history a necessary step for bookmarkable URL's
-    Backbone.history.start();
+
     // session initialization
     accessdb.session = new accessdb.Models.testingSession();
     accessdb.session.load();
     accessdb.session.save();
-
+    // Start Backbone history a necessary step for bookmarkable URL's
+    Backbone.history.start();
 
     $(".webTechTreeDiv").on('treevue:change', function (event) {
         accessdb.testsFilter.loadTrees(true, ["WCAG", "TESTS"]);
@@ -32,8 +32,17 @@ $(document).ready(function () {
         var id = $(event.target).attr("value");
         console.log(id);
         accessdb.session.set("testProfileId",id);
+        $("#editProfileBtn").attr("href","#/user-profile-edit.html/"+id);
     });
-
+    $("#deleteProfileBtn").on("click", function(event)
+    {
+        UserTestingProfile.deleteUserProfilesById(accessdb.session.get("testProfileId"), function(error, data, status)
+        {
+            if(!error){
+                UserTestingProfile.loadUserProfilesByUserId(function(error, data, status){ });
+            }
+        });
+    });
     $("#doLogin").on("click", function (event) {
         var lData = {
             userId: $("#userId").val(),
@@ -82,7 +91,7 @@ $(document).ready(function () {
         var p = new UserTestingProfile();
         p.loadDataFromForm();
         UserTestingProfile.persistUserProfile(p, function(out){
-            UserTestingProfile.loadUserProfilesByUserId(function(error, data){
+            UserTestingProfile.loadUserProfilesByUserId(function(error, data, status){
                 accessdb.session.set("userTestingProfiles", data);
             });
         });

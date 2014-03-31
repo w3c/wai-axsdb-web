@@ -10,18 +10,18 @@ accessdb.API = {
     },
     TEST: {
         findById: function (testId, callback) {
-            Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_TESTUNITS + "/" + testId, "GET", null, function (error, data) {
-                callback(error, data);
+            Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_TESTUNITS + "/" + testId, "GET", null, function (error, data, status) {
+                callback(error, data, status);
             });
         },
         countAll: function (callback) {
             var query = "select count(distinct u.testUnitId) from TestUnitDescription as u";
-            Utils.doSelectQueryWithCallBack(accessdb.config.services.URL_SERVICE_TECHNIQUES_BYQUERY, query, function (error, data) {
+            Utils.doSelectQueryWithCallBack(accessdb.config.services.URL_SERVICE_TECHNIQUES_BYQUERY, query, function (error, data, status) {
                 if (data && data.list && data.list[0])
                     data = data.list[0];
                 else
                     data = null;
-                callback(error, data);
+                callback(error, data, status);
             });
         },
         countFilteredTests: function (filter, callback) {
@@ -39,41 +39,41 @@ accessdb.API = {
     WEBTECHNOLOGIES: {
         findAll: function (callback) {
             var query = "from WebTechnology as t order by t.nameId";
-            Utils.doSelectQueryWithCallBack(accessdb.config.services.URL_SERVICE_TECHNIQUES_BYQUERY, query, function (error, data) {
+            Utils.doSelectQueryWithCallBack(accessdb.config.services.URL_SERVICE_TECHNIQUES_BYQUERY, query, function (error, data, status) {
                 if (data && data.list)
                     data = data.list || null;
-                callback(error, data);
+                callback(error, data, status);
             });
         }
     },
     TESTRESULT: {
         persistBunch: function (bunch, callback) {
-            Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_PERSIST, 'POST', bunch, function (error, data) {
-                callback(error, data);
+            Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_PERSIST, 'POST', bunch, function (error, data, status) {
+                callback(error, data, status);
             });
         }
     },
     TESTINGSESSION: {
         save: function (session, callback) {
-            Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTINGSESSION_SAVE, 'POST', session, function (error, data) {
-                callback(error, data);
+            Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTINGSESSION_SAVE, 'POST', session, function (error, data, status) {
+                callback(error, data, status);
             });
         },
         persist: function (session, callback) {
             Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTINGSESSION_PERSIST + session.get("sessionId"),
-                'POST', session, function (error, data) {
-                    callback(error, data);
+                'POST', session, function (error, data, status) {
+                    callback(error, data, status);
                 });
         },
         login: function (loginData, callback) {
-            Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_LOGIN, 'POST', loginData, function (error, data) {
-                callback(error, data);
+            Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_LOGIN, 'POST', loginData, function (error, data, status) {
+                callback(error, data, status);
             });
         },
         logout: function (session, callback) {
             Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_LOGOUT + session.get("sessionId"), 'POST', null,
-                function (error, data) {
-                    callback(error, data);
+                function (error, data, status) {
+                    callback(error, data, status);
                 });
         }
     }
