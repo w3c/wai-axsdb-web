@@ -72,14 +72,12 @@ window.accessdb.appRouter.on('route:user-profile-edit', function (id) {
 
 window.accessdb.appRouter.on('route:test-run', function (id) {
     window.accessdb.appRouter.loadPage("test-run");
-
-    accessdb.session.set("lastTestUnit", null);
+    accessdb.testingRunner = new accessdb.Models.TestingHelper();
     Utils.resetForm('#testingForm');
     $(".tests_done").html(accessdb.session.get("testResultList").length);
     $(".tests_all").html(accessdb.session.get("testUnitIdList").length+accessdb.session.get("testUnitIdList").length);
-    if(accessdb.session.get("lastTestUnit") === null)
-        accessdb.session.set("lastTestUnit", accessdb.TestingHelper.run(accessdb.session.get("lastTestUnit")));
-
+    accessdb.testingRunner.start();
+    accessdb.testingRunner.loadNext();
 });
 window.accessdb.appRouter.on('route:test-submit', function () {
     window.accessdb.appRouter.loadPage("test-submit");

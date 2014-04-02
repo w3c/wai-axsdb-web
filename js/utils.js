@@ -139,12 +139,11 @@ function extractLast( term ) {
 function getFileNameWithNoExt(x) {
 	return x.substr(0, x.lastIndexOf('.'));
 }
-function removeItemFromArray(thearray, itemtoRemove) {
-	var i = thearray.indexOf(itemtoRemove);
-	var newarray=[];
-	if(i>=0)
-	    newarray = thearray.splice(i, 1);
-	return newarray;
+Utils.removeItemFromArray = function (thearray, itemtoRemove) {
+    thearray = _.filter(thearray, function(item) {
+        return item === itemtoRemove;
+    });
+	return thearray;
 }
 
 Utils.doSelectQuery = function(url, q, async)

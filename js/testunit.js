@@ -9,8 +9,7 @@ function TestUnit() {
     this.version = "0.1";
     this.comment = "[no comment]";
     var myDate = new Date();    
-    this.creator = accessdb.session.userId;
-
+    this.creator = accessdb.session.get("userId");
     var cdate = myDate.getFullYear() + '-' + (myDate.getMonth() + 1) + "-"
             + (myDate.getDate());
     this.date = cdate;
@@ -68,6 +67,13 @@ function TestUnit() {
         
     };
 };
+TestUnit.prototype.setData = function(data) {
+    for (var property in data)
+    {
+        this[property] = data[property];
+    }
+};
+
 TestUnit.getTestsTreeData = function(callback){
     Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_TESTUNITS_TREE, "POST", accessdb.testsFilter, function(error, data, status){
         callback(error, data, status);
@@ -82,12 +88,7 @@ TestUnit.prototype.showInTestingPage = function(){
     $("#test-run-holder").append(tmp);
 };
 
-TestUnit.prototype.setData = function(data) {
-    for (var property in data) 
-    {
-        this[property] = data[property];
-    }  
-};
+
 TestUnit.prototype.getTestFileUrl = function() {
     var testurl=accessdb.config.URL_TESUITES_ROOT + "notest.html";
     try{
@@ -116,7 +117,7 @@ TestUnit.prototype.loadById = function(id,callback) {
     }); 
 };
 TestUnit.prototype.deleteTest = function(callback) {
-    var url = accessdb.config.services.URL_SERVICE_DELETE_TESTUNIT +accessdb.session.sessionId + "/" + this.id; 
+    var url = accessdb.config.services.URL_SERVICE_DELETE_TESTUNIT +accessdb.session.get("sessionId") + "/" + this.id; 
     $.ajax({
         'url': url,
         data: {}, 
@@ -290,16 +291,16 @@ TestUnit.prototype.showResourceFilesList = function (edit)
                 $(aDel).on('click', function(event)
                 {
                     var fileId = $(event.target).closest(".removeMe").attr("data-accessdb-id");
-                    var testUnitId = accessdb.session.currentTestUnit.testUnitId;
-                    var sessionId = accessdb.session.sessionId;
+                    var testUnitId = accessdb.session.get("currentTestUnit").testUnitId;
+                    var sessionId = accessdb.session.get("sessionId");
                     TestUnit.deleteResourceFile(sessionId,fileId,testUnitId, function(error, data, status){
                         console.log(data.status);
                         if(data.status===200)
                         {
-                            accessdb.session.currentTestUnit.subject.resources = jQuery.grep(accessdb.session.currentTestUnit.subject.resources, function( a ) {
+                            accessdb.session.get("currentTestUnit").subject.resources = jQuery.grep(accessdb.session.get("currentTestUnit").subject.resources, function( a ) {
                                 return (a.id+"") !== fileId;
                             });
-                            accessdb.session.currentTestUnit.showResourceFilesList(true);
+                            accessdb.session.get("currentTestUnit").showResourceFilesList(true);
                         }
                         else if(data.status === 401)
                             alert("It seems you are not authorized to delete this resource. Please logout and login again.");
@@ -420,74 +421,3 @@ TestUnit.prototype.submitForm = function ()
     else
         return false;
 };
-
-
-/*
- 
-
-TestUnit.getXmlMetaById=function(id) {
-
-    var out=null;
-    $.ajax({
-        url: accessdb.config.services.URL_SERVICE_GET_TESTUNITS_ASTEXT + id,
-        dataType : "text",
-        type: 'GET',
-        async: false,
-        cache: false,
-        timeout: 3000,
-        error: function(){
-           console.log("testunit loading error");
-        },
-        success: function(error, data, status){
-            console.log(data);
-            out = data;
-        }
-    });
-    return out;
-};
-TestUnit.updateMetaFromXml = function(xml, sessionid)
-{
-    $.ajax({
-        type : "post",
-        url : accessdb.config.services.URL_SERVICE_TESTUNIT_UPDATEMETA + sessionid,
-        dataType : "text",
-        async: false,
-        statusCode : {
-            404 : function() {
-                console.log("page not found");
-            }
-        },
-        data : xml,
-        success : function(data) {
-            console.log("Data Saved ");         
-        }
-    });
-};
-
-this.showTestUnits = function() {
-var session = this;
-if(this.testUnitIdList.length>0)
-{
-    var html = "";
-    for ( var id in this.testUnitIdList) {
-        var unitId = this.testUnitIdList[id];
-        html = html  + "<li>"+unitId+"  <a href='"+ unitId+"'>remove <a/></li>";
-    }
-    $("#testUnitIdList").html(html);    
-    $("#testUnitIdList a").on("click", function(event){ 
-        event.preventDefault();
-        var itemToRemove = $(this).attr("href");            
-        removeItemFromArray(session.testUnitIdList, itemToRemove);
-        session.showTestUnits($("#testUnitIdList"));
-    });
-    $("#testUnitIdList").show();
-    $("#testbutton").show();
-    
-}
-else
-{
-    $("#testUnitIdList").hide();
-    $("#testbutton").hide();
-    $("#testUnitIdList").parent().append('<p>No more test units in your list.</p>');
-}
-};  */
