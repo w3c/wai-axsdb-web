@@ -6,8 +6,6 @@ accessdb.Models.TestingHelper = function (){
         start: function () {
             this.loadDataFromSession();
             userProfile = UserTestingProfile.getUserProfileById(accessdb.session.get("testProfileId"));
-            $(holder).on("axsdb:loadNext", this.loadNext);
-            $(holder).on("axsdb:saveAndLoadNext", this.saveAndLoadNext);
         },
         loadDataFromSession: function () {
             testIds = _.clone(accessdb.session.get("testUnitIdList"));
