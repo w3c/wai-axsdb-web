@@ -52,6 +52,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         });
         this.on('change:testResultList', function (o) {
             console.log("change:testResultList");
+            TestResult.viewTestingResultsBeforeSave();
             //update UI for results
         });
         this.on('change:userTestingProfiles', function (o) {

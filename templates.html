@@ -25,6 +25,42 @@
         </label>
     </div>
 </script>
+<script type="text/template" id="test-run-finish-resultsList">
+    <header>
+        <h3>Test Results</h3>
+    </header>
+    <ul>
+        <% _.each(results, function(r) { %>
+            <li><%= r.testUnitId %> [Outcome: <%= r.resultValue %> with Profile:
+                 <%= r.testingProfile.platform.name %> <%= r.testingProfile.assistiveTechnology.version.text %> ,
+                 <%= r.testingProfile.userAgent.name %> <%= r.testingProfile.userAgent.version.text %> ,
+                 <%= r.testingProfile.assistiveTechnology.name %> <%= r.testingProfile.assistiveTechnology.version.text %> ,
+                 <%= r.testingProfile.plugin.name %> <%= r.testingProfile.plugin.version.text %>]
+                <span class="btn-pills">
+                    <button value="<%= r.testUnitId %>" class="btn removeTestingResult"><span class="icon-minus-sign-alt"></span>	Delete</button>
+                    <!-- <button value="<%= r.testUnitId %>" class="btn testRetest"><span class="icon-repeat"></span>	Put selected for retesting</button> -->
+                </span>
+            </li>
+        <% }); %>
+    </ul>
+    <header>
+        <h3>Submit test results</h3>
+    </header>
+    <form action="#">
+        <div class="form-block">
+            <div class="form-row">
+                <label for="name">Name/E-Mail (optional):</label>
+									<span>
+										<input type="text" id="name">
+									</span>
+            </div>
+        </div>
+        <p>You have carried out <strong><%= results.length %> tests that can be published</strong>. Please confirm this contribution.</p>
+        <div class="form-submit">
+            <a href="#/tests-run-submit.html" class="btn-primary btn-next" type="submit"><span class="icon-ok-sign"></span> Submit Test Results</a>
+        </div>
+    </form>
+</script>
 <script type="text/template" id="test-run-template">
         <header>
             <h3><span class="subheading">Test : <%= test.testUnitId %></span> <%= test.title %></h3>

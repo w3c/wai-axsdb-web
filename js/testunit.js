@@ -83,7 +83,9 @@ TestUnit.getTestsTreeData = function(callback){
 TestUnit.prototype.showInTestingPage = function(){
     var testRef = this.getTestFileUrl();
     this.testFile = testRef;
-    var tmp = _.template($('#test-run-template').html(), {test: this});
+    var tmp = _.template($('#test-run-template').html(), {
+        test: this
+    });
     $("#test-run-holder").empty();
     $("#test-run-holder").append(tmp);
 };

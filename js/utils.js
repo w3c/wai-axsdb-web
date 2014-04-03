@@ -125,9 +125,9 @@ function getURLParameter(name) {
 			, null ])[1]);
 }
 Utils.msg2user = function (msg) {
-    //window.alert(msg);
-	$("#msg2user").html(msg);
-    $("#msg2user" ).dialog();
+    window.alert(msg);
+	//$("#msg2user").html(msg);
+    //$("#msg2user" ).dialog();
 }
 
 function split( val ) {
@@ -141,7 +141,7 @@ function getFileNameWithNoExt(x) {
 }
 Utils.removeItemFromArray = function (thearray, itemtoRemove) {
     thearray = _.filter(thearray, function(item) {
-        return item === itemtoRemove;
+        return item !== itemtoRemove;
     });
 	return thearray;
 }

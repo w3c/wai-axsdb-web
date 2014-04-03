@@ -71,11 +71,17 @@ window.accessdb.appRouter.on('route:user-profile-edit', function (id) {
 });
 
 window.accessdb.appRouter.on('route:test-run', function (id) {
+    if(accessdb.session.get("testProfileId")<1){
+        Utils.msg2user("You have not setup or select a profile for the testing.");
+        return false;
+    }
+    if(accessdb.session.get("testUnitIdList").length<1){
+        Utils.msg2user("You have selected no test to run.");
+        return false;
+    }
     window.accessdb.appRouter.loadPage("test-run");
     accessdb.testingRunner = new accessdb.Models.TestingHelper();
     Utils.resetForm('#testingForm');
-    $(".tests_done").html(accessdb.session.get("testResultList").length);
-    $(".tests_all").html(accessdb.session.get("testUnitIdList").length+accessdb.session.get("testUnitIdList").length);
     accessdb.testingRunner.start();
     accessdb.testingRunner.loadNext();
 });
@@ -87,6 +93,7 @@ window.accessdb.appRouter.on('route:test-update', function (id) {
 });
 window.accessdb.appRouter.on('route:tests-finish', function () {
     window.accessdb.appRouter.loadPage("tests-finish");
+    TestResult.viewTestingResultsBeforeSave();
 });
 window.accessdb.appRouter.on('route:tests-run', function () {
     window.accessdb.appRouter.loadPage("tests-run");
@@ -110,4 +117,7 @@ window.accessdb.appRouter.on('route:defaultRoute', function(actions) {
 window.accessdb.appRouter.loadPage = function(id){
     $("article").hide();
     $("#"+accessdb.config.PAGE_ID_PREFIX + id).show();
+};
+window.accessdb.appRouter.redirect = function(page){
+    window.location.href = "#/" + page;
 };

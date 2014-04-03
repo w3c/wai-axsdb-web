@@ -1,14 +1,18 @@
 accessdb.Models.TestingHelper = function (){
-    var testIds = null; // ["ARIA1_0000001", "ARIA2_0000002"]
+    var testIds = null;
     var holder = "#testingForm";
     var test, testResult, userProfile = null;
+    var count = 0;
     return {
         start: function () {
+            count = 0;
             this.loadDataFromSession();
             userProfile = UserTestingProfile.getUserProfileById(accessdb.session.get("testProfileId"));
+            console.log("TestingHelper started with " + testIds.length + " tests, profile id " + userProfile.id + " and count " + count);
         },
         loadDataFromSession: function () {
             testIds = _.clone(accessdb.session.get("testUnitIdList"));
+            testIds.sort();
         },
         loadNext: function () {
             if(userProfile===null){
@@ -18,6 +22,8 @@ accessdb.Models.TestingHelper = function (){
             if(this.hasNext()){
                 this.prepareTestData();
                 test.showInTestingPage();
+                this.progressUpdate();
+                count ++;
                 return true;
             }
             return false;
@@ -26,7 +32,7 @@ accessdb.Models.TestingHelper = function (){
             this.prepareResult();
             this.saveDataToSession();
             Utils.resetForm(holder);
-            this.loadNext();
+            return this.loadNext();
         },
         saveDataToSession: function (){
             testIds = _.filter(testIds, function(item) {
@@ -43,7 +49,7 @@ accessdb.Models.TestingHelper = function (){
             test = null;
         },
         prepareTestData: function () {
-            var nextId = _.clone(testIds).pop();
+            var nextId = _.clone(testIds).shift();
             test = new TestUnit();
             test.loadByIdSync(nextId);
         },
@@ -63,7 +69,20 @@ accessdb.Models.TestingHelper = function (){
             testResult.runDate = nowD.toJSON();
         },
         hasNext: function () {
-            return testIds.length >=0;
+            return testIds.length > 0;
+        },
+        countMore: function(){
+            return testIds.length;
+        },
+        countDone: function(){
+            return count;
+        },
+        progressUpdate : function (){
+            var current = count + 1;
+            var all = this.countMore() + count;
+            $("#axsdb-page-test-run progress").attr("max", all);
+            $("#axsdb-page-test-run progress").attr("value", current);
+            $("#axsdb-page-test-run progress").html(current + " of " + all + " Tests finished");
         }
     }
 }

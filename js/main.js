@@ -43,22 +43,16 @@ $(document).ready(function () {
             }
         });
     });
+    // #/run-test.html
     $(document).on("click", ".do_next", function (event) {
         event.preventDefault();
         var hasNext = accessdb.testingRunner.saveAndLoadNext();
         if(!hasNext){
-            accessdb.appRouter.loadPage("tests-finish");
-            accessdb.appRouter.navigate("tests-finish.html");
+            accessdb.appRouter.redirect("tests-finish.html")
         }
-       // accessdb.session.set("lastTestUnit", accessdb.TestingHelper.run(accessdb.session.get("lastTestUnit")));
-        $(".tests_done").html(accessdb.session.get("testResultList").length);
-        $(".tests_all").html(accessdb.session.get("testUnitIdList").length+accessdb.session.get("testResultList").length);
     });
     $(document).on("click", ".skipme", function (event) {
         event.preventDefault();
-        accessdb.session.set("lastTestUnit", accessdb.TestingHelper.run(accessdb.session.get("lastTestUnit"), true));
-        $(".tests_done").html(accessdb.session.get("testResultList").length);
-        $(".tests_all").html(accessdb.session.get("testUnitIdList").length+accessdb.session.get("testResultList").length);
     });
 
     $("#doLogin").on("click", function (event) {
@@ -94,8 +88,6 @@ $(document).ready(function () {
             });
             return false;
         }
-
-
     });
     $('#login').on("keydown", function (e) {
         if (e.keyCode == $.ui.keyCode.ENTER) {
@@ -117,5 +109,15 @@ $(document).ready(function () {
             event.preventDefault();
     });
 
+    // #tests-finish
+     $(document).on("click", ".removeTestingResult", function (event) {
+        var testResultList = accessdb.session.get("testResultList");
+        event.preventDefault();
+        var testUnitId = $(event.target).attr("value");
+         testResultList = _.filter(testResultList, function(item) {
+             return item.testUnitId !== testUnitId;
+         });
+        accessdb.session.set("testResultList", testResultList);
+    });
 });
 

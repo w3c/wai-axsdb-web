@@ -114,8 +114,8 @@ UserTestingProfile.persistUserProfile = function (p, callback) {
             accessdb.session.get("userTestingProfiles").push(p);
             accessdb.session.set("userTestingProfiles", accessdb.session.get("userTestingProfiles"));
         }
-        accessdb.session.save(function (data) {
-            callback(data.userTestingProfiles);
+        accessdb.session.save(function () {
+            callback(accessdb.session.get("userTestingProfiles"));
         });
     }
 };
@@ -170,8 +170,9 @@ UserTestingProfile.showTestingProfiles = function () {
             var userProfile = session.get("userTestingProfiles")[testProfileId];
             var testProfile = userProfile.profile;
             if(!testProfile){
-                console.error("testprofile empty");
-                testProfile  = {};
+                console.warn("testprofile empty");
+                return false;
+
             }
 
             testProfile.platform = testProfile.platform || new Product();

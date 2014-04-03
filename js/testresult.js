@@ -258,45 +258,17 @@ function TestResult(unitId, resultValue, testingProfile, rating) {
     };
 }
 
-TestResult.viewTestingResultsBeforeSave = function (testResultList) {
-    $(".tests_done").html(accessdb.session.testResultList.length);
-    var divListTestsSelected = $(".divPreSaveListTestsSelected").empty();
-    if (accessdb.session.get("testResultList").length > 0) {
-        divListTestsSelected = $(divListTestsSelected).append("<ul />");
-        accessdb.session.set("testResultList", accessdb.session.get("testResultList").sort());
-        for (var i = 0; i < accessdb.session.get("testResultList").length; i++) {
-            var result = accessdb.session.get("testResultList")[i];
-            var a = $('<a class="testresultDelete" data-inline="true" data-mini="true" data-accessdb-id="" data-role="button" data-icon="delete" data-iconpos="notext">Delete</a>')
-                .attr("data-accessdb-id", result.testUnitId);
-            $(a).on('click', function (event) {
-                event.preventDefault();
-                var id = $(event.target).closest("a").attr("data-accessdb-id");
-                accessdb.session.set("testResultList", jQuery.grep(accessdb.session.get("testResultList"), function (el, i) {
-                    return ( el.testUnitId !== id);
-                }));
-                TestResult.viewTestingResultsBeforeSave();
-                $("#testingresults").trigger("create");
-            });
-
-            var aRetest = $('<a class="testresultRetest" data-inline="true" data-mini="true" data-accessdb-id="" data-role="button" data-icon="refresh" data-iconpos="notext">Put selected for re-testing</a>')
-                .attr("data-accessdb-id", result.testUnitId);
-            $(aRetest).on('click', function (event) {
-                var id = $(event.target).closest("a").attr("data-accessdb-id");
-                accessdb.session.testResultList = jQuery.grep(accessdb.session.testResultList, function (el, i) {
-                    return ( el.testUnitId !== id);
-                });
-                accessdb.session.testUnitIdList.push(id);
-                accessdb.session.testUnitIdList.reverse();
-                TestResult.viewTestingResultsBeforeSave();
-                accessdb.session.updateUI();
-                $("#testingresults").trigger("create");
-            });
-            var li = $("<li />").html(result.testUnitId + " [Outcome: " + result.resultValue + " with Profile:  " + UserTestingProfile.toString(result.testingProfile) + "]").append(a).append(aRetest);
-            $(divListTestsSelected).find("ul").append(li);
-        }
+TestResult.viewTestingResultsBeforeSave = function () {
+    var testResultList = accessdb.session.get("testResultList");
+    if(testResultList && testResultList.length>0){
+        var tmp = _.template($('#test-run-finish-resultsList').html(), {
+            results: accessdb.session.get("testResultList")
+        });
+        $("#testingResultsDiv").empty();
+        $("#testingResultsDiv").append(tmp);
     }
     else {
-        $(".divPreSaveListTestsSelected").html("<p>No results yet!</p>");
+        $("#testingResultsDiv").html("<p>No results yet!</p>");
     }
 };
 TestResult.buildDataTable = function (filter, holder) {
