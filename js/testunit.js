@@ -327,18 +327,18 @@ TestUnit.deleteResourceFile = function(sessionId,fileId,testUnitId, callback){
 
 TestUnit.prototype.initForm = function (sessionId)
 {   
-    $("#testunitform").find("input[type=text], textarea").val("");
-    $("#testunitform").find("input:radio").attr("checked", false).checkboxradio("refresh");
+    $("#test-form").find("input[type=text], textarea").val("");
+    $("#test-form").find("input:radio").attr("checked", false);
     var myDate = new Date();
     var cdate = myDate.getFullYear()+ '-' + (myDate.getMonth()+1)  + "-" + (myDate.getDate()) ;
-    $("#date").attr("value",cdate);
-    $("#status").attr("value","UNCONFIRMED");
-    $("#language").attr("value","en");
-    $("#testUnitId").attr("value",getURLParameter("testUnitId"));   
-    $( "#date" ).datepicker( "option", "dateFormat", accessdb.config.DATE_FORMAT );
-    $("#sessionId").attr("value",sessionId);
+    $("#test-form-date").attr("value",cdate);
+    $("#test-form-status").attr("value","UNCONFIRMED");
+    $("#test-form-language").attr("value","en");
+    $("#test-form-testUnitId").attr("value",getURLParameter("testUnitId"));
+    $("#test-form-date" ).datepicker( "option", "dateFormat", accessdb.config.DATE_FORMAT );
+    $("#test-form-sessionId").attr("value",sessionId);
 
-    var stepsE = $("#steps ol li:first");
+    var stepsE = $("#test-form-steps ol li:first");
     stepsE.EnableMultiField({
         linkText: 'Add more',
         linkClass: 'addMoreFields',
@@ -357,7 +357,7 @@ TestUnit.prototype.initForm = function (sessionId)
         data: []
     });
        
-    var fileE = $("#resourceFiles ol li:first");
+    var fileE = $("#test-form-resourceFiles ol li:first");
     //$(fileE).replaceWith( fileE = $(fileE).clone( true ) );
     fileE.EnableMultiField({
         linkText: 'Add more',
@@ -417,9 +417,132 @@ TestUnit.prototype.submitForm = function ()
         var json_text = JSON.stringify(this, null, 2);
         //console.log(json_text);
         $("#TestUnitDescription").val(json_text); 
-        $("#testunitform").submit();    
+        $("#test-form").submit();    
         return true;
     }   
     else
         return false;
 };
+
+TestUnit.initFormPage = function (id) {
+    var cache = {}, lastXhr;
+    var bar = $('.bar');
+    var percent = $('.percent');
+    var status = $('#status');
+    $("#test-form-testformValidation").empty();
+    $("#test-form-technique").prop('disabled', false);
+    var select_test_case = new  TestUnit();
+    accessdb.session.set("select_test_case", TestUnit());
+    accessdb.code.initeditor();
+    accessdb.code.reseteditor();
+    $("#test-form").attr("action", accessdb.config.services.URL_SERVICE_INSERT_TESTUNIT + "/" + accessdb.session.get("sessionId"));
+    if (accessdb.session.get("userId") != null) {
+        accessdb.code.showLibraries();
+        /*for edit*/
+        if (id) {
+            select_test_case.loadById(id, function (obj) {
+                accessdb.session.set("currentTestUnitId", id);
+                select_test_case.buildForm();
+                $("#test-form").show();
+                $("#test-form-submit").val("Save Test Case");
+                $('#test-form-technique').focus();
+            });
+        }
+        else {
+            select_test_case.initForm(accessdb.session.get("sessionId"));
+            $("#test-form-").show();
+            $("#test-form-submit").val("Submit Test Case");
+        }
+        $('#test-form-technique').focus();
+    }
+    else {
+        accessdb.appRouter.redirect("log-in.html")
+    }
+    accessdb.session.set("select_test_case", select_test_case);
+
+    $("#test-form-technique").autocomplete({
+        minLength: 2,
+        focus: function (event, ui) {
+            $("#test-form-technique").val(ui.item.nameId + ": " + ui.item.title);
+            $("#test-form-requirement").val(ui.item.specRef + "#" + ui.item.nameId);
+            return false;
+        },
+        select: function (event, ui) {
+            $("#test-form-technique").val(ui.item.nameId + ": " + ui.item.title);
+            $("#test-form-requirement").val(ui.item.nameId);
+            accessdb.session.get("select_test_case").technique = ui.item;
+            console.log(accessdb.session.get("select_test_case"));
+            accessdb.code.updateTitle();
+            return false;
+        },
+        source: function (request, response) {
+            var term = request.term;
+            if (term in cache) {
+                response(cache[term]);
+                return;
+            }
+            lastXhr = $.getJSON(accessdb.config.services.URL_SERVICE_GET_TECHNIQUES + "byterm/" + term, request, function (data, status, xhr) {
+                cache[term] = data;
+                if (xhr === lastXhr) {
+                    response(data);
+                }
+            });
+        }
+    }).data("ui-autocomplete")._renderItem = function (ul, item) {
+        return $("<li></li>").data("item.autocomplete", item).append("<a>" + item.nameId + ": " + item.title + "</a>").appendTo(ul);
+    };
+    $('#test-form-technique').on("click", function () {
+        $('#test-form-technique').focus();
+        $('#test-form-technique').select();
+    });
+    $("#test-form").ajaxForm({
+        cache: false,
+        timeout: 7000,
+        beforeSend: function () {
+            $(".progress").show();
+            status.empty();
+            var percentVal = '0%';
+            bar.width(percentVal);
+            percent.html(percentVal);
+        },
+        uploadProgress: function (event, position, total, percentComplete) {
+            $("#test-form").hide();
+            var percentVal = percentComplete + '%';
+            bar.width(percentVal);
+            percent.html(percentVal);
+        },
+        complete: function (xhr) {
+            // $("#img_loading").hide();
+            accessdb.code.reseteditor();
+            //  status.html(xhr.responseText);
+            console.log("upload completed" + xhr.statusText);
+            if (xhr.status == 201)
+                $("#testformdialogresponse").html("Changes saved!");
+            else if (xhr.status == 401)
+                $("#testformdialogresponse").html("Either you have no permission or your Session has been expired. Please try to logout and login again");
+            else
+                $("#testformdialogresponse").html(xhr.responseText);
+//            $.mobile.changePage('#testformdialog', {transition: 'pop', role: 'dialog'});
+        }
+    });
+    $("#test-form-code-library").on("change", function (event) {
+        event.preventDefault();
+        accessdb.code.addLibrary();
+    });
+
+    $('#test-form').on("keydown", function (e) {
+        if (e.keyCode == 27) {
+            $("#resourceFile").focus();
+        }   // esc
+
+    });
+    $('#test-form-title').on("keyup", function (e) {
+        accessdb.code.updateTitle();
+    });
+    $("#test-form-submit").on("click", function (event) {
+        event.preventDefault();
+        var done = accessdb.session.get("select_test_case").submitForm();
+        if (done)
+            accessdb.session.set("select_test_case", new TestUnit());
+    });
+}

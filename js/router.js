@@ -87,6 +87,7 @@ window.accessdb.appRouter.on('route:test-run', function (id) {
 });
 window.accessdb.appRouter.on('route:test-submit', function () {
     window.accessdb.appRouter.loadPage("test-submit");
+    TestUnit.initFormPage();
 });
 window.accessdb.appRouter.on('route:test-update', function (id) {
     window.accessdb.appRouter.loadPage("test-update");

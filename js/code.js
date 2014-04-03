@@ -22,19 +22,19 @@ accessdb.code={
 	  		"</body>\n" +
 	  		"</html>",
 	  	addLibrary:function(){
-	  		var source =$('#code_library').find(":selected").val();
+	  		var source =$('#test-form-code-library').find(":selected").val();
 	  		var result = $.grep(accessdb.code.libraries, function(e){ return e.name == source; });
 	  		var newhead = "<head>\n" +result[0].value;
 	  		var current =  accessdb.code.editorDoc.getValue();	  		
 	  		current=current.replace(/<head>/gi,newhead);
-	  		$("#testCode").val(current);	
+	  		$("#test-form-code").val(current);	
 	  		accessdb.code.editorDoc.setValue(current);
 
 	  	}
 };
 accessdb.code.updateTitle = function(){
-	var newtitle = $('#title').val();
-	newtitle = accessdb.session.select_test_case.technique.nameId + ": " + newtitle;
+	var newtitle = $('#test-form-title').val();
+	newtitle = accessdb.session.get("select_test_case").technique.nameId + ": " + newtitle;
 	var el = $( '<html></html>' );
 	var editorVal = accessdb.code.editorDoc.getValue();
 	el.html(editorVal);
@@ -47,7 +47,7 @@ accessdb.code.updateTitle = function(){
 };
 
 accessdb.code.showLibraries = function(){
-	var selectE = $("#code_library");
+	var selectE = $("#test-form-code-library");
 	$(selectE).empty();
 	var option = $("<option></option>")
 		.attr("value","")
@@ -71,7 +71,7 @@ accessdb.code.initeditor = function(){
 	                      {matches: /(text|application)\/(x-)?vb(a|script)/i,
 	                       mode: "vbscript"}]
 	      };
-		    accessdb.code.editorDoc=  CodeMirror.fromTextArea(document.getElementById('testCode'), {
+		    accessdb.code.editorDoc=  CodeMirror.fromTextArea(document.getElementById('test-form-code'), {
 		    	  // your settings here
 		    	  lineNumbers : true,
 		    	  smartIndent:true,
