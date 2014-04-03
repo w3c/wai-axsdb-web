@@ -119,5 +119,13 @@ $(document).ready(function () {
          });
         accessdb.session.set("testResultList", testResultList);
     });
+    $(document).on("click", "#testResultsPersist", function (event) {
+        event.preventDefault();
+        var tests_done = accessdb.session.get("testResultList").length;
+        accessdb.session.tests_done = tests_done;//temp
+        accessdb.session.saveResultsBunch(function(){
+            accessdb.appRouter.redirect("tests-run-submit.html");
+        });
+    });
 });
 

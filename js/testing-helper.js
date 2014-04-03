@@ -55,7 +55,7 @@ accessdb.Models.TestingHelper = function (){
         },
         prepareResult: function () {
             testResult = new TestResult();
-            testResult.comment = $("#testing_comment").val();
+            testResult.comment = $("#cmnt").val();
             testResult.resultValue = $("input[name='result']:checked").val();
             testResult.testUnitDescription =
             {

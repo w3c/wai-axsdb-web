@@ -57,7 +57,7 @@
         </div>
         <p>You have carried out <strong><%= results.length %> tests that can be published</strong>. Please confirm this contribution.</p>
         <div class="form-submit">
-            <a href="#/tests-run-submit.html" class="btn-primary btn-next" type="submit"><span class="icon-ok-sign"></span> Submit Test Results</a>
+            <a href="#/tests-run-submit.html" id="testResultsPersist" class="btn-primary btn-next" type="submit"><span class="icon-ok-sign"></span> Submit Test Results</a>
         </div>
     </form>
 </script>
@@ -97,7 +97,7 @@
                         </div>
                         <div class="form-row radio">
 											<span>
-												<input type="radio" id="res2" value="true" name="result">
+												<input type="radio" id="res2" value="false" name="result">
 											</span>
                             <label for="res2">No/False</label>
                         </div>

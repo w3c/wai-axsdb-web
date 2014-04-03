@@ -137,7 +137,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         if (this.get("userId") != null)
             bunch.user.userId = this.get("userId");
         accessdb.API.TESTRESULT.persistBunch(bunch, function (error, data, status) {
-            if (!eroor && data != null)
+            if (!error && data != null)
                 self.clearResults();
             callback(error, data, status);
         });
