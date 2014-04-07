@@ -142,7 +142,8 @@ UserTestingProfile.deleteUserProfilesById = function (pid, callback) {
                 }
                 callback(null, null, status);
             });
-    } else {
+    }
+    else {
         UserTestingProfile.removeTestingProfile(pid);
         callback(null, null, accessdb.session.get("userTestingProfiles"));
     }
@@ -172,9 +173,7 @@ UserTestingProfile.showTestingProfiles = function () {
             if(!testProfile){
                 console.warn("testprofile empty");
                 return false;
-
             }
-
             testProfile.platform = testProfile.platform || new Product();
             testProfile.userAgent = testProfile.userAgent || new Product();
             testProfile.assistiveTechnology = testProfile.assistiveTechnology || new Product();

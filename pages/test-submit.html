@@ -68,68 +68,78 @@
                 </fieldset>
                 <fieldset>
                     <legend>Test Case Resources</legend>
-                    <div class="form-row required">
-                        <label for="test-form-code-library">Add library</label>
-                            <span>
-                                <select id="test-form-code-library">
-                                    <option value="">Select</option>
-                                    <option value="jQuery latest">jQuery latest</option>
-                                    <option value="jQuery UI latest">jQuery UI latest</option>
-                                </select>
-                            </span>
-                    </div>
-                    <div class="form-row required">
-                        <label for="test-form-code">HTML Code</label>
-                            <span>
-                                <textarea name="desc" id="test-form-code" cols="30" rows="10"></textarea>
-                            </span>
-                    </div>
-                    <fieldset id="test-form-resourceFiles" class="form-row required">
-                        <legend>Resource Files (referable in the HTML code by their name)</legend>
-                            <ol>
-                                <li>
-                                    <input type="file" name="resourceFile" />
-                                </li>
-                            </ol>
-                        <fieldset>
-                            <legend>Available resource files</legend>
-                            <div class="testCaseResourceFilesDiv"></div>
+                    <div class="form-block">
+                        <div class="form-row required">
+                            <label for="test-form-code-library">Add library</label>
+                                <span>
+                                    <select id="test-form-code-library">
+                                        <option value="">Select</option>
+                                        <option value="jQuery latest">jQuery latest</option>
+                                        <option value="jQuery UI latest">jQuery UI latest</option>
+                                    </select>
+                                </span>
+                        </div>
+                        <div class="form-row required">
+                            <label for="test-form-code">HTML Code</label>
+                                <span>
+                                    <textarea name="desc" id="test-form-code" cols="30" rows="10"></textarea>
+                                </span>
+                        </div>
+                        <fieldset id="test-form-resourceFiles" class="form-row required">
+                            <legend>Resource Files (referable in the HTML code by their name)</legend>
+                            <div class="form-block">
+                                <ol>
+                                    <li>
+                                        <input type="file" name="resourceFile" />
+                                    </li>
+                                </ol>
+                            <fieldset>
+                                <legend>Available resource files</legend>
+                                <div class="testCaseResourceFilesDiv"></div>
+                            </fieldset>
+                           </div>
                         </fieldset>
-                    </fieldset>
+                    </div>
                 </fieldset>
                 <fieldset class="form-row required">
                     <legend>Test Procedure</legend>
                     <p>Provide information on how to run the test case</p>
-                    <fieldset id="test-form-steps">
-                        <legend>Testing steps</legend>
-                        <ol>
-                            <li>
-                                <textarea recname="test-form-step" type="text" class=testform_step name="step"></textarea>
-                            </li>
-                        </ol>
-                    </fieldset>
-                    <div class="form-row required">
-                        <label for="test-form-yesNoQuestion">Testing Question</label>
-                        <span>
-                            <textarea rows="2"  name="yesNoQuestion" id="test-form-yesNoQuestion" cols="50"></textarea>
-                        </span>
-                    </div>
-                    <div class="form-row required">
-                        <label for="test-form-expectedResult">Expected Result:</label>
-                        <span>
-                           <select name="expectedResult" id="test-form-expectedResult">
-                               <option value="true">Yes</option>
-                               <option value="false">No</option>
-                           </select>
-                        </span>
+                    <div class="form-block">
+                        <div class="form-row required">
+                            <fieldset id="test-form-steps">
+                                <legend>Testing steps</legend>
+                                <span>
+                                <ol>
+                                    <li>
+                                        <textarea recname="test-form-step" type="text" class=testform_step name="step"></textarea>
+                                    </li>
+                                </ol>
+                                    </span>
+                            </fieldset>
                         </div>
                         <div class="form-row required">
-                            <label for="test-form-comment">Comment</label>
+                            <label for="test-form-yesNoQuestion">Testing Question</label>
                             <span>
-                                <textarea name="testform_comment" id="test-form-comment"></textarea>
+                                <textarea rows="2"  name="yesNoQuestion" id="test-form-yesNoQuestion" cols="50"></textarea>
                             </span>
                         </div>
-                    </fieldset>
+                        <div class="form-row required">
+                            <label for="test-form-expectedResult">Expected Result:</label>
+                            <span>
+                               <select name="expectedResult" id="test-form-expectedResult">
+                                   <option value="true">Yes</option>
+                                   <option value="false">No</option>
+                               </select>
+                            </span>
+                            </div>
+                            <div class="form-row required">
+                                <label for="test-form-comment">Comment</label>
+                                <span>
+                                    <textarea name="testform_comment" id="test-form-comment"></textarea>
+                                </span>
+                            </div>
+                    </div>
+                </fieldset>
                 <button id="test-form-submit" type="submit" class="btn-primary">Submit Test Case</button>
             </form>
         </div>

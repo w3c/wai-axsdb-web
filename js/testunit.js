@@ -40,46 +40,38 @@ function TestUnit() {
             }]  
     };
     $("#testform_tu_status").val(this.status);
-    this.showTestUnitsDetails = function()
-    {       
-        var testurl = this.getTestFileUrl();
-        $("#tu_testUnitId").html(this.testUnitId);
-        $("#tu_title").html(this.title);
-        $("#tu_description").html(this.description);
-        $("#tu_requirement").html(this.technique.nameId + ": " + this.technique.title);
-        $("#tu_webTechnology").html(this.technique.webTechnology);
-        $("#tu_status").html(this.status);
-        $("#tu_date").html(this.date);
-        $("#tu_testurl a").attr("href",this.getTestFileUrl());
-        $("#addtoqueue").attr("href",this.testUnitId);
-        $("#tu_comment").html(this.comment);
-        $("#tu_question").html(this.testProcedure.yesNoQuestion);
-        $("#tu_expected").html(this.testProcedure.expectedResult);   
-        var steps=TestUnit.loadStepsData(this.testProcedure);
-        
-        var stepsH = "";
-        for ( var stepId in steps) {
-            var step = steps[stepId].step; 
-            stepsH+="<li>"+step+"</li>";
-        }
-        $("#tu_steps").html(stepsH);
-        //this.showResourceFilesList();
-        
-    };
+};
+TestUnit.prototype.showTestUnitsDetails = function()
+{
+    var testurl = this.getTestFileUrl();
+    $("#tu_testUnitId").html(this.testUnitId);
+    $("#tu_title").html(this.title);
+    $("#tu_description").html(this.description);
+    $("#tu_requirement").html(this.technique.nameId + ": " + this.technique.title);
+    $("#tu_webTechnology").html(this.technique.webTechnology);
+    $("#tu_status").html(this.status);
+    $("#tu_date").html(this.date);
+    $("#tu_testurl a").attr("href",this.getTestFileUrl());
+    $("#addtoqueue").attr("href",this.testUnitId);
+    $("#tu_comment").html(this.comment);
+    $("#tu_question").html(this.testProcedure.yesNoQuestion);
+    $("#tu_expected").html(this.testProcedure.expectedResult);
+    var steps=TestUnit.loadStepsData(this.testProcedure);
+
+    var stepsH = "";
+    for ( var stepId in steps) {
+        var step = steps[stepId].step;
+        stepsH+="<li>"+step+"</li>";
+    }
+    $("#tu_steps").html(stepsH);
+    //this.showResourceFilesList();
+
 };
 TestUnit.prototype.setData = function(data) {
-    for (var property in data)
-    {
+    for (var property in data) {
         this[property] = data[property];
     }
 };
-
-TestUnit.getTestsTreeData = function(callback){
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_TESTUNITS_TREE, "POST", accessdb.testsFilter, function(error, data, status){
-        callback(error, data, status);
-    }); 
-};
-
 TestUnit.prototype.showInTestingPage = function(){
     var testRef = this.getTestFileUrl();
     this.testFile = testRef;
@@ -89,8 +81,6 @@ TestUnit.prototype.showInTestingPage = function(){
     $("#test-run-holder").empty();
     $("#test-run-holder").append(tmp);
 };
-
-
 TestUnit.prototype.getTestFileUrl = function() {
     var testurl=accessdb.config.URL_TESUITES_ROOT + "notest.html";
     try{
@@ -183,30 +173,6 @@ TestUnit.prototype.buildFromForm = function()
     this.comment = $("#testform_comment").val();
     console.log(this);
 };
-
-TestUnit.loadStepsData = function(testProcedure)
-{
-    function SortByOrder(a, b){
-        var aOrder= parseInt(a.orderId);
-        var bOrder = parseInt(b.orderId); 
-        return ((aOrder < bOrder) ? -1 : ((aOrder > bOrder) ? 1 : 0));
-      };
-    var stepsData=[];
-    var steps = testProcedure.steps;
-    for ( var stepId in steps) {
-        var step = steps[stepId];
-        var txt = step.step;
-        var stepData = {
-                step : txt,
-        orderId : step.orderId               
-            };
-        stepsData.push(stepData);
-    }
-    stepsData.sort(SortByOrder);
-    return stepsData;
-};
-
-  
 TestUnit.prototype.buildForm = function()
 {
     $("#testUnitId").val(this.testUnitId);
@@ -231,7 +197,6 @@ TestUnit.prototype.buildForm = function()
       accessdb.code.editorDoc.setValue(data);
     });
     var stepsData=TestUnit.loadStepsData(this.testProcedure);
-    
     $("#steps ol li + li").remove();
     $("#steps ol li").EnableMultiField({
         linkText: 'Add more',
@@ -285,7 +250,6 @@ TestUnit.prototype.showResourceFilesList = function (edit)
                 .html(file.src);
             var filesLI = $("<li/>");
             filesLI.append(a);
-
             if(edit){
                 var aDel = $(
                 '<a class="removeMe" data-inline="true" data-mini="true" data-accessdb-id="" data-role="button" data-icon="delete" data-iconpos="notext">Delete</a>')
@@ -321,10 +285,6 @@ TestUnit.prototype.showResourceFilesList = function (edit)
     else
            $(".testCaseResourceFilesDiv").html("Currently no resource file saved");
 };
-TestUnit.deleteResourceFile = function(sessionId,fileId,testUnitId, callback){
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_DELETE_RESOURCE_FILE + sessionId + "/" + testUnitId+ "/" + fileId , "DELETE", null, callback, true);
-};
-
 TestUnit.prototype.initForm = function (sessionId)
 {   
     $("#test-form").find("input[type=text], textarea").val("");
@@ -337,7 +297,6 @@ TestUnit.prototype.initForm = function (sessionId)
     $("#test-form-testUnitId").attr("value",getURLParameter("testUnitId"));
     $("#test-form-date" ).datepicker( "option", "dateFormat", accessdb.config.DATE_FORMAT );
     $("#test-form-sessionId").attr("value",sessionId);
-
     var stepsE = $("#test-form-steps ol li:first");
     stepsE.EnableMultiField({
         linkText: 'Add more',
@@ -356,7 +315,6 @@ TestUnit.prototype.initForm = function (sessionId)
         maxItemReachedCallback: null,
         data: []
     });
-       
     var fileE = $("#test-form-resourceFiles ol li:first");
     //$(fileE).replaceWith( fileE = $(fileE).clone( true ) );
     fileE.EnableMultiField({
@@ -423,7 +381,36 @@ TestUnit.prototype.submitForm = function ()
     else
         return false;
 };
+TestUnit.deleteResourceFile = function(sessionId,fileId,testUnitId, callback){
+    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_DELETE_RESOURCE_FILE + sessionId + "/" + testUnitId+ "/" + fileId , "DELETE", null, callback, true);
+};
 
+TestUnit.getTestsTreeData = function(callback){
+    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_TESTUNITS_TREE, "POST", accessdb.testsFilter, function(error, data, status){
+        callback(error, data, status);
+    });
+};
+TestUnit.loadStepsData = function(testProcedure)
+{
+    function SortByOrder(a, b){
+        var aOrder= parseInt(a.orderId);
+        var bOrder = parseInt(b.orderId);
+        return ((aOrder < bOrder) ? -1 : ((aOrder > bOrder) ? 1 : 0));
+    };
+    var stepsData=[];
+    var steps = testProcedure.steps;
+    for ( var stepId in steps) {
+        var step = steps[stepId];
+        var txt = step.step;
+        var stepData = {
+            step : txt,
+            orderId : step.orderId
+        };
+        stepsData.push(stepData);
+    }
+    stepsData.sort(SortByOrder);
+    return stepsData;
+};
 TestUnit.initFormPage = function (id) {
     var cache = {}, lastXhr;
     var bar = $('.bar');
