@@ -43,7 +43,6 @@ Filter.prototype.loadTree=function(treeIds, callback){
             $.treevue([treeData], that.page, processDatafn).appendTo('.criteriaTreeDiv');
             Utils.loadingEnd(".criteriaTreeDiv");
             that.populate();
-            accessdb.TreeHelper.updateTreeFromTestList();
             callback("WCAG");
         }, this.criteriosLevel);  
     }
@@ -133,6 +132,7 @@ Filter.prototype.loadTree=function(treeIds, callback){
             });
             $.treevue(data.children,  that.page+"-teststree").appendTo('#thetestsTreeDiv');
             Utils.loadingEnd(".webTechTreeDiv");
+            accessdb.TreeHelper.updateTreeFromTestList();
             callback("TESTS");
         });
     }  

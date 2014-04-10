@@ -14,27 +14,21 @@ accessdb.TreeHelper = {
         for (i = 0; i < testsInput.length; i++) {
             var input = testsInput.get(i);
             var id = $(input).attr("value");
+
             if (_.contains(accessdb.session.get("testUnitIdList"), id)) {
                 $(input).attr("checked", true);
             }
             else {
                 $(input).attr("checked", false);
-                var siblings = $(input).parent().siblings();
-                var hasmore = false;
-                for (s = 0; s < siblings.length; s++) {
-                    var inp = siblings.get(s);
-                    if ($(inp).prop("checked") === true) {
-                        hasmore = true;
-                    }
-                    else
-                        hasmore = false;
-                }
-                var parentInput = $(input).parent().parent().parent().find("input").get(0);
-                if (hasmore)
-                    $(parentInput).attr("checked", true);
-                else
-                    $(parentInput).attr("checked", false);
             }
+            var allSiblings = $(input).parent().parent().find("input").length;
+            var checkedSiblings = $(input).parent().parent().find("input:checked").length;
+            var siblings = $(input).parent().parent().find("input");
+            var parentInput = $(input).parent().parent().parent().find("input").get(0);
+            if (allSiblings===checkedSiblings)
+                $(parentInput).attr("checked", true);
+            else
+                $(parentInput).attr("checked", false);
         }
     },
     treeNodeTolist: function (node, nodeType, list, parent) {
