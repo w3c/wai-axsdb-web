@@ -71,7 +71,7 @@ window.accessdb.appRouter.on('route:user-profile-edit', function (id) {
 });
 
 window.accessdb.appRouter.on('route:test-run', function (id) {
-    if(accessdb.session.get("testProfileId")<1){
+    if(accessdb.session.get("testProfileId")==-1){
         Utils.msg2user("You have not setup or select a profile for the testing.");
         return false;
     }
@@ -100,7 +100,7 @@ window.accessdb.appRouter.on('route:tests-run', function () {
     window.accessdb.appRouter.loadPage("tests-run");
     accessdb.testsFilter = accessdb.testsFilter || new Filter(window.accessdb.config.PAGE_ID_PREFIX + "tests-run");
     accessdb.testsFilter.loadTrees(false,["WCAG","WEBTECHS","TESTS"]);
-
+    TestUnit.viewTestUnitIdList();
 });
 window.accessdb.appRouter.on('route:tests-run-submit', function () {
     window.accessdb.appRouter.loadPage("tests-run-submit");

@@ -62,22 +62,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         });
         this.on('change:testUnitIdList', function (o) {
             console.log("change:testUnitIdList");
-            $(".inqueuetest").html(self.get("testUnitIdList").length);
-            var ul = $("#selected").find("ul")[0];
-            $(ul).empty();
-            for (testId in self.get("testUnitIdList")) {
-                var testId = self.get("testUnitIdList")[testId];
-                accessdb.API.TEST.findById(testId, function (error, data, status) {
-                    var test = data;
-
-                    if(test){
-                        var li = _.template($('#test-selected-list-template').html(), {test: test});
-                        $(ul).append(li);
-                    }
-
-                })
-            }
-            accessdb.TreeHelper.updateTreeFromTestList();
+            TestUnit.viewTestUnitIdList();
         });
         this.on('change', function () {
             console.log("session changed");

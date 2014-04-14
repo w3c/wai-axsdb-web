@@ -167,13 +167,10 @@ UserTestingProfile.showTestingProfiles = function () {
     var session = accessdb.session;
     $(".userProfilesDiv").empty();
     if (session.get("userTestingProfiles").length > 0) {
-        for (var testProfileId in session.get("userTestingProfiles")) {
-            var userProfile = session.get("userTestingProfiles")[testProfileId];
+        for (var i=0;i<session.get("userTestingProfiles").length;i++)
+        {
+            var userProfile = session.get("userTestingProfiles")[i];
             var testProfile = userProfile.profile;
-            if(!testProfile){
-                console.warn("testprofile empty");
-                return false;
-            }
             testProfile.platform = testProfile.platform || new Product();
             testProfile.userAgent = testProfile.userAgent || new Product();
             testProfile.assistiveTechnology = testProfile.assistiveTechnology || new Product();
@@ -187,11 +184,16 @@ UserTestingProfile.showTestingProfiles = function () {
                 p: testProfile,
                 id: userProfile.id
             });
-            if(accessdb.session.get("testProfileId")===userProfile.id){
-                $(pTemplate).prop('checked', true);
-                selected = true;
+            var selected;
+            if(accessdb.session.get("testProfileId")==userProfile.id){
+               selected = $(pTemplate).find("input:radio").attr("id");
             }
             $(".userProfilesDiv").append(pTemplate);
+            if(selected){
+                $(".userProfilesDiv").find("#"+selected).prop("checked", true);
+                $(".userProfilesDiv").find("#"+selected).attr("checked", true);
+                selected = undefined;
+            }
         }
     }
     return session.get("userTestingProfiles").length;

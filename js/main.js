@@ -27,6 +27,7 @@ $(document).ready(function () {
         event.preventDefault();
         var id = $(event.target).find("span").attr("aria-described-by");
         accessdb.session.removeFromQueue(id);
+        accessdb.TreeHelper.updateTreeFromTestList();
     });
     $(document).on("click", ".userProfilesDiv input", function (event) {
         var id = $(event.target).attr("value");
@@ -53,6 +54,10 @@ $(document).ready(function () {
     });
     $(document).on("click", ".skipme", function (event) {
         event.preventDefault();
+        var hasNext = accessdb.testingRunne.loadNext();
+        if(!hasNext){
+            accessdb.appRouter.redirect("tests-finish.html")
+        }
     });
 
     $("#doLogin").on("click", function (event) {

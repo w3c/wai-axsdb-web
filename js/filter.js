@@ -113,6 +113,9 @@ Filter.prototype.loadTree=function(treeIds, callback){
                 data.children[ind].collapsed = false;
                 for ( var i in techniqueNode.children) {
                     var testNode = techniqueNode.children[i];
+                    if(!accessdb.session.testTitles)
+                        accessdb.session.testTitles = [];
+                    accessdb.session.testTitles[testNode.value] =  data.children[ind].children[i].description;
                     data.children[ind].children[i].label = "Test Case " + data.children[ind].children[i].label;
                     data.children[ind].children[i].collapsed = false;
                     if(accessdb.session.isTestInQueue(testNode.value)){
