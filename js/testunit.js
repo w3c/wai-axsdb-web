@@ -39,7 +39,7 @@ function TestUnit() {
                 src:""
             }]  
     };
-    $("#testform_tu_status").val(this.status);
+    $("#test-form-status").val(this.status.toLowerCase());
 };
 TestUnit.prototype.showTestUnitsDetails = function()
 {
@@ -52,7 +52,6 @@ TestUnit.prototype.showTestUnitsDetails = function()
     $("#tu_status").html(this.status);
     $("#tu_date").html(this.date);
     $("#tu_testurl a").attr("href",this.getTestFileUrl());
-    $("#addtoqueue").attr("href",this.testUnitId);
     $("#tu_comment").html(this.comment);
     $("#tu_question").html(this.testProcedure.yesNoQuestion);
     $("#tu_expected").html(this.testProcedure.expectedResult);
@@ -136,26 +135,20 @@ TestUnit.prototype.buildFromForm = function()
         delete this.subject.resources;
     }
     var editorVal = accessdb.code.editorDoc.getValue();
-    $("#testCode").val(editorVal);
-    this.testUnitId = $("#testUnitId").val();
-    //this.language = $("#language").val();
-    this.title = $("#title").val();
-    this.description = $("#description").val();
-    this.status = $("#testform_tu_status").val().toUpperCase();
-    //this.creator = $("#creator").val();
-    //this.version = $("#version").val();
-    //this.date = $("#date").val();
+    $("#test-form-code").val(editorVal);
+    this.testUnitId = $("#test-form-testUnitId").val();
+    this.title = $("#test-form-title").val();
+    this.description = $("#test-form-description").val();
+    this.status = $("#test-form-status option:selected").val().toUpperCase();
+    this.creator = accessdb.session.get("userId");
     var datenow = new Date();
     this.date = datenow.toJSON();
-    this.creator = $("#creator").val();
-    // this.technique.nameId = $("#requirement").val();
-    // this.technique.webTechnology = "HTML"; //FIXME
-    this.testProcedure.yesNoQuestion = $("#yesNoQuestion").val();
-    this.testProcedure.expectedResult = $("#expectedResult").val();
+    this.testProcedure.yesNoQuestion = $("#test-form-yesNoQuestion").val();
+    this.testProcedure.expectedResult = $("#test-form-expectedResult").val();
     var testProcedure = this.testProcedure;
     testProcedure.step=[];
     var stepIndex=0;
-    $('.testform_step').each(function() {
+    $('.test-form-step').each(function() {
         var val = $(this).val();
         if(val.trim()!=""){
             var iid= -1;
@@ -170,26 +163,26 @@ TestUnit.prototype.buildFromForm = function()
     });
     this.testProcedure = testProcedure;
     this.subject.resourceFiles = [];
-    this.comment = $("#testform_comment").val();
+    this.comment = $("#test-form-comment").val();
     console.log(this);
 };
 TestUnit.prototype.buildForm = function()
 {
-    $("#testUnitId").val(this.testUnitId);
-    $("#language").val(this.language);
-    $("#title").val(this.title);
-    $("#description").val(this.description);
-    $("#status").val(""+this.status );
-    $("#creator").val(this.creator);
-    $("#version").val(this.version);
-    $("#date").val(this.date);
-    $("#requirement").val(this.technique.nameId);
-    $("#reqRef").prop('disabled', true); 
-    $("#reqRef").val(this.technique.title);
-    $("#yesNoQuestion").val(this.testProcedure.yesNoQuestion);
-    $("#expectedResult").val(""+this.testProcedure.expectedResult );
-    $("#testform_comment").val(this.comment);
-    $("#testform_tu_status").val(this.status).selectmenu('refresh', true);
+    $("#test-form-testUnitId").val(this.testUnitId);
+    $("#test-form-language").val(this.language);
+    $("#test-form-title").val(this.title);
+    $("#test-form-description").val(this.description);
+    $("#test-form-status").val(""+this.status );
+    $("#test-form-creator").val(this.creator);
+    $("#test-form-version").val(this.version);
+    $("#test-form-date").val(this.date);
+    $("#test-form-requirement").val(this.technique.nameId);
+    $("#test-form-reqRef").prop('disabled', true);
+    $("#test-form-reqRef").val(this.technique.title);
+    $("#test-form-yesNoQuestion").val(this.testProcedure.yesNoQuestion);
+    $("#test-form-expectedResult").val(""+this.testProcedure.expectedResult );
+    $("#test-form-comment").val(this.comment);
+    $("#test-form-status").val(this.status);
     var testurl = this.getTestFileUrl();    
     //avoid caching my passing random param
     testurl = testurl + "?date="+new Date().toString();
@@ -197,8 +190,8 @@ TestUnit.prototype.buildForm = function()
       accessdb.code.editorDoc.setValue(data);
     });
     var stepsData=TestUnit.loadStepsData(this.testProcedure);
-    $("#steps ol li + li").remove();
-    $("#steps ol li").EnableMultiField({
+    $("#test-form-steps ol li + li").remove();
+    $("#test-form-steps ol li").EnableMultiField({
         linkText: 'Add more',
         linkClass: 'addMoreFields',
         enableRemove: true,
@@ -215,8 +208,8 @@ TestUnit.prototype.buildForm = function()
         data: stepsData
         }); 
     var resourceFilesData=[];
-    $("#resourceFiles ol li + li").remove();
-    $("#resourceFiles ol li").EnableMultiField({
+    $("#test-form-resourceFiles ol li + li").remove();
+    $("#test-form-resourceFiles ol li").EnableMultiField({
         linkText: 'Add more',
         linkClass: 'addMoreFields',
         enableRemove: true,
@@ -251,9 +244,8 @@ TestUnit.prototype.showResourceFilesList = function (edit)
             var filesLI = $("<li/>");
             filesLI.append(a);
             if(edit){
-                var aDel = $(
-                '<a class="removeMe" data-inline="true" data-mini="true" data-accessdb-id="" data-role="button" data-icon="delete" data-iconpos="notext">Delete</a>')
-                .attr("data-accessdb-id", file.id);
+                var aDel = $('<a class="removeMe" data-accessdb-id="">Delete</a>')
+                    .attr("data-accessdb-id", file.id);
                 $(aDel).on('click', function(event)
                 {
                     var fileId = $(event.target).closest(".removeMe").attr("data-accessdb-id");
@@ -261,18 +253,21 @@ TestUnit.prototype.showResourceFilesList = function (edit)
                     var sessionId = accessdb.session.get("sessionId");
                     TestUnit.deleteResourceFile(sessionId,fileId,testUnitId, function(error, data, status){
                         console.log(data.status);
-                        if(data.status===200)
-                        {
-                            accessdb.session.get("currentTestUnit").subject.resources = jQuery.grep(accessdb.session.get("currentTestUnit").subject.resources, function( a ) {
-                                return (a.id+"") !== fileId;
-                            });
-                            accessdb.session.get("currentTestUnit").showResourceFilesList(true);
+                        if(error){
+                            Utils.msg2user("There was a problem deleting the resource file. Please try again");
                         }
-                        else if(data.status === 401)
-                            alert("It seems you are not authorized to delete this resource. Please logout and login again.");
-                        else
-                            alert("There was a problem deleting the resource file. Please try again");
-                        
+                        else{
+                            if(data.status===200)
+                            {
+                                accessdb.session.get("currentTestUnit").subject.resources = jQuery.grep(accessdb.session.get("currentTestUnit").subject.resources, function( a ) {
+                                    return (a.id+"") !== fileId;
+                                });
+                                accessdb.session.get("currentTestUnit").showResourceFilesList(true);
+                            }
+                            else if(data.status === 401)
+                                Utils.msg2user("It seems you are not authorized to delete this resource. Please logout and login again.");
+                        }
+
                     });
                 });
                 filesLI.append(aDel);
@@ -286,16 +281,16 @@ TestUnit.prototype.showResourceFilesList = function (edit)
            $(".testCaseResourceFilesDiv").html("Currently no resource file saved");
 };
 TestUnit.prototype.initForm = function (sessionId)
-{   
+{
     $("#test-form").find("input[type=text], textarea").val("");
     $("#test-form").find("input:radio").attr("checked", false);
     var myDate = new Date();
     var cdate = myDate.getFullYear()+ '-' + (myDate.getMonth()+1)  + "-" + (myDate.getDate()) ;
     $("#test-form-date").attr("value",cdate);
-    $("#test-form-status").attr("value","UNCONFIRMED");
+    //$("#test-form-status").attr("value","UNCONFIRMED");
     $("#test-form-language").attr("value","en");
-    $("#test-form-testUnitId").attr("value",getURLParameter("testUnitId"));
-    $("#test-form-date" ).datepicker( "option", "dateFormat", accessdb.config.DATE_FORMAT );
+   // $("#test-form-testUnitId").attr("value",getURLParameter("testUnitId"));
+   // $("#test-form-date" ).datepicker( "option", "dateFormat", accessdb.config.DATE_FORMAT );
     $("#test-form-sessionId").attr("value",sessionId);
     var stepsE = $("#test-form-steps ol li:first");
     stepsE.EnableMultiField({
@@ -308,7 +303,6 @@ TestUnit.prototype.initForm = function (sessionId)
         confirmationMsgOnRemove: 'Are you sure you wish to remove this step?',
         beforeAddEventCallback: null,
         addEventCallback : function(newElem, clonnedFrom){
-            //$("#testform").trigger('create');
        },
        removeEventCallback: null,
         maxItemsAllowedToAdd: null,
@@ -354,13 +348,13 @@ TestUnit.prototype.reportValidation = function(errors){
     if(errors.length>0){
         var h = $("<h3></h3>");
         h.text(errors.length+ " error(s) in Submission");
-        $("#testformValidation").append(h);     
+        $("#testformValidation").append(h);
         var ul = $("<ol></ol>");
         $("#testform_erros").append("<li></li>");
         for(var errorId in errors){
             var li = $("<li></li>").append(errors[errorId]);
             ul.append(li);          
-        }       
+        }
         $("#testformValidation").append(ul);
         $("#testformValidation").scrollTop();
         $("#testformValidation").focus();
@@ -373,8 +367,7 @@ TestUnit.prototype.submitForm = function ()
     if(this.isValid())
     {
         var json_text = JSON.stringify(this, null, 2);
-        //console.log(json_text);
-        $("#TestUnitDescription").val(json_text); 
+        $("#test-form-TestUnitDescription").val(json_text);
         $("#test-form").submit();    
         return true;
     }   
@@ -386,9 +379,7 @@ TestUnit.deleteResourceFile = function(sessionId,fileId,testUnitId, callback){
 };
 
 TestUnit.getTestsTreeData = function(callback){
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_TESTUNITS_TREE, "POST", accessdb.testsFilter, function(error, data, status){
-        callback(error, data, status);
-    });
+    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_TESTUNITS_TREE, "POST", accessdb.testsFilter, callback);
 };
 TestUnit.loadStepsData = function(testProcedure)
 {
@@ -437,7 +428,7 @@ TestUnit.initFormPage = function (id) {
         }
         else {
             select_test_case.initForm(accessdb.session.get("sessionId"));
-            $("#test-form-").show();
+            $("#test-form").show();
             $("#test-form-submit").val("Submit Test Case");
         }
         $('#test-form-technique').focus();
@@ -499,17 +490,16 @@ TestUnit.initFormPage = function (id) {
             percent.html(percentVal);
         },
         complete: function (xhr) {
-            // $("#img_loading").hide();
+            Utils.loadingStart("#testformValidation");
             accessdb.code.reseteditor();
-            //  status.html(xhr.responseText);
-            console.log("upload completed" + xhr.statusText);
+            console.log("upload completed" + xhr.status);
+            var msg = xhr.responseText;
             if (xhr.status == 201)
-                $("#testformdialogresponse").html("Changes saved!");
+                msg = "Changes saved!";
             else if (xhr.status == 401)
-                $("#testformdialogresponse").html("Either you have no permission or your Session has been expired. Please try to logout and login again");
-            else
-                $("#testformdialogresponse").html(xhr.responseText);
-//            $.mobile.changePage('#testformdialog', {transition: 'pop', role: 'dialog'});
+                msg = "Either you have no permission or your Session has been expired. Please try to logout and login again";
+            Utils.loadingEnd("#testformValidation");
+            Utils.msg2user(msg);
         }
     });
     $("#test-form-code-library").on("change", function (event) {
@@ -531,5 +521,38 @@ TestUnit.initFormPage = function (id) {
         var done = accessdb.session.get("select_test_case").submitForm();
         if (done)
             accessdb.session.set("select_test_case", new TestUnit());
+    });
+}
+TestUnit.viewTestUnitIdList = function(){
+    var session = accessdb.session;
+    $(".inqueuetest").html(session.get("testUnitIdList").length);
+    var ul = $("#selected").find("ul")[0];
+    $(ul).empty();
+    var tests = session.get("testUnitIdList");
+    for(var i=0;i<tests.length;i++){
+        var test = tests[i];
+
+        if(test){
+            var li = _.template($('#test-selected-list-template').html(), {test:{testUnitId:  test, title:  accessdb.session.testTitles[test]}});
+            $(ul).append(li);
+        }
+    }
+    //TODO: load titles
+};
+TestUnit.loadTests = function (ids, callback){
+    var tests = [];
+    function createAddTest(callback, id) {
+        console.log("task id" + id);
+        accessdb.API.TEST.findById(id, function (error, data, status) {
+            tests[id] = data;
+            if(typeof callback === "function")
+                callback(error, data);
+        })
+    }
+    function successCallback(err, test){
+        callback(err, tests);
+    }
+    async.each(ids, createAddTest.bind(this, successCallback), function(err){
+        callback(err, null);
     });
 }

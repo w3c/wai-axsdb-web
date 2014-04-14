@@ -14,17 +14,21 @@
     <div class="content">
         <div class="grid">
             <h2>Submit Test Case</h2>
+            <div id="test-form-testformValidation">
+
+            </div>
+
             <form class="form-submitTestCase roleExpertsOnly" id="test-form" action="http://www.w3.org/WAI/accessibility-support/api_stable/testunit/commit/jomajp6h9jd5u7dlvu0pd7rtg4" data-ajax="false" method="post" enctype="multipart/form-data">
                 <input name="sessionId" id="test-form-sessionId" value="jomajp6h9jd5u7dlvu0pd7rtg4" type="hidden">
                 <input name="testUnitId" id="test-form-testUnitId" value="null" type="hidden">
                 <input name="rights" id="test-form-rights" value="http://www.w3.org/Consortium/Legal/2008/04-testsuite-license.html" type="hidden">
                 <input name="version" id="test-form-version" value="0" type="hidden">
                 <input name="language" id="test-form-language" value="en" type="hidden">
-                <input value="2014-1-23" name="test-form-date" id="test-form-date" type="hidden">
-                <input name="TestUnitDescription" id="TestUnitDescription" value="" type="hidden">
+                <input name="date" id="test-form-date" value="2014-1-23" type="hidden">
+                <input name="TestUnitDescription" id="test-form-TestUnitDescription" value="" type="hidden">
                 <input name="requirement" id="test-form-requirement" value="" type="hidden">
                 <input name="creator" id="test-form-creator" value="" type="hidden">
-                <input name="testform_webTechnology" id="test-form-webTechnology" value="HTML" type="hidden">
+                <!--<input name="testform_webTechnology" id="test-form-webTechnology" value="HTML" type="hidden">-->
                 <fieldset>
                     <legend>About the Test Case</legend>
                     <p>Provide information about the test Case</p>
@@ -38,7 +42,7 @@
                         <div class="form-row">
                             <label for="test-form-status">Status of test</label>
                             <span>
-                                <select id="test-form-status">
+                                <select disabled id="test-form-status">
                                     <option value="unconfirmed">Unconfirmed</option>
                                     <option value="new">New</option>
                                     <option value="ballot">Ballot</option>
@@ -82,7 +86,7 @@
                         <div class="form-row required">
                             <label for="test-form-code">HTML Code</label>
                                 <span>
-                                    <textarea name="desc" id="test-form-code" cols="30" rows="10"></textarea>
+                                    <textarea name="testCode" id="test-form-code" cols="30" rows="10"></textarea>
                                 </span>
                         </div>
                         <fieldset id="test-form-resourceFiles" class="form-row required">
@@ -111,7 +115,7 @@
                                 <span>
                                 <ol>
                                     <li>
-                                        <textarea recname="test-form-step" type="text" class=testform_step name="step"></textarea>
+                                        <textarea recname="test-form-step" type="text" class=test-form-step name="step"></textarea>
                                     </li>
                                 </ol>
                                     </span>
