@@ -26,17 +26,16 @@ Utils.loadingEnd=function(holder){
 };
 
 Utils.UIRoleAdapt = function(){
-	accessdb.session.userRoles = accessdb.session.userRoles || [];
+    var userRoles = accessdb.session.get("userRoles")  || [];
 	$(".accessdbUserMessage").html("");
-	var currentPageId = $.mobile.activePage.attr('id');
 	if(accessdb.session.isUserCollaborator()) {
 		$(".roleExpertsOnly").show();
 	}
 	else
 	{
-		$("#" + currentPageId + " .roleExpertsOnly").hide();
-		var msg = $('<p></p>').addClass("accessdbUserMessage").append("You need Collaborator Permission for this action!");
-		$("#" + currentPageId + " .roleExpertsOnly").parent().append(msg);
+		$(".roleExpertsOnly").hide();
+		var msg = $('<p></p>').addClass("accessdbUserMessage").append("You need Collaborator Role for this action!");
+		$(".roleExpertsOnly").parent().append(msg);
 
 	}
 	if(accessdb.session.isUserAdmin()) {
@@ -44,9 +43,9 @@ Utils.UIRoleAdapt = function(){
 	}
 	else
 	{
-		$("#" + currentPageId + " .roleAdminOnly").hide();
-		var msg = $('<p></p>').addClass("accessdbUserMessage").append("You need Admin Permission for this action!");
-		$("#" + currentPageId + " .roleAdminOnly").parent().append(msg);
+		$(".roleAdminOnly").hide();
+		var msg = $('<p></p>').addClass("accessdbUserMessage").append("You need Admin Role for this action!");
+		$(".roleAdminOnly").parent().append(msg);
 	}
 };
 Utils.getUrlVars = function()

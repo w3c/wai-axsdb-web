@@ -16,12 +16,18 @@ window.accessdb.Models.AppRouter = Backbone.Router.extend({
         "test.html/:id": "test",
         "log-in.html": "log-in",
         "log-out.html": "log-out",
+        "admin.html": "admin-techniques",
         "*actions": "defaultRoute"
     }
 });
 // Initiate the router
 window.accessdb.appRouter = new window.accessdb.Models.AppRouter;
 
+window.accessdb.appRouter.on('route:admin-techniques', function () {
+    window.accessdb.appRouter.loadPage("admin-techniques");
+    Utils.UIRoleAdapt();
+    accessdb.admin.init();
+});
 window.accessdb.appRouter.on('route:home', function () {
     window.accessdb.appRouter.loadPage("home");
 });

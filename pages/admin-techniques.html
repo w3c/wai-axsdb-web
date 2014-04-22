@@ -1,0 +1,31 @@
+<article id="axsdb-page-admin-techniques">
+    <h1 class="page-title">
+        Admin Techniques
+    </h1>
+    <nav class="navbar" role="navigation">
+        <a href="#/home.html" class="btn-small"><span class="icon-home"></span> Home</a>
+    </nav>
+    <div class="accessdbUserMessage"></div>
+    <div class="roleAdminOnly">
+        <p>
+            Add URL for importing WCAG2.0 techniques documents into the database. See
+            <a href="https://github.com/w3c/wcag/tree/master/wcag20/sources">WCAG 2.0	Sources</a>
+        </p>
+        <div data-role="fieldcontain">
+            <label for="techImportURL">
+                XML Source URL:
+            </label>
+            <input id="techImportURL" type="text" size="90" data-inline="true" required="required"
+                   value="https://raw.github.com/w3c/wcag/Working-Branch-for-Fall-2014/wcag20/sources/techniques/aria.xml" />
+        </div>
+            <button id="techImportPrepareBtn" data-inline="false">Check if anything to Sync</button>
+        <div>
+            <h3>Techniques Added: </h3>
+           <div id="admin-technique-results-div">
+
+           </div>
+            <button id="techImportBtn" data-inline="false">Sync selected</button>
+        </div>
+    </div>
+
+</article>

@@ -5,7 +5,7 @@
         Views: {},
         config: {
             PAGE_ID_PREFIX: "axsdb-page-",
-            URL_API_ROOT : "http://www.w3.org/WAI/accessibility-support/api_dev/",
+            URL_API_ROOT : "http://www.w3.org/WAI/accessibility-support/api/",
             URL_WEBAPP_ROOT: "http://www.w3.org/WAI/accessibility-support/axsdb/",
             URL_SITE_ROOT: "",
             URL_TESUITES_ROOT: "http://www.w3.org/WAI/accessibility-support/testfiles_dev/",
@@ -24,6 +24,8 @@
                 URL_SERVICE_LOGIN: "testingsession/login",
                 URL_SERVICE_LOGOUT: "testingsession/logout/",
                 URL_SERVICE_ADMIN_TECHNICKSPARSE: "admin/techniques/",
+
+
                 URL_SERVICE_INSERT_RATING: "rating/commit",
                 URL_SERVICE_SUBMITALL: "testingsession/save",
                 URL_SERVICE_GET_RATINGS_BYRATEDID: "rating/browse",

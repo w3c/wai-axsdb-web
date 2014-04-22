@@ -88,8 +88,8 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
             || this.hasUserRole(accessdb.config.USER_ROLE_AXSDBW3C_CODE);
     },
     hasUserRole: function (r) {
-        for (var int = 0; int < this.userRoles.length; int++) {
-            var role = this.userRoles[int];
+        for (var int = 0; int < this.get("userRoles").length; int++) {
+            var role = this.get("userRoles")[int];
             if (role === r)
                 return true;
         }

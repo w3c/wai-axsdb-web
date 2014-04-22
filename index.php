@@ -42,6 +42,7 @@
     <script type="text/javascript" src="js/testing-helper.js"></script>
     <script type="text/javascript" src="js/testresult.js"></script>
     <script type="text/javascript" src="js/code.js"></script>
+    <script type="text/javascript" src="js/admin.js"></script>
 
     <script type="text/javascript" src="js/mockup.js"></script>
  <script type="text/javascript">

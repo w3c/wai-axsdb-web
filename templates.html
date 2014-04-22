@@ -121,6 +121,48 @@
             </section>
         </form>
 </script>
+<script type="text/template" id="admin-technique-sync-response-prepare-template">
+    <table>
+        <caption>Import preparing results</caption>
+         <thead>
+             <th scope="col">Technique</th>
+             <th scope="col">Status</th>
+             <th scope="col">Date</th>
+             <th scope="col">URL</th>
+             <th scope="col">Sha</th>
+         </thead>
+        <tbody>
+        <% _.each(results, function(r) { %>
+            <tr class="admin-import-li-<%= r.statusCode %>">
+                <td><label><input type="checkbox" name="admin-technique-sync" value="<%= r.entity.technique %>" checked="checked" /><%= r.entity.technique %></label> </td>
+                <td><%= r.statusCode %></td>
+                <td><%= r.entity.date %></td>
+                <td><%= r.entity.diffUrl %></td>
+                <td><%= r.entity.sha %></td>
+            </tr>
+        <% }); %>
+        </tbody>
+    </table>
+</script>
+<script type="text/template" id="admin-technique-sync-response-synced-template">
+    <table>
+        <caption>Sync Results</caption>
+        <thead>
+        <th scope="col">Technique ID</th>
+        <th scope="col">Technique Title</th>
+        <th scope="col">Sync Status</th>
+        </thead>
+        <tbody>
+        <% _.each(results, function(r) { %>
+        <tr class="admin-import-li-<%= r.statusCode %>">
+            <td>r.entity.nameId %></td>
+            <td>r.entity.title %></td>
+            <td><%= r.statusCode %></td>
+        </tr>
+        <% }); %>
+        </tbody>
+    </table>
+</script>
 <script type="text/template" id="test-submit-code-template"><!DOCTYPE html>
 <html>
 <head>
