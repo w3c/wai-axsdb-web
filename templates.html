@@ -134,7 +134,12 @@
         <tbody>
         <% _.each(results, function(r) { %>
             <tr class="admin-import-li-<%= r.statusCode %>">
-                <td><label><input type="checkbox" name="admin-technique-sync" value="<%= r.entity.technique %>" checked="checked" /><%= r.entity.technique %></label> </td>
+                <td>
+                    <label>
+                        <input type="checkbox" name="admin-technique-sync" value="<%= r.entity.technique %>"  <% if(r.statusCode==101) { %>checked="checked"<% } %> />
+                        <%= r.entity.technique %>
+                    </label>
+                </td>
                 <td><%= r.statusCode %></td>
                 <td><%= r.entity.date %></td>
                 <td><%= r.entity.diffUrl %></td>
@@ -155,8 +160,8 @@
         <tbody>
         <% _.each(results, function(r) { %>
         <tr class="admin-import-li-<%= r.statusCode %>">
-            <td>r.entity.nameId %></td>
-            <td>r.entity.title %></td>
+            <td><%= r.entity.nameId %></td>
+            <td><%= r.entity.title %></td>
             <td><%= r.statusCode %></td>
         </tr>
         <% }); %>

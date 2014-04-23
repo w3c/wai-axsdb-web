@@ -1,50 +1,67 @@
 accessdb.admin = {};
 accessdb.admin.init = function (){
+    $("#admin-technique-results-div").empty();
+    $("#techImportBtn").hide();
 
     $("#techImportBtn").click(function() {
         var selectedIds = [];
         $("input[name='admin-technique-sync']:checked").each(function(index, value){
-            selectedIds = selectedIds.push($(value).attr("value"));
+            selectedIds.push($(value).attr("value"));
         });
         var selected = _.filter(accessdb.admin.responses, function(e){
             return _.contains(selectedIds, e.entity.technique);
         });
-        accessdb.admin.techniquesSync(url, function(error, data, status) {
-            if(error){
-                $("#admin-technique-results-div").html(data.responseText);
-                return;
+        Utils.loadingStart("#admin-technique-results-div");
+        accessdb.admin.techniquesSync(selected, function(error, data, status) {
+            Utils.loadingEnd("#admin-technique-results-div");
+            if(error.status===302){
+                $("#admin-technique-results-div").html("GitHub REST timeout limit reached! Please try again in some minutes! ");
             }
+            else{
+                $("#admin-technique-results-div").html(error.responseText);
+            }
+            return;
             if(status === 200){
                 accessdb.admin.responses = [];
                 if(data.length>0){
                     var template = _.template($('#admin-technique-sync-response-synced-template').html(), {results:data});
+                    $("#admin-technique-results-div").empty();
                     $("#admin-technique-results-div").html(template);
                 }
                 else
                 {
                     $("#admin-technique-results-div").html("Nothing new to add");
                 }
+                $("#techImportBtn").hide();
             }
         });
     });
     $("#techImportPrepareBtn").click(function() {
         var url = $("#techImportURL").val();
-        $("#techImportList").empty();
+        Utils.loadingStart("#admin-technique-results-div");
         accessdb.admin.techniquesImportPrepare(url, function(error, data, status) {
+            Utils.loadingEnd("#admin-technique-results-div");
             if(error){
-                $("#admin-technique-results-div").html(data.responseText);
+                if(error.status===302){
+                    $("#admin-technique-results-div").html("GitHub REST timeout limit reached! Please try again in some minutes! ");
+                }
+                else{
+                    $("#admin-technique-results-div").html(error.responseText);
+                }
                 return;
             }
             if(status === 200){
                 accessdb.admin.responses = data;
                 if(data.length>0){
                     var template = _.template($('#admin-technique-sync-response-prepare-template').html(), {results:data});
+                    $("#admin-technique-results-div").empty();
                     $("#admin-technique-results-div").html(template);
                 }
                 else
                 {
                     $("#admin-technique-results-div").html("Nothing new to add");
                 }
+                $("#techImportBtn").show();
             }
             else{
                 $("#admin-technique-results-div").html("Unknown Problem");
@@ -95,10 +112,10 @@ accessdb.admin.techniquesImportPrepare = function(url, callback) {
             callback(error, data, status);
         });
 };
-accessdb.admin.techniquesSync = function(url, callback) {
+accessdb.admin.techniquesSync = function(selected, callback) {
     accessdb.admin.ajaxAsyncWithCallBack(
             accessdb.config.services.URL_SERVICE_ADMIN_TECHNICKSPARSE
-            + accessdb.session.get("sessionId") +"/import-do", "POST", url,
+            + accessdb.session.get("sessionId") +"/import-do", "POST", selected,
         function(error, data, status) {
             callback(error, data, status);
         });
@@ -123,26 +140,3 @@ accessdb.admin.ajaxAsyncWithCallBack = function (url, method, data, callback)
         }
     });
 };
-/*
-accessdb.Models.GitHubTechniqueInfo = new function(){
-    this.date = "0000-03-28T17:18:24.000+0000";
-    this.technique = "AA1";
-    this.webTechnology = {};
-    this.sha = "";
-    this.diffUrl = "";
-    this.url = "";
-
-}
-accessdb.Models.ImportResponse = new function(){
-   accessdb.Models.ImportResponse.UNDEFINED = -1;
-    accessdb.Models.ImportResponse.SAME = 100;
-    accessdb.Models.ImportResponse.ONLY_IN_WCAG = 101;
-    accessdb.Models.ImportResponse.ONLY_IN_DB = 102;
-    accessdb.Models.ImportResponse.NEWER = 201;
-    accessdb.Models.ImportResponse.OLDER = 202;
-    accessdb.Models.ImportResponse.SUCCESS = 301;
-    accessdb.Models.ImportResponse.FAIL = 302;
-
-    this.statusCode = -1;
-    this.entity = new accessdb.Models.GitHubTechniqueInfo;
-}*/
