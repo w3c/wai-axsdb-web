@@ -175,8 +175,11 @@ Utils.doSelectQuery = function(url, q, async)
 	});	
 	return out;
 };
-Utils.ajaxAsyncWithCallBack = function (url, method, data, callback, showloading)
+Utils.ajaxAsyncWithCallBack = function (url, method, data, callback, targetE)
 {
+    if(targetE){
+        Utils.loadingStart(targetE);
+    }
     $.ajax({
         url: url,
         dataType: "json",
@@ -188,9 +191,15 @@ Utils.ajaxAsyncWithCallBack = function (url, method, data, callback, showloading
         timeout: 30000,
         processData: false,
         success: function(data, textStatus, jqXHR){
+            if(targetE){
+                Utils.loadingEnd(targetE);
+            }
             callback(null, data, jqXHR.status);
         },
         error: function(jqXHR, textStatus, errorThrown) {
+            if(targetE){
+                Utils.loadingEnd(targetE);
+            }
             callback(jqXHR, null, null);
         }
     });

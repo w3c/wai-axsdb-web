@@ -175,7 +175,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         });
         this.set("testUnitIdList", newList);
     },
-    login: function (lData, callback) {
+    login: function (lData, callback, targetE) {
         this.resetLocalSession();
         var self = this;
         if (self.isValid()) {
@@ -198,7 +198,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
                     console.error(error.status);
                     callback(false);
                 }
-            });
+            }, targetE);
         }
     },
     logout: function (callback) {

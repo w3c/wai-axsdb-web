@@ -10,9 +10,7 @@ accessdb.API = {
     },
     TEST: {
         findById: function (testId, callback) {
-            Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_TESTUNITS + "/" + testId, "GET", null, function (error, data, status) {
-                callback(error, data, status);
-            });
+            Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_TESTUNITS + "/" + testId, "GET", null, callback);
         },
         countAll: function (callback) {
             var query = "select count(distinct u.testUnitId) from TestUnitDescription as u";
@@ -48,16 +46,12 @@ accessdb.API = {
     },
     TESTRESULT: {
         persistBunch: function (bunch, callback) {
-            Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_PERSIST, 'POST', bunch, function (error, data, status) {
-                callback(error, data, status);
-            });
+            Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_PERSIST, 'POST', bunch, callback);
         }
     },
     TESTINGSESSION: {
         save: function (session, callback) {
-            Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTINGSESSION_SAVE, 'POST', session, function (error, data, status) {
-                callback(error, data, status);
-            });
+            Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTINGSESSION_SAVE, 'POST', session, callback);
         },
         persist: function (session, callback) {
             Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTINGSESSION_PERSIST + session.get("sessionId"),
@@ -65,16 +59,11 @@ accessdb.API = {
                     callback(error, data, status);
                 });
         },
-        login: function (loginData, callback) {
-            Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_LOGIN, 'POST', loginData, function (error, data, status) {
-                callback(error, data, status);
-            });
+        login: function (loginData, callback, targetE) {
+            Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_LOGIN, 'POST', loginData, callback, targetE);
         },
         logout: function (session, callback) {
-            Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_LOGOUT + session.get("sessionId"), 'POST', null,
-                function (error, data, status) {
-                    callback(error, data, status);
-                });
+            Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_LOGOUT + session.get("sessionId"), 'POST', null, callback);
         }
     }
 };

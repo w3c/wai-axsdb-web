@@ -1,3 +1,7 @@
+/**
+ * Admin functoinality
+ * NOTDEFINED = -1; SAME = 100; ONLY_IN_WCAG = 101; ONLY_IN_DB = 102; NEWER = 201; OLDER = 202; OK = 200; FAIL = 302;
+ */
 accessdb.admin = {};
 accessdb.admin.init = function (){
     $("#admin-technique-results-div").empty();
@@ -14,11 +18,14 @@ accessdb.admin.init = function (){
         Utils.loadingStart("#admin-technique-results-div");
         accessdb.admin.techniquesSync(selected, function(error, data, status) {
             Utils.loadingEnd("#admin-technique-results-div");
-            if(error.status===302){
-                $("#admin-technique-results-div").html("GitHub REST timeout limit reached! Please try again in some minutes! ");
-            }
-            else{
-                $("#admin-technique-results-div").html(error.responseText);
+            if(error){
+                if(error.status===302){
+                    $("#admin-technique-results-div").html("GitHub REST timeout limit reached! Please try again in some minutes! ");
+                }
+                else{
+                    $("#admin-technique-results-div").html(error.responseText);
+                }
+                return;
             }
             return;
             if(status === 200){

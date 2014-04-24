@@ -90,7 +90,7 @@ $(document).ready(function () {
                     Utils.msg2user("User failed to login. Please try again.");
                     return false;
                 }
-            });
+            }, "#infodiv");
             return false;
         }
     });
