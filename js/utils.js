@@ -19,6 +19,7 @@ function Utils(){};
 
 Utils.loadingStart=function(holder){
 	var div = $('<div class="progress"><div>Loading…</div></div>');
+    $(holder).empty();
 	$(holder).append(div);
 };
 Utils.loadingEnd=function(holder){

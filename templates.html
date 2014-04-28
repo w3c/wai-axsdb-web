@@ -142,7 +142,12 @@
                 </td>
                 <td><%= r.statusCode %></td>
                 <td><%= r.entity.date %></td>
-                <td><%= r.entity.diffUrl %></td>
+                <td>
+                    <% if(r.statusCode!=100) { %>
+                    <a target="new" href="<%= r.entity.diffUrl %>">Differences in GitHub (new window)</a></td>
+                <% } else { %>
+                    No diff
+                <% } %>
                 <td><%= r.entity.sha %></td>
             </tr>
         <% }); %>

@@ -25,10 +25,9 @@ accessdb.admin.init = function (){
                 else{
                     $("#admin-technique-results-div").html(error.responseText);
                 }
-                return;
+                return false;
             }
-            return;
-            if(status === 200){
+            if(status === 201){
                 accessdb.admin.responses = [];
                 if(data.length>0){
                     var template = _.template($('#admin-technique-sync-response-synced-template').html(), {results:data});
@@ -55,7 +54,7 @@ accessdb.admin.init = function (){
                 else{
                     $("#admin-technique-results-div").html(error.responseText);
                 }
-                return;
+                return false;
             }
             if(status === 200){
                 accessdb.admin.responses = data;
