@@ -1,11 +1,10 @@
 /**
  * assuming results an array of json objects ;
  * {
- *  noOfAll: "0"
- *  noOfPass: "0"
- *  noOfUniqueCombinations: "0"
- *  noOfUniqueContributors: "0"
- *  technique: "ARIA6"
+    noOfAll: "0"
+    noOfPass: "0"
+    technique: "ARIA6"
+    techniqueTitle: "Using aria-label to provide labels for objects"
  * }
  *
  */
