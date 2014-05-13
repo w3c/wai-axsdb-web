@@ -47,7 +47,15 @@ accessdb.API = {
     TESTRESULT: {
         persistBunch: function (bunch, callback) {
             Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_PERSIST, 'POST', bunch, callback);
+        },
+        loadTestResultsDataOverview: function (filter, callback, targetE){
+            var url = accessdb.config.services.URL_SERVICE_TESTRESULT_DATAOVERVIEW;
+            Utils.ajaxAsyncWithCallBack(url, "POST", filter, function (error, data, status) {
+                callback(error, data.list, status);
+            }, targetE);
         }
+
+
     },
     TESTINGSESSION: {
         save: function (session, callback) {

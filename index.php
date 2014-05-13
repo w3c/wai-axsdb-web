@@ -41,6 +41,7 @@
     <script type="text/javascript" src="js/header.js"></script>
     <script type="text/javascript" src="js/testing-helper.js"></script>
     <script type="text/javascript" src="js/testresult.js"></script>
+    <script type="text/javascript" src="js/testresult-views.js"></script>
     <script type="text/javascript" src="js/code.js"></script>
     <script type="text/javascript" src="js/admin.js"></script>
 

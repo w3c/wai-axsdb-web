@@ -3,6 +3,9 @@ window.accessdb.Models.AppRouter = Backbone.Router.extend({
         "": "home",
         "home.html": "home",
         "results.html": "results",
+        "results-by-technique.html/:id": "test",
+
+
         "test-run.html/:id": "test-run",
         "test-run.html": "test-run",
         "test-submit.html": "test-submit",
@@ -14,6 +17,7 @@ window.accessdb.Models.AppRouter = Backbone.Router.extend({
         "user-profile-add.html": "user-profile-add",
         "user-profile-edit.html/:id": "user-profile-edit",
         "test.html/:id": "test",
+
         "log-in.html": "log-in",
         "log-out.html": "log-out",
         "admin.html": "admin-techniques",
@@ -52,6 +56,13 @@ window.accessdb.appRouter.on('route:log-in', function () {
 });
 window.accessdb.appRouter.on('route:results', function () {
     window.accessdb.appRouter.loadPage("results");
+    accessdb.resultsFilter = accessdb.resultsFilter || new Filter("axsdb-page-results");
+    accessdb.resultsFilter.loadTrees(false);
+    accessdb.TestResultsDataOverview = new accessdb.Views.TestResultsDataOverview();
+    accessdb.TestResultsDataOverview.fetch(accessdb.resultsFilter, function(error, data){
+        if(!error)
+            accessdb.TestResultsDataOverview.render();
+    })
 });
 window.accessdb.appRouter.on('route:user-profiles', function () {
     window.accessdb.appRouter.loadPage("user-profiles");
