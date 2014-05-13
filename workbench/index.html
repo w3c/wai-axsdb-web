@@ -1,0 +1,79 @@
+<!doctype html>
+ 
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+	<title>AccessDB Workbench</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="../css/wai-act.css" />
+
+    <script type="text/javascript" src="../js/lib/jquery-2.1.0.min.js"></script>
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script type="text/javascript" src="../js/accessdb.js"></script>
+  	<script type="text/javascript" src="js/WorkBench.js"></script>
+  	<script type="text/javascript" src="js/main.js"></script>
+</head>
+<body>
+<h1>AccessDB Workbench</h1>
+<p>
+	This is a training and documentation by example for the AccessDB REST Services and Query language</a>. 
+	Please select a function or type and query and run. You can anytime customize the requests and create your owns. Note that 
+	access to the repository is read only (no create, delete update services neither allowed and only SELECT query allowed). 
+</p> 
+	<form action="" method="POST">
+		<label for="examples">Select Example to Run</label>
+		<select id="examples">
+			
+		</select>
+		<button id="runExample">Run REST Service</button>
+        <!-- 	<a href="#apihelp">Context Sensitive API Help</a>
+            <a href="#schemahelp">Context Sensitive Schema Help</a> -->
+		<fieldset>
+			<legend>Request data</legend>
+			
+			<label for="rest_request_method">Request Method</label>
+			<input type="text" size="10" id="rest_request_method"></input>
+			<br />
+			<label for="rest_request_url">Request URL</label>
+			<input type="text" size="90" id="rest_request_url"></input>
+			<br />
+			<label for="rest_request_json">Request in JSON</label>
+			<textarea rows="4" cols="80" id="rest_request_json">Request in JSON</textarea>
+		</fieldset>
+		<fieldset>
+			<legend>Query data</legend>		
+			<label for="queries">Example Queries</label>
+			<select id="queries">
+				<optgroup label="Version">
+					<option value="SELECT name, MAX(version.major)  FROM Product group by name">productMaxVers</option>
+				</optgroup>				
+			</select>	
+			<br />
+			<label for="request_hql_query">Request in AccedbQL (HQL)</label>
+			<textarea rows="4" cols="80" id="request_hql_query">from SuccessCriterio</textarea>
+			<br/>
+			<button id="runQuery">Run Query through REST</button>
+		</fieldset>
+		<fieldset>
+		<legend>Response data</legend>
+		<label for="rest_response_json">JSON Response</label>
+		<textarea rows="4" cols="80" id="rest_response_json">Response in JSON</textarea>
+		<br />
+		<label for="rest_response_http">HTTP Response</label>
+		<input type="text" size="8" id="rest_response_http"></input>
+		</fieldset>
+	</form>
+<!--
+	<img src="img/accessdb2-services.png"  alt ="accessdb object model"/>
+
+	<h2>Context Sensitive API Help</h2>	
+	URL: <a id="apihelp_a" target="help" href="http://imergo.com/ns/3.1/api/overview-index.html">http://imergo.com/ns/3.1/api/overview-index.html</a>
+	<br />
+	<iframe id="apihelp" style="width: 90%;height: 200px" src="http://imergo.com/ns/3.1/api/overview-index.html"></iframe>
+	
+	<h2>Context Sensitive Schema Help</h2>	
+	URL: <a id="schemahelp_a" target="help" href="http://imergo.com/ns/3.1/public/html/index.html">http://imergo.com/ns/3.1/public/html/index.html</a>
+	<br />
+	<iframe id="schemahelp" style="width: 90%;height: 200px" src="http://imergo.com/ns/3.1/public/html/index.html"></iframe> -->
+</body>
+</html>
