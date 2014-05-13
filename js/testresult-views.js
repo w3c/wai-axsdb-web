@@ -21,6 +21,7 @@ accessdb.Views.TestResultsDataOverview = function (){
         var self = this;
         if (!filter){
             console.warn("No filter defined!");
+            callback("No filter defined!", null);
         }
         else {
             accessdb.API.TESTRESULT.loadTestResultsDataOverview(filter, function (error, data, status) {
