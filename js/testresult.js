@@ -2,8 +2,7 @@
 
 function TestResult(unitId, resultValue, testingProfile, rating) {
     this.testingProfile = testingProfile;
-    this.testUnitId = unitId;
-    this.testUnitDescription = null;
+    this.testUnitDescription = unitId;
     this.resultValue = resultValue;
     this.runDate = "";
     this.setData = function (data) {

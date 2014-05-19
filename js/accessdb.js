@@ -73,8 +73,7 @@
         },
         appRouter: null,
         session: null,
-        resultsFilter: null,
-        testsFilter: null,
+        filters : [],
         paramId: null,
         resultsviewdata: {}
     };

@@ -11,13 +11,16 @@ $(document).ready(function () {
     Backbone.history.start();
 
     $(".webTechTreeDiv").on('treevue:change', function (event) {
-        accessdb.testsFilter.loadTrees(true, ["WCAG", "TESTS"]);
+        var pageId = $(event.target).closest("article").attr("id");
+        accessdb.filters[pageId].loadTrees(true, ["WCAG", "TESTS"]);
     });
     $("input[name=conformance]").on('change', function (event) {
-        accessdb.testsFilter.loadTrees(true, ["WCAG", "WEBTECHS", "TESTS"]);
+        var pageId = $(event.target).closest("article").attr("id");
+        accessdb.filters[pageId].loadTrees(true, ["WCAG", "WEBTECHS", "TESTS"]);
     });
     $(".criteriaTreeDiv").on('treevue:change', function (event) {
-        accessdb.testsFilter.loadTrees(true, ["TESTS", "WEBTECHS"]);
+        var pageId = $(event.target).closest("article").attr("id");
+        accessdb.filters[pageId].loadTrees(true, ["TESTS", "WEBTECHS"]);
     });
     $("#thetestsTreeDiv").on('treevue:change', function (event) {
         accessdb.TreeHelper.importTests($("#thetestsTreeDiv ul"));

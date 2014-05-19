@@ -379,7 +379,7 @@ TestUnit.deleteResourceFile = function(sessionId,fileId,testUnitId, callback){
 };
 
 TestUnit.getTestsTreeData = function(callback){
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_TESTUNITS_TREE, "POST", accessdb.testsFilter, callback);
+    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_TESTUNITS_TREE, "POST", accessdb.filters["axsdb-page-tests-run"], callback);
 };
 TestUnit.loadStepsData = function(testProcedure)
 {

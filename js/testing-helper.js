@@ -57,16 +57,14 @@ accessdb.Models.TestingHelper = function (){
             testResult = new TestResult();
             testResult.comment = $("#cmnt").val();
             testResult.resultValue = $("input[name='result']:checked").val();
-            testResult.testUnitDescription =
-            {
-                id: test.id
-            };
-            testResult.testUnitId = test.testUnitId;
+            testResult.testUnitDescription = test.testUnitId;
             testResult.testingProfile = new TestingProfile();
             testResult.testingProfile.setDataWithNoId(userProfile.profile);
             testResult.type = "RESULT";
             var nowD = new Date();
             testResult.runDate = nowD.toJSON();
+            //FIXME: check format with server side
+            testResult.runDate = null;
         },
         hasNext: function () {
             return testIds.length > 0;
