@@ -54,7 +54,7 @@
 <header role="banner">
     <div class="w3c-wai-header">
         <a href="/"><img src="http://w3.org/2008/site/images/logo-w3c-mobile-lg" alt="W3C" height="53" width="90"></a>
-        <a href="/" class="wai"><img src="http://www.w3.org/WAI/images/wai-temp" alt="Web Accessibility Initiative"></a>
+        <a href="/WAI/" class="wai"><img src="http://www.w3.org/WAI/images/wai-temp" alt="Web Accessibility Initiative"></a>
     </div>
 </header>
 <main role="main" aria-live="assertive">
