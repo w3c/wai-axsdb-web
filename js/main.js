@@ -8,19 +8,20 @@ $(document).ready(function () {
     Backbone.history.start();
 
     $(".webTechTreeDiv").on('treevue:change', function (event) {
-        var pageId = $(event.target).closest("article").attr("id");
+        var pageId = accessdb.appRouter.page;
         accessdb.TreeHelper.loadTrees(accessdb.filters[pageId], ["WCAG", "TESTS"]);
-        accessdb.TestResultsDataOverview.reload();
+        if(accessdb.TestResultsDataOverview)
+            accessdb.TestResultsDataOverview.reload();
     });
     $("input[name=conformance]").on('change', function (event) {
-        var pageId = $(event.target).closest("article").attr("id");
-        accessdb.TreeHelper.loadTrees(accessdb.filters[pageId], ["WCAG", "WEBTECHS", "TESTS"]);
+        var pageId = accessdb.appRouter.page;
+        accessdb.TreeHelper.loadTrees(accessdb.filters[pageId]);
         if(accessdb.TestResultsDataOverview)
             accessdb.TestResultsDataOverview.reload();
     });
     $(".criteriaTreeDiv").on('treevue:change', function (event) {
-        var pageId = $(event.target).closest("article").attr("id");
-        accessdb.TreeHelper.loadTrees(accessdb.filters[pageId], ["TESTS", "WEBTECHS"]);
+        var pageId = accessdb.appRouter.page;
+        accessdb.TreeHelper.loadTrees(accessdb.filters[pageId]);
         if(accessdb.TestResultsDataOverview)
             accessdb.TestResultsDataOverview.reload();
     });

@@ -144,7 +144,7 @@ accessdb.TreeHelper = {
     populateFilter : function(filter) {
         filter.criteriosLevel = $('input[name=conformance]:checked', "#" + filter.page).val() || filter.criteriosLevel;
         filter.criterios = accessdb.TreeHelper.importCriteria("#" + filter.page + " .criteriaTreeDiv > ul");
-        if (filter.page == "results") {
+        if (filter.page === accessdb.config.PAGE_ID_PREFIX +  "results") {
             filter.ats = accessdb.TreeHelper.importProducts("#" + filter.page + " .atTreeDiv > ul", "AssistiveTechnology");
             filter.uas = accessdb.TreeHelper.importProducts("#" + filter.page + " .uaTreeDiv > ul", "UAgent");
             filter.oss = accessdb.TreeHelper.importProducts("#" + filter.page + " .osTreeDiv > ul", "Platform");
@@ -159,7 +159,7 @@ accessdb.TreeHelper = {
         if(treeIds.indexOf("WCAG")>=0){
             $(".criteriaTreeDiv").empty();
             Utils.loadingStart(".criteriaTreeDiv");
-            accessdb.API.WCAG2.getWCAG2TreeData(this.criteriosLevel, function(error, data, status){
+            accessdb.API.WCAG2.getWCAG2TreeData(filter.criteriosLevel, function(error, data, status){
                 var treeData = data;
                 treeData.label = "All Success Criteria";
                 var processDatafn = function (data){
@@ -183,7 +183,7 @@ accessdb.TreeHelper = {
                 callback("AT");
             $(".atTreeDiv").empty();
             Utils.loadingStart(".atTreeDiv");
-            accessdb.API.TESTRESULT.getATTree(this, function(error, data, status){
+            accessdb.API.TESTRESULT.getATTree(filter, function(error, data, status){
                 var treeData = data;
                 treeData.label = "All";
                 treeData.collapsed = false;
@@ -202,7 +202,7 @@ accessdb.TreeHelper = {
                 callback("UA");
             $(".uaTreeDiv").empty();
             Utils.loadingStart(".uaTreeDiv");
-            accessdb.API.TESTRESULT.getUATree(this, function(error, data, status){
+            accessdb.API.TESTRESULT.getUATree(filter, function(error, data, status){
                 $(".uaTreeDiv").empty();
                 var treeData = data;
                 treeData.label = "All";
@@ -222,7 +222,7 @@ accessdb.TreeHelper = {
                 callback("OS");
             $(".osTreeDiv").empty();
             Utils.loadingStart(".osTreeDiv");
-            accessdb.API.TESTRESULT.getOSTree(this, function(error, data, status){
+            accessdb.API.TESTRESULT.getOSTree(filter, function(error, data, status){
                 $(".osTreeDiv").empty();
                 var treeData = null;
                 if(filter.oss.length<1)

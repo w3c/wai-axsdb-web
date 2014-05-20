@@ -35,8 +35,8 @@ accessdb.Views.TestResultsDataOverview = function (){
         }
     };
     this.reload = function(){
-        var pageId = window.accessdb.config.PAGE_ID_PREFIX + "results";
-        if(pageId===$("#"+pageId).attr("id")){
+        var pageId = accessdb.config.PAGE_ID_PREFIX+"results";
+        if(accessdb.appRouter.page === pageId){
             var self = this;
             this.fetch( accessdb.filters[pageId], function(error, data){
                 if(!error)
@@ -162,7 +162,7 @@ TestResultViewDataTechnique.dataToTableRow = function (data) {
     var tr = $("<tr/>");
     // Test case    Result  OS  Plugin  Contributor Comment
     var row = [];
-    row.push('<a href="#testdetails?id=' + data.testResult.testUnitDescription + '">' + data.testResult.testUnitDescription + '</a>');
+    row.push('<a href="#testdetails?id=' + data.testResult.testUnitDescription + '">' + data.testResult.testUnitDescription.testUnitId + '</a>');
     row.push(data.testResult.resultValue);
     if (data.testResult.testingProfile.platform.name)
         row.push(data.testResult.testingProfile.platform.name + " " + data.testResult.testingProfile.platform.version.text);

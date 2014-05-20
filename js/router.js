@@ -1,4 +1,5 @@
 window.accessdb.Models.AppRouter = Backbone.Router.extend({
+    page : null,
     routes: {
         "": "home",
         "home.html": "home",
@@ -56,7 +57,7 @@ window.accessdb.appRouter.on('route:log-in', function () {
 });
 window.accessdb.appRouter.on('route:results', function () {
     window.accessdb.appRouter.loadPage("results");
-    var pageId = window.accessdb.config.PAGE_ID_PREFIX + "results";
+    var pageId =  accessdb.config.PAGE_ID_PREFIX + "results";
     accessdb.filters[pageId] = accessdb.filters[pageId] || new window.accessdb.Models.Filter(pageId);
     accessdb.TreeHelper.loadTrees(accessdb.filters[pageId]);
     accessdb.TestResultsDataOverview = new accessdb.Views.TestResultsDataOverview();
@@ -113,7 +114,7 @@ window.accessdb.appRouter.on('route:tests-finish', function () {
 });
 window.accessdb.appRouter.on('route:tests-run', function () {
     window.accessdb.appRouter.loadPage("tests-run");
-    var pageId = window.accessdb.config.PAGE_ID_PREFIX + "tests-run";
+    var pageId = accessdb.config.PAGE_ID_PREFIX + "tests-run";
     accessdb.filters[pageId] = accessdb.filters[pageId] || new window.accessdb.Models.Filter(pageId);
     accessdb.TreeHelper.loadTrees(accessdb.filters[pageId], ["WCAG","WEBTECHS","TESTS"]);
 });
@@ -132,6 +133,7 @@ window.accessdb.appRouter.on('route:defaultRoute', function(actions) {
 
 window.accessdb.appRouter.loadPage = function(id){
     $("article").hide();
+    this.page = accessdb.config.PAGE_ID_PREFIX + id;
     $("#"+accessdb.config.PAGE_ID_PREFIX + id).show();
 };
 window.accessdb.appRouter.redirect = function(page){
