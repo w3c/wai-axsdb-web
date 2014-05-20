@@ -73,8 +73,12 @@
     }
     accessdb.API = {
         WCAG2: {
-            findTEchnqueByName: function (techId) {
+            findTechnqueByName: function (techId) {
 
+            },
+            deleteDeepTechnique: function (nameId, callback) {
+                var url = accessdb.config.services.URL_SERVICE_ADMIN_DEL_TECHNIQUE_DEEP + accessdb.session.sessionId + "/" + nameId;
+                Utils.ajaxAsyncWithCallBack(url, "DELETE", null, callback, true);
             },
             getWebtechsTreeData: function (callback) {
                 Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TECHNIQUES_TECHS, "GET", null, callback);

@@ -15,12 +15,14 @@ $(document).ready(function () {
     $("input[name=conformance]").on('change', function (event) {
         var pageId = $(event.target).closest("article").attr("id");
         accessdb.TreeHelper.loadTrees(accessdb.filters[pageId], ["WCAG", "WEBTECHS", "TESTS"]);
-        accessdb.TestResultsDataOverview.reload();
+        if(accessdb.TestResultsDataOverview)
+            accessdb.TestResultsDataOverview.reload();
     });
     $(".criteriaTreeDiv").on('treevue:change', function (event) {
         var pageId = $(event.target).closest("article").attr("id");
         accessdb.TreeHelper.loadTrees(accessdb.filters[pageId], ["TESTS", "WEBTECHS"]);
-        accessdb.TestResultsDataOverview.reload();
+        if(accessdb.TestResultsDataOverview)
+            accessdb.TestResultsDataOverview.reload();
     });
     $("#thetestsTreeDiv").on('treevue:change', function (event) {
         accessdb.TreeHelper.importTests($("#thetestsTreeDiv ul"));

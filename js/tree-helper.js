@@ -156,7 +156,6 @@ accessdb.TreeHelper = {
         console.log(filter.criterios.length);
     },
     loadTree : function(filter, treeIds, callback){
-        var that = filter;
         if(treeIds.indexOf("WCAG")>=0){
             $(".criteriaTreeDiv").empty();
             Utils.loadingStart(".criteriaTreeDiv");
@@ -172,9 +171,9 @@ accessdb.TreeHelper = {
                     }
                     return data;
                 };
-                $.treevue([treeData], that.page, processDatafn).appendTo('.criteriaTreeDiv');
+                $.treevue([treeData], filter.page, processDatafn).appendTo('.criteriaTreeDiv');
                 Utils.loadingEnd(".criteriaTreeDiv");
-                accessdb.TreeHelper.populateFilter(that);
+                accessdb.TreeHelper.populateFilter(filter);
                 callback("WCAG");
             });
         }
@@ -185,7 +184,7 @@ accessdb.TreeHelper = {
                 var treeData = data;
                 treeData.label = "All";
                 treeData.collapsed = false;
-                $.treevue([treeData],  that.page+"-accessdb-ATTree").appendTo('.atTreeDiv');
+                $.treevue([treeData],  filter.page+"-accessdb-ATTree").appendTo('.atTreeDiv');
                 Utils.loadingEnd(".atTreeDiv");
                 callback("AT");
             });
@@ -198,7 +197,7 @@ accessdb.TreeHelper = {
                 var treeData = data;
                 treeData.label = "All";
                 treeData.collapsed = false;
-                $.treevue([treeData],  that.page+"-accessdb-UATree").appendTo('.uaTreeDiv');
+                $.treevue([treeData],  filter.page+"-accessdb-UATree").appendTo('.uaTreeDiv');
                 Utils.loadingEnd(".uaTreeDiv");
                 callback("UA");
             });
@@ -209,11 +208,11 @@ accessdb.TreeHelper = {
             accessdb.API.RESULT.getOSTree(this, function(error, data, status){
                 $(".osTreeDiv").empty();
                 var treeData = null;
-                if(that.oss.length<1)
+                if(filter.oss.length<1)
                     treeData = data;
                 treeData.label = "All";
                 treeData.collapsed = false;
-                $.treevue([treeData],  that.page+"-accessdb-OSTree").appendTo('.osTreeDiv');
+                $.treevue([treeData],  filter.page+"-accessdb-OSTree").appendTo('.osTreeDiv');
                 Utils.loadingEnd(".osTreeDiv");
                 callback("OS");
             });
@@ -226,7 +225,7 @@ accessdb.TreeHelper = {
                 var treeData = data;
                 treeData.label = "All";
                 treeData.collapsed = false;
-                $.treevue([treeData],  that.page+"-accessdb-webtechs").appendTo('.webTechTreeDiv');
+                $.treevue([treeData],  filter.page+"-accessdb-webtechs").appendTo('.webTechTreeDiv');
                 Utils.loadingEnd(".webTechTreeDiv");
                 callback("WEBTECHS");
             });
@@ -270,7 +269,7 @@ accessdb.TreeHelper = {
                     if(data)
                         $(".tests_count_all").html(data);
                 });
-                $.treevue(data.children,  that.page+"-teststree").appendTo('#thetestsTreeDiv');
+                $.treevue(data.children,  filter.page+"-teststree").appendTo('#thetestsTreeDiv');
                 Utils.loadingEnd(".webTechTreeDiv");
                 accessdb.TreeHelper.updateTreeFromTestList();
                 callback("TESTS");
@@ -278,7 +277,6 @@ accessdb.TreeHelper = {
         }
     },
     loadTrees : function(filter, treeIds, callback){
-        var that = filter;
         var feedback = "<strong>Updated Widgets: </strong><br/>";
         treeIds = treeIds || ["AT","UA","OS","WCAG","WEBTECHS"];
            // this.populate();
@@ -290,7 +288,7 @@ accessdb.TreeHelper = {
                 accessdb.TreeHelper.loadTree(filter, nextId,next);
             }
             else{
-                $("#"+that.page +" [role=alert]").html(feedback);
+                $("#"+filter.page +" [role=alert]").html(feedback);
                 if(callback)
                     callback();
             }

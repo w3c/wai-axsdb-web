@@ -75,6 +75,7 @@ accessdb.admin.init = function (){
             }
         });
     });
+
     /*
     $("#adminDoDeleteTechniques").click(function(){
         var nodeList = $("#adminWebTechAndTechniqueTreeDiv ul").treevueJson();
@@ -88,7 +89,7 @@ accessdb.admin.init = function (){
         {
             console.log(list);
             for ( var i in list) {
-                Requirements.deleteDeepTechnique(list[i], function(data, error){
+     accessdb.API.WGAG2.deleteDeepTechnique(list[i], function(data, error){
                     if(error){
                         console.log(error);
                         return;
@@ -109,7 +110,8 @@ accessdb.admin.init = function (){
 
     });
     */
-}
+};
+
 accessdb.admin.techniquesImportPrepare = function(url, callback) {
     accessdb.admin.ajaxAsyncWithCallBack(
             accessdb.config.services.URL_SERVICE_ADMIN_TECHNICKSPARSE

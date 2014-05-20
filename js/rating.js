@@ -1,3 +1,8 @@
+/**
+ * for future
+ * @constructor
+ */
+
 function Rating() {
 	this.ratingValue = null;
 	this.ratedId = -1;
