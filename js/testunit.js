@@ -533,7 +533,7 @@ TestUnit.viewTestUnitIdList = function(){
         var test = tests[i];
 
         if(test){
-            var li = _.template($('#test-selected-list-template').html(), {test:{testUnitId:  test, title:  accessdb.session.testTitles[test]}});
+            var li = _.template($('#test-selected-list-template').html(), {test:{testUnitId:  test, title:  accessdb.testTitles[test]}});
             $(ul).append(li);
         }
     }

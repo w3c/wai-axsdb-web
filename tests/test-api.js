@@ -17,7 +17,7 @@ asyncTest( "API.TEST.countAll", function() {
     });
 });
 asyncTest( "API.TESTRESULT.loadTestResultsDataOverview", function() {
-    var filter = new Filter("axsdb-page-results");
+    var filter = new window.accessdb.Models.Filter("axsdb-page-results");
     accessdb.API.TESTRESULT.loadTestResultsDataOverview(filter, function (error, data, status) {
         if(!error){
             console.log(data);

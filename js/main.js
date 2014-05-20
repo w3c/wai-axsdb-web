@@ -1,7 +1,4 @@
 $(document).ready(function () {
-    for (var property in accessdb.config.services) {
-        accessdb.config.services[property] = accessdb.config.URL_API_ROOT + accessdb.config.services[property];
-    }
 
     // session initialization
     accessdb.session = new accessdb.Models.testingSession();
@@ -12,15 +9,18 @@ $(document).ready(function () {
 
     $(".webTechTreeDiv").on('treevue:change', function (event) {
         var pageId = $(event.target).closest("article").attr("id");
-        accessdb.filters[pageId].loadTrees(true, ["WCAG", "TESTS"]);
+        accessdb.TreeHelper.loadTrees(accessdb.filters[pageId], ["WCAG", "TESTS"]);
+        accessdb.TestResultsDataOverview.reload();
     });
     $("input[name=conformance]").on('change', function (event) {
         var pageId = $(event.target).closest("article").attr("id");
-        accessdb.filters[pageId].loadTrees(true, ["WCAG", "WEBTECHS", "TESTS"]);
+        accessdb.TreeHelper.loadTrees(accessdb.filters[pageId], ["WCAG", "WEBTECHS", "TESTS"]);
+        accessdb.TestResultsDataOverview.reload();
     });
     $(".criteriaTreeDiv").on('treevue:change', function (event) {
         var pageId = $(event.target).closest("article").attr("id");
-        accessdb.filters[pageId].loadTrees(true, ["TESTS", "WEBTECHS"]);
+        accessdb.TreeHelper.loadTrees(accessdb.filters[pageId], ["TESTS", "WEBTECHS"]);
+        accessdb.TestResultsDataOverview.reload();
     });
     $("#thetestsTreeDiv").on('treevue:change', function (event) {
         accessdb.TreeHelper.importTests($("#thetestsTreeDiv ul"));
@@ -113,8 +113,6 @@ $(document).ready(function () {
                 accessdb.session.set("userTestingProfiles", data);
             });
         });
-        if(1==2)
-            event.preventDefault();
     });
 
     // #tests-finish
@@ -123,7 +121,7 @@ $(document).ready(function () {
         event.preventDefault();
         var testUnitId = $(event.target).attr("value");
          testResultList = _.filter(testResultList, function(item) {
-             return item.testUnitId !== testUnitId;
+             return item.testUnitDescription !== testUnitId;
          });
         accessdb.session.set("testResultList", testResultList);
     });

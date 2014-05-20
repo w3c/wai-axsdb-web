@@ -112,7 +112,6 @@ UserTestingProfile.persistUserProfile = function (p, callback) {
             accessdb.session.set("pCounter", accessdb.session.get("pCounter") - 1);
             p.id = accessdb.session.get("pCounter");
             accessdb.session.get("userTestingProfiles").push(p);
-            accessdb.session.set("userTestingProfiles", accessdb.session.get("userTestingProfiles"));
         }
         accessdb.session.save(function () {
             callback(accessdb.session.get("userTestingProfiles"));

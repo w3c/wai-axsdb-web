@@ -57,13 +57,10 @@ window.accessdb.appRouter.on('route:log-in', function () {
 window.accessdb.appRouter.on('route:results', function () {
     window.accessdb.appRouter.loadPage("results");
     var pageId = window.accessdb.config.PAGE_ID_PREFIX + "results";
-    accessdb.filters[pageId] = accessdb.filters[pageId] || new Filter(pageId);
-    accessdb.filters[pageId].loadTrees(false);
+    accessdb.filters[pageId] = accessdb.filters[pageId] || new window.accessdb.Models.Filter(pageId);
+    accessdb.TreeHelper.loadTrees(accessdb.filters[pageId]);
     accessdb.TestResultsDataOverview = new accessdb.Views.TestResultsDataOverview();
-    accessdb.TestResultsDataOverview.fetch( accessdb.filters[pageId], function(error, data){
-        if(!error)
-            accessdb.TestResultsDataOverview.render();
-    })
+    accessdb.TestResultsDataOverview.reload();
 });
 window.accessdb.appRouter.on('route:user-profiles', function () {
     window.accessdb.appRouter.loadPage("user-profiles");
@@ -117,9 +114,8 @@ window.accessdb.appRouter.on('route:tests-finish', function () {
 window.accessdb.appRouter.on('route:tests-run', function () {
     window.accessdb.appRouter.loadPage("tests-run");
     var pageId = window.accessdb.config.PAGE_ID_PREFIX + "tests-run";
-    accessdb.filters[pageId] = accessdb.filters[pageId] || new Filter(pageId);
-    accessdb.filters[pageId].loadTrees(false,["WCAG","WEBTECHS","TESTS"]);
-    TestUnit.viewTestUnitIdList();
+    accessdb.filters[pageId] = accessdb.filters[pageId] || new window.accessdb.Models.Filter(pageId);
+    accessdb.TreeHelper.loadTrees(accessdb.filters[pageId], ["WCAG","WEBTECHS","TESTS"]);
 });
 window.accessdb.appRouter.on('route:tests-run-submit', function () {
     window.accessdb.appRouter.loadPage("tests-run-submit");

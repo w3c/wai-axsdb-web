@@ -34,6 +34,16 @@ accessdb.Views.TestResultsDataOverview = function (){
             }, self.$el);
         }
     };
+    this.reload = function(){
+        var pageId = window.accessdb.config.PAGE_ID_PREFIX + "results";
+        if(pageId===$("#"+pageId).attr("id")){
+            var self = this;
+            this.fetch( accessdb.filters[pageId], function(error, data){
+                if(!error)
+                    self.render();
+            });
+        }
+    }
 }
 
 
