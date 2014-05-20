@@ -102,7 +102,7 @@ TestUnit.prototype.getResourceFileUrl = function(src) {
 };
 TestUnit.prototype.loadById = function(id,callback) {
     var obj = this;
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_TESTUNITS + "/" + id, "GET", null, function(error, data, status){
+    accessdb.API.TEST.findById(id, function(error, data, status){
         obj.setData(data);
         callback(obj);
     }); 
@@ -379,7 +379,7 @@ TestUnit.deleteResourceFile = function(sessionId,fileId,testUnitId, callback){
 };
 
 TestUnit.getTestsTreeData = function(callback){
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_TESTUNITS_TREE, "POST", accessdb.filters["axsdb-page-tests-run"], callback);
+    accessdb.API.TEST.getTestsTreeData(accessdb.filters["axsdb-page-tests-run"], callback);
 };
 TestUnit.loadStepsData = function(testProcedure)
 {

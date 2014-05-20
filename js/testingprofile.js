@@ -74,12 +74,7 @@ UserTestingProfile.loadUserProfilesByUserId = function (callback) {
     var sessionId = accessdb.session.get("sessionId");
     var userId = accessdb.session.get("userId");
     if (userId) {
-        // profiles/{userId}/{sessionId}
-        Utils.ajaxAsyncWithCallBack(
-                accessdb.config.services.URL_SERVICE_GET_ALLUSERPROFILES + userId + "/" + sessionId, "GET", null,
-            function (error, data, status) {
-                callback(error, data, status);
-            });
+        accessdb.API.PROFILE.findByUserId(userId,callback);
     }
     else {
         callback(null, accessdb.session.get("userTestingProfiles"));
@@ -90,18 +85,10 @@ UserTestingProfile.persistUserProfile = function (p, callback) {
     var userId = accessdb.session.get("userId");
     if (userId) {
         if (p.id > 0) {
-            // PUT profiles/{sessionId}
-            Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_PUT_PROFILE + sessionId, "PUT", p,
-                function (error, data, status) {
-                    callback(error, data, status);
-                });
+            accessdb.API.PROFILE.updateUserProfile(userId, p, callback);
         }
         else {
-            // POST profiles/{userId}/{sessionId}
-            Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_POST_PROFILE + userId + "/" + sessionId,
-                "POST", p, function (error, data, status) {
-                    callback(error, data, status);
-                });
+            accessdb.API.PROFILE.insertUserProfile(userId, p, callback);
         }
     }
     else {
@@ -133,9 +120,8 @@ UserTestingProfile.deleteUserProfilesById = function (pid, callback) {
     var sessionId = accessdb.session.get("sessionId");
     var userId = accessdb.session.get("userId");
     if (userId) {
-        Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_DELETE_PROFILE + pid + "/" + sessionId,
-            "DELETE", {}, function (error, data, status) {
-                if(!error || (error && error.status===200)){ //TODO: check server side
+        accessdb.API.PROFILE.deleteUserProfile(pid, function (error, data, status) {
+                if(!error || (error && error.status===200)){
                     UserTestingProfile.removeTestingProfile(pid);
                     accessdb.session.set("testProfileId", -1);
                 }

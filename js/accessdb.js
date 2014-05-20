@@ -18,7 +18,7 @@
         },
         appRouter: null,
         session: null,
-        filters : [],
+        filters : {},
         paramId: null,
         resultsviewdata: {}
     };

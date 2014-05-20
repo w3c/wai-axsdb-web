@@ -180,7 +180,7 @@ accessdb.TreeHelper = {
         else if(treeIds.indexOf("AT")>=0){
             $(".atTreeDiv").empty();
             Utils.loadingStart(".atTreeDiv");
-            accessdb.API.RESULT.getATTree(this, function(error, data, status){
+            accessdb.API.TESTRESULT.getATTree(this, function(error, data, status){
                 var treeData = data;
                 treeData.label = "All";
                 treeData.collapsed = false;
@@ -192,7 +192,7 @@ accessdb.TreeHelper = {
         else if(treeIds.indexOf("UA")>=0){
             $(".uaTreeDiv").empty();
             Utils.loadingStart(".uaTreeDiv");
-            accessdb.API.RESULT.getUATree(this, function(error, data, status){
+            accessdb.API.TESTRESULT.getUATree(this, function(error, data, status){
                 $(".uaTreeDiv").empty();
                 var treeData = data;
                 treeData.label = "All";
@@ -205,7 +205,7 @@ accessdb.TreeHelper = {
         else if(treeIds.indexOf("OS")>=0){
             $(".osTreeDiv").empty();
             Utils.loadingStart(".osTreeDiv");
-            accessdb.API.RESULT.getOSTree(this, function(error, data, status){
+            accessdb.API.TESTRESULT.getOSTree(this, function(error, data, status){
                 $(".osTreeDiv").empty();
                 var treeData = null;
                 if(filter.oss.length<1)
@@ -279,7 +279,11 @@ accessdb.TreeHelper = {
     loadTrees : function(filter, treeIds, callback){
         var feedback = "<strong>Updated Widgets: </strong><br/>";
         treeIds = treeIds || ["AT","UA","OS","WCAG","WEBTECHS"];
-           // this.populate();
+        try{
+            accessdb.TreeHelper.populateFilter(filter);
+        }
+        catch(e){
+        }
         var next = function(msg){
             var nextId = treeIds.shift();
             if(msg)

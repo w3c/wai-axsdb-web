@@ -6,6 +6,7 @@
     window.accessdb = window.accessdb || {};
     window.accessdb.config = window.accessdb.config || {};
     window.accessdb.config.URL_API_ROOT = "http://www.w3.org/WAI/accessibility-support/api/";
+    window.accessdb.sessionId = null,
     window.accessdb.Models = window.accessdb.Models || {};
     window.accessdb.Models.Filter = function (page) {
         this.page = page || "";
@@ -71,13 +72,13 @@
     for (var property in accessdb.config.services) {
         accessdb.config.services[property] = accessdb.config.URL_API_ROOT + accessdb.config.services[property];
     }
-    accessdb.API = {
+    window.accessdb.API = {
         WCAG2: {
             findTechnqueByName: function (techId) {
 
             },
             deleteDeepTechnique: function (nameId, callback) {
-                var url = accessdb.config.services.URL_SERVICE_ADMIN_DEL_TECHNIQUE_DEEP + accessdb.session.sessionId + "/" + nameId;
+                var url = accessdb.config.services.URL_SERVICE_ADMIN_DEL_TECHNIQUE_DEEP + accessdb.sessionId + "/" + nameId;
                 Utils.ajaxAsyncWithCallBack(url, "DELETE", null, callback, true);
             },
             getWebtechsTreeData: function (callback) {
@@ -109,9 +110,12 @@
                 Utils.doSelectQueryWithCallBack(
                     accessdb.config.services.URL_SERVICE_TECHNIQUES_BYQUERY,
                     query, callback);
+            },
+            getTestsTreeData : function (filter, callback){
+                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_TESTUNITS_TREE, "POST", filter, callback);
             }
         },
-        RESULT: {
+        TESTRESULT: {
             getATTree: function (filter, callback) {
                 Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_AT, "POST", filter, callback);
             },
@@ -120,6 +124,17 @@
             },
             getOSTree: function (filter, callback) {
                 Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_OS, "POST", filter, callback);
+            },
+            persistBunch: function (bunch, callback) {
+                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_PERSIST, 'POST', bunch, callback);
+            },
+            getDataOverview: function (filter, callback, targetE) {
+                var url = accessdb.config.services.URL_SERVICE_TESTRESULT_DATAOVERVIEW;
+                Utils.ajaxAsyncWithCallBack(url, "POST", filter, function (error, data, status) {
+                    if(data)
+                        data = data.list;
+                    callback(error, data, status);
+                }, targetE);
             }
         },
         WEBTECHNOLOGIES: {
@@ -132,32 +147,38 @@
                 });
             }
         },
-        TESTRESULT: {
-            persistBunch: function (bunch, callback) {
-                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_PERSIST, 'POST', bunch, callback);
+
+        PROFILE: {
+            findByUserId: function (userId, callback) {
+                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_ALLUSERPROFILES + userId + "/" + accessdb.sessionId, "GET", null, callback);
             },
-            loadTestResultsDataOverview: function (filter, callback, targetE) {
-                var url = accessdb.config.services.URL_SERVICE_TESTRESULT_DATAOVERVIEW;
-                Utils.ajaxAsyncWithCallBack(url, "POST", filter, function (error, data, status) {
-                    callback(error, data.list, status);
-                }, targetE);
+            insertUserProfile: function (userId, profile, callback) {
+                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_POST_PROFILE + userId + "/" + accessdb.sessionId,
+                    "POST", profile, callback);
+            },
+            updateUserProfile: function (userId, profile, callback) {
+                //FIXME: problem with w3 PUT redirect
+                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_PUT_PROFILE + accessdb.sessionId, "PUT", profile, callback);
+            },
+            deleteUserProfile: function (id, callback) {
+                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_DELETE_PROFILE + id + "/" + accessdb.sessionId,
+                    "DELETE", {}, callback);
             }
         },
         TESTINGSESSION: {
             save: function (session, callback) {
+                accessdb.sessionId = session.get("sessionId");
                 Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTINGSESSION_SAVE, 'POST', session, callback);
             },
             persist: function (session, callback) {
-                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTINGSESSION_PERSIST + session.get("sessionId"),
-                    'POST', session, function (error, data, status) {
-                        callback(error, data, status);
-                    });
+                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTINGSESSION_PERSIST + accessdb.sessionId,
+                    'POST', session, callback);
             },
             login: function (loginData, callback, targetE) {
                 Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_LOGIN, 'POST', loginData, callback, targetE);
             },
             logout: function (session, callback) {
-                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_LOGOUT + session.get("sessionId"), 'POST', null, callback);
+                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_LOGOUT + accessdb.sessionId, 'POST', null, callback);
             }
         }
     };

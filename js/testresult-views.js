@@ -24,7 +24,7 @@ accessdb.Views.TestResultsDataOverview = function (){
             callback("No filter defined!", null);
         }
         else {
-            accessdb.API.TESTRESULT.loadTestResultsDataOverview(filter, function (error, data, status) {
+            accessdb.API.TESTRESULT.getDataOverview(filter, function (error, data, status) {
                 if(!error){
                     console.log(data);
                     self.results = data;
@@ -89,9 +89,7 @@ TestResultDataOverview.loadResultArray = function (filter, callback) {
     if (!filter)
         callback(data);
     else {
-        Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_DATAOVERVIEW, "POST", filter, function (error, data, status) {
-            callback(data.list);
-        });
+        accessdb.API.TESTRESULT.getDataOverview(filter, callback);
     }
 
 };
@@ -164,7 +162,7 @@ TestResultViewDataTechnique.dataToTableRow = function (data) {
     var tr = $("<tr/>");
     // Test case    Result  OS  Plugin  Contributor Comment
     var row = [];
-    row.push('<a href="#testdetails?id=' + data.testResult.testUnitDescription.testUnitId + '">' + data.testResult.testUnitDescription.testUnitId + '</a>');
+    row.push('<a href="#testdetails?id=' + data.testResult.testUnitDescription + '">' + data.testResult.testUnitDescription + '</a>');
     row.push(data.testResult.resultValue);
     if (data.testResult.testingProfile.platform.name)
         row.push(data.testResult.testingProfile.platform.name + " " + data.testResult.testingProfile.platform.version.text);
