@@ -178,9 +178,9 @@ accessdb.TreeHelper = {
                 callback("WCAG");
             });
         }
-        else if(treeIds.indexOf("AT")>=0){
+        else if(treeIds.indexOf("AssistiveTechnology")>=0){
             if($(".atTreeDiv").size()<1)
-                callback("AT");
+                callback("AssistiveTechnology");
             $(".atTreeDiv").empty();
             Utils.loadingStart(".atTreeDiv");
             accessdb.API.TESTRESULT.getATTree(filter, function(error, data, status){
@@ -194,10 +194,10 @@ accessdb.TreeHelper = {
                 };
                 $.treevue([treeData],  filter.page+"-accessdb-ATTree",processDatafn).appendTo('.atTreeDiv');
                 Utils.loadingEnd(".atTreeDiv");
-                callback("AT");
+                callback("AssistiveTechnology");
             });
         }
-        else if(treeIds.indexOf("UA")>=0){
+        else if(treeIds.indexOf("UAgent")>=0){
             if($(".uaTreeDiv").size()<1)
                 callback("UA");
             $(".uaTreeDiv").empty();
@@ -217,7 +217,7 @@ accessdb.TreeHelper = {
                 callback("UA");
             });
         }
-        else if(treeIds.indexOf("OS")>=0){
+        else if(treeIds.indexOf("Platform")>=0){
             if($(".osTreeDiv").size()<1)
                 callback("OS");
             $(".osTreeDiv").empty();
@@ -239,9 +239,9 @@ accessdb.TreeHelper = {
                 callback("OS");
             });
         }
-        else if(treeIds.indexOf("WEBTECHS")>=0){
+        else if(treeIds.indexOf("WebTechnology")>=0){
             if($(".webTechTreeDiv").size()<1)
-                callback("WEBTECHS");
+                callback("WebTechnology");
             $(".webTechTreeDiv").empty();
             Utils.loadingStart(".webTechTreeDiv");
             accessdb.API.WCAG2.getWebtechsTreeData(function(error, data, status){
@@ -256,7 +256,7 @@ accessdb.TreeHelper = {
                 };
                 $.treevue([treeData],  filter.page+"-accessdb-webtechs", processDatafn).appendTo('.webTechTreeDiv');
                 Utils.loadingEnd(".webTechTreeDiv");
-                callback("WEBTECHS");
+                callback("WebTechnology");
             });
         }
         else if(treeIds.indexOf("TESTS")>=0){
@@ -302,23 +302,48 @@ accessdb.TreeHelper = {
             });
         }
     },
-    loadTrees : function(filter, treeIds, callback){
-        var feedback = "<strong>Updated Widgets: </strong><br/>";
-        treeIds = treeIds || ["AT","UA","OS","WCAG","WEBTECHS"];
+    loadTrees : function(event, callback){
+        var pageId =   accessdb.appRouter.page;
+        var pagesIds = [accessdb.config.PAGE_ID_PREFIX +"results", accessdb.config.PAGE_ID_PREFIX +"tests-run"];
+        if(!_.contains(pagesIds, pageId)){
+            if(callback)
+                callback();
+            return;
+        }
+        var allTreeIds = ["AssistiveTechnology","UAgent","Platform","WCAG","WebTechnology"];
+        var toLoadTreeIds = [];
+        if(pageId ===  accessdb.config.PAGE_ID_PREFIX + "results"){
+            toLoadTreeIds = ["AssistiveTechnology","UAgent","Platform","WCAG","WebTechnology"];
+        }
+        else if(pageId ===  accessdb.config.PAGE_ID_PREFIX + "tests-run"){
+            toLoadTreeIds = ["AssistiveTechnology","WCAG","WebTechnology", "TESTS"];
+        }
+        var filter = null;
+        if(event){
+            var filtertype = event.currentTarget.getAttribute("data-axsdb-filtertype");
+            Utils.removeItemFromArray(allTreeIds, filtertype);
+            toLoadTreeIds = Utils.removeItemFromArray(allTreeIds, filtertype);
+        }
+        else{
+            accessdb.filters[pageId] = new window.accessdb.Models.Filter(pageId);
+        }
+        filter = accessdb.filters[pageId];
+        accessdb.TreeHelper.doLoadTrees(toLoadTreeIds, filter, callback);
+    },
+    doLoadTrees : function(treeIds, filter, callback){
+        if(treeIds.length<1){
+            callback();
+        }
         try{
             accessdb.TreeHelper.populateFilter(filter);
         }
         catch(e){
+            console.warn("accessdb.TreeHelper.populateFilter failed");
         }
         var next = function(msg){
             var nextId = treeIds.shift();
-            if(msg)
-                feedback = feedback + msg + ", " ;
             if(nextId){
                 accessdb.TreeHelper.loadTree(filter, nextId, next);
-            }
-            else{
-                $("#"+filter.page +" [role=alert]").html(feedback);
             }
             if(callback)
                 callback();

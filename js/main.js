@@ -8,20 +8,17 @@ $(document).ready(function () {
     Backbone.history.start();
 
     $(".webTechTreeDiv").on('treevue:change', function (event) {
-        var pageId = accessdb.appRouter.page;
-        accessdb.TreeHelper.loadTrees(accessdb.filters[pageId], ["WCAG", "TESTS"]);
+        accessdb.TreeHelper.loadTrees(event);
         if(accessdb.TestResultsDataOverview)
             accessdb.TestResultsDataOverview.reload();
     });
     $("input[name=conformance]").on('change', function (event) {
-        var pageId = accessdb.appRouter.page;
-        accessdb.TreeHelper.loadTrees(accessdb.filters[pageId]);
+        accessdb.TreeHelper.loadTrees(event);
         if(accessdb.TestResultsDataOverview)
             accessdb.TestResultsDataOverview.reload();
     });
     $(".criteriaTreeDiv").on('treevue:change', function (event) {
-        var pageId = accessdb.appRouter.page;
-        accessdb.TreeHelper.loadTrees(accessdb.filters[pageId]);
+        accessdb.TreeHelper.loadTrees(event);
         if(accessdb.TestResultsDataOverview)
             accessdb.TestResultsDataOverview.reload();
     });
