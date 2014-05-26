@@ -262,6 +262,50 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         else
             this.set("sessionId", accessdb.config.sessionId);
         this.set("profiles_index", 0);
+    },
+    initHandlers : function(){
+        $("#doLogin").on("click", function (event) {
+            var lData = {
+                userId: $("#userId").val(),
+                pass: $("#pass").val(),
+                sessionId: accessdb.session.get("sessionId")
+            };
+            var pass = false;
+            try{
+                pass = document.getElementById("loginform").checkValidity();
+            }
+            catch(e){
+                if(lData.userId.length>0 && lData.pass.length>0)
+                    pass = true;
+                if(!pass)
+                    Utils.msg2user("Invalid input. Please try again.");
+            }
+            if(pass)
+            {
+                accessdb.session.login(lData, function (result) {
+                    if (result) {
+                        console.log("login success");
+                        $("#logoutInfo").show();
+                        $("#loginform").hide();
+                        //accessdb.appRouter.loadPage("home");
+                    }
+                    else
+                    {
+                        Utils.msg2user("User failed to login. Please try again.");
+                        return false;
+                    }
+                }, "#infodiv");
+                return false;
+            }
+        });
+        $('#login').on("keydown", function (e) {
+            if (e.keyCode == $.ui.keyCode.ENTER) {
+                if (accessdb.session.userId == null)
+                    $("#doLogin").trigger("click");
+                else
+                    $("#doLogout").trigger("click");
+            }
+        });
     }
 })
 ;

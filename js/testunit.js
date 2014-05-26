@@ -267,7 +267,6 @@ TestUnit.prototype.showResourceFilesList = function (edit)
                             else if(data.status === 401)
                                 Utils.msg2user("It seems you are not authorized to delete this resource. Please logout and login again.");
                         }
-
                     });
                 });
                 filesLI.append(aDel);
@@ -374,10 +373,9 @@ TestUnit.prototype.submitForm = function ()
     else
         return false;
 };
-TestUnit.deleteResourceFile = function(sessionId,fileId,testUnitId, callback){
-    Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_DELETE_RESOURCE_FILE + sessionId + "/" + testUnitId+ "/" + fileId , "DELETE", null, callback, true);
+TestUnit.deleteResourceFile = function(sessionId,fileId,testUnitId, callback) {
+    accessdb.API.TEST.deleteResourceFile(fileId, testUnitId, callback);
 };
-
 TestUnit.getTestsTreeData = function(callback){
     accessdb.API.TEST.getTestsTreeData(accessdb.filters["axsdb-page-tests-run"], callback);
 };
@@ -531,13 +529,11 @@ TestUnit.viewTestUnitIdList = function(){
     var tests = session.get("testUnitIdList");
     for(var i=0;i<tests.length;i++){
         var test = tests[i];
-
         if(test){
             var li = _.template($('#test-selected-list-template').html(), {test:{testUnitId:  test, title:  accessdb.testTitles[test]}});
             $(ul).append(li);
         }
     }
-    //TODO: load titles
 };
 TestUnit.loadTests = function (ids, callback){
     var tests = [];
@@ -554,5 +550,47 @@ TestUnit.loadTests = function (ids, callback){
     }
     async.each(ids, createAddTest.bind(this, successCallback), function(err){
         callback(err, null);
+    });
+}
+
+TestUnit.loadTestsTree = function (){
+    var filter = accessdb.filters[accessdb.config.PAGE_ID_PREFIX + "tests-run"];
+    if(accessdb.appRouter.page !== accessdb.config.PAGE_ID_PREFIX + "tests-run"){
+        return;
+    }
+    $("#thetestsTreeDiv").empty();
+    Utils.loadingStart(".thetestsTreeDiv");
+    TestUnit.getTestsTreeData(function(error, data, status){
+        $("#thetestsTreeDiv").empty();
+        // select what is in queue
+        var countTests = 0;
+        for ( var ind in data.children) {
+            var techniqueNode = data.children[ind];
+            data.children[ind].label = "Technique " + data.children[ind].label;
+            data.children[ind].collapsed = false;
+            for ( var i in techniqueNode.children) {
+                var testNode = techniqueNode.children[i];
+                if(!accessdb.testTitles)
+                    accessdb.testTitles = [];
+                accessdb.testTitles[testNode.value] =  data.children[ind].children[i].description;
+                data.children[ind].children[i].label = "Test Case " + data.children[ind].children[i].label;
+                data.children[ind].children[i].collapsed = false;
+                if(accessdb.session.isTestInQueue(testNode.value)){
+                    //set selected
+                    data.children[ind].children[i].selected = true;
+                }
+                if(data.children[ind].children[i].type === "TestUnitDescription")
+                    countTests++;
+            }
+        }
+        $(".testsOnPage").html(countTests);
+        TestUnit.viewTestUnitIdList();
+        accessdb.API.TEST.countAll(function(error, data, status){
+            if(data)
+                $(".tests_count_all").html(data);
+        });
+        $.treevue(data.children,  filter.page+"-teststree").appendTo('#thetestsTreeDiv');
+        Utils.loadingEnd(".webTechTreeDiv");
+        accessdb.TreeHelper.updateTreeFromTestList();
     });
 }

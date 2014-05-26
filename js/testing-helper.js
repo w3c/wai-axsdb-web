@@ -4,6 +4,31 @@ accessdb.Models.TestingHelper = function (){
     var test, testResult, userProfile = null;
     var count = 0;
     return {
+        initHandlers : function(){
+            // on remove from the selected tests
+            $(document).on("click", "span.icon.icon-remove", function (event) {
+                event.preventDefault();
+                var id = $(event.target).find("span").attr("aria-described-by");
+                accessdb.session.removeFromQueue(id);
+                accessdb.TreeHelper.updateTreeFromTestList();
+            });
+
+            // #/run-test.html
+            $(document).on("click", ".do_next", function (event) {
+                event.preventDefault();
+                var hasNext = accessdb.testingRunner.saveAndLoadNext();
+                if(!hasNext){
+                    accessdb.appRouter.redirect("tests-finish.html")
+                }
+            });
+            $(document).on("click", ".skipme", function (event) {
+                event.preventDefault();
+                var hasNext = accessdb.testingRunne.loadNext();
+                if(!hasNext){
+                    accessdb.appRouter.redirect("tests-finish.html")
+                }
+            });
+        },
         start: function () {
             count = 0;
             this.loadDataFromSession();

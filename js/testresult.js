@@ -1,5 +1,3 @@
-
-
 function TestResult(unitId, resultValue, testingProfile, rating) {
     this.testingProfile = testingProfile;
     this.testUnitDescription = unitId;
@@ -27,7 +25,28 @@ function TestResult(unitId, resultValue, testingProfile, rating) {
             }
         });
     };
-}
+};
+TestResult.initHandlers = function(){
+    $(document).on("click", ".removeTestingResult", function (event) {
+        var testResultList = accessdb.session.get("testResultList");
+        event.preventDefault();
+        var testUnitId = $(event.target).attr("value");
+        testResultList = _.filter(testResultList, function(item) {
+            return item.testUnitDescription !== testUnitId;
+        });
+        accessdb.session.set("testResultList", testResultList);
+    });
+    $(document).on("click", "#testResultsPersist", function (event) {
+        event.preventDefault();
+        var tests_done = accessdb.session.get("testResultList").length;
+        accessdb.session.tests_done = tests_done;//temp
+        accessdb.session.saveResultsBunch(function(){
+            accessdb.appRouter.redirect("tests-run-submit.html");
+        });
+    });
+
+};
+
 
 TestResult.viewTestingResultsBeforeSave = function () {
     var testResultList = accessdb.session.get("testResultList");

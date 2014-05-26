@@ -63,10 +63,16 @@ window.accessdb.appRouter.on('route:results', function () {
 });
 window.accessdb.appRouter.on('route:user-profiles', function () {
     window.accessdb.appRouter.loadPage("user-profiles");
-    if(accessdb.session && accessdb.session.get("userTestingProfiles").length<1){
-        UserTestingProfile.loadUserProfilesByUserId(function(error, data, status){
-            accessdb.session.set("userTestingProfiles", data);
-        });
+    if(accessdb.session && accessdb.session.get("userTestingProfiles")){
+        if(accessdb.session.get("userTestingProfiles").length<1){
+            UserTestingProfile.loadUserProfilesByUserId(function(error, data, status){
+                accessdb.session.set("userTestingProfiles", data);
+            });
+        }
+    }
+    else{
+        console.warn("user profiles not in session :");
+        console.log(accessdb.session);
     }
     UserTestingProfile.showTestingProfiles();
 
@@ -95,6 +101,7 @@ window.accessdb.appRouter.on('route:test-run', function (id) {
     }
     window.accessdb.appRouter.loadPage("test-run");
     accessdb.testingRunner = new accessdb.Models.TestingHelper();
+    accessdb.testingRunner.initHandlers();
     Utils.resetForm('#testingForm');
     accessdb.testingRunner.start();
     accessdb.testingRunner.loadNext();
@@ -112,7 +119,9 @@ window.accessdb.appRouter.on('route:tests-finish', function () {
 });
 window.accessdb.appRouter.on('route:tests-run', function () {
     window.accessdb.appRouter.loadPage("tests-run");
-    accessdb.TreeHelper.loadTrees();
+    accessdb.TreeHelper.loadTrees(null, function(){
+        TestUnit.loadTestsTree();
+    });
 });
 window.accessdb.appRouter.on('route:tests-run-submit', function () {
     window.accessdb.appRouter.loadPage("tests-run-submit");

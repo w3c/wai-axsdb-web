@@ -60,6 +60,32 @@ function UserTestingProfile() {
         }
     };
 };
+UserTestingProfile.initHandlers = function(){
+    $(document).on("click", ".userProfilesDiv input", function (event) {
+        var id = $(event.target).attr("value");
+        console.log(id);
+        accessdb.session.set("testProfileId",id);
+        $("#editProfileBtn").attr("href","#/user-profile-edit.html/"+id);
+    });
+    $("#deleteProfileBtn").on("click", function(event)
+    {
+        UserTestingProfile.deleteUserProfilesById(accessdb.session.get("testProfileId"), function(error, data, status)
+        {
+            if(!error){
+                UserTestingProfile.loadUserProfilesByUserId(function(error, data, status){ });
+            }
+        });
+    });
+    $(".testprofileSave").on("click", function(event){
+        var p = new UserTestingProfile();
+        p.loadDataFromForm();
+        UserTestingProfile.persistUserProfile(p, function(out){
+            UserTestingProfile.loadUserProfilesByUserId(function(error, data, status){
+                accessdb.session.set("userTestingProfiles", data);
+            });
+        });
+    });
+};
 UserTestingProfile.toString = function (testProfile) {
     var text = testProfile.platform.name + "  " + testProfile.platform.version.text;
     if (testProfile.userAgent.name)

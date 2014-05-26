@@ -113,6 +113,9 @@
             },
             getTestsTreeData : function (filter, callback){
                 Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_TESTUNITS_TREE, "POST", filter, callback);
+            },
+            deleteResourceFile : function(fileId,testId, callback, tatgetE){
+                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_DELETE_RESOURCE_FILE + accessdb.sessionId + "/" + testId+ "/" + fileId , "DELETE", null, callback, tatgetE);
             }
         },
         TESTRESULT: {
