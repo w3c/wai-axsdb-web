@@ -1,20 +1,32 @@
 <article id="axsdb-page-log-in">
     <h1 class="page-title">
-       Log-in page
+       Accessibility Support Database
     </h1>
     <nav class="navbar" role="navigation">
         <a href="#/home.html" class="btn-small"><span class="icon-home"></span> Home</a>
     </nav>
-    <div>
+    <div class="centered">
         <div role="alert" id="infodiv"></div>
-
+        <h2>Login</h2>
         <form id="loginform" method="post" action="">
-            <input type="hidden" name="sessionid" value="">
-            <label for="userId">Username:</label>
-            <input type="text" placeholder="Your W3C username" required aria-required=”true” name="userId" id="userId" title="Your W3C account username" >
-            <label for="pass" class="ui-input-text" required>Password:</label>
-            <input type="password" placeholder="Your W3C password" required aria-required=”true” name="pass" id="pass" title="Your W3C account password" >
-            <input type="submit" id="doLogin" value="Login" />
+            <div class="form-block">
+                <div class="form-row">
+                    <label for="userId">Username:</label>
+                    <span>
+                        <input type="text" placeholder="Your W3C username" required aria-required=”true” name="userId" id="userId" title="Your W3C account username" >
+                    </span>
+                </div>
+                <div class="form-row">
+                    <label for="pass" class="ui-input-text" required>Password:</label>
+                    <span>
+                        <input type="password" placeholder="Your W3C password" required aria-required=”true” name="pass" id="pass" title="Your W3C account password" >
+                    </span>
+                </div>
+            </div>
+            <div class="form-submit">
+                <input type="hidden" name="sessionid" value="">
+                <button type="submit" id="doLogin" value="Login" class="btn-primary">Login</button>
+            </div>
         </form>
         <p>Note that login is not required to use and contribute to this database. <a href="#why-login" class="ui-link">Then, why login?</a></p>
 
@@ -26,9 +38,7 @@
             </p>
         </div>
 
-        <h2>
-            <a name="why-login" id="why" shape="rect" class="ui-link">Why Login?</a>
-        </h2>
+        <h2 id="why-login">Why Login?</h2>
         <p>
             Anyone can <a href="http://www.w3.org/Help/Account/Request/Public" class="ui-link">create
             a W3C Account <img src="http://www.w3.org/Icons/tr.png" alt="different format">
