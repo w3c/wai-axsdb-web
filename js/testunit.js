@@ -102,7 +102,7 @@ TestUnit.prototype.getResourceFileUrl = function(src) {
 };
 TestUnit.prototype.loadById = function(id,callback) {
     var obj = this;
-    accessdb.API.TEST.findById(id, function(error, data, status){
+    accessdb.API.TEST.findByUnitId(id, function(error, data, status){
         obj.setData(data);
         callback(obj);
     }); 
@@ -539,7 +539,7 @@ TestUnit.loadTests = function (ids, callback){
     var tests = [];
     function createAddTest(callback, id) {
         console.log("task id" + id);
-        accessdb.API.TEST.findById(id, function (error, data, status) {
+        accessdb.API.TEST.findByUnitId(id, function (error, data, status) {
             tests[id] = data;
             if(typeof callback === "function")
                 callback(error, data);

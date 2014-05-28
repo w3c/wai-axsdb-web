@@ -20,6 +20,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
     },
     initialize: function () {
         var self = this;
+        self.set("sessionId",accessdb.config.sessionId);
         self.loadLocalSession();
         if (self.get("sessionId") && self.get("userId") != null) {
             if (self.isSessionAuthenticated()) {
@@ -215,9 +216,9 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         var data = Utils.ajaxSync(accessdb.config.services.URL_SERVICE_TESTINGSESSION_LOAD + this.get("sessionId"), 'GET',
             null);
         var auth = false;
-        if (!data)
-            $("body").html("<p>It seems there is a problem with the server side. Please contact admin</p>");
-        if (data.sessionId)
+       // if (!data)
+         //   $("body").html("<p>It seems there is a problem with the server side. Please contact admin</p>");
+        if (data && data.sessionId)
             auth = true;
         return auth;
     },
