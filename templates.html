@@ -11,19 +11,17 @@
     </li>
 </script>
 <script type="text/template" id="user-profile-template">
-    <div class="ui-radio">
-        <input name="testprofilesin" id="testprofile-<%= id %>" value="<%= id %>" type="radio">
-        <label class="ui-radio-on ui-btn ui-btn-corner-all ui-fullsize ui-btn-icon-left ui-btn-up-c" for="testprofile-<%= id %>">
-            <span class="ui-btn-inner">
-                <span class="ui-btn-text">
-                    OS: <%= p.platform.name %> <%= p.assistiveTechnology.version.text %><br>
-                    Browser: <%= p.userAgent.name %> <%= p.userAgent.version.text %><br>
-                    Assistive Technology: <%= p.assistiveTechnology.name %> <%= p.assistiveTechnology.version.text %> <br>
-                    Plugin: <%= p.plugin.name %> <%= p.plugin.version.text %>
-                </span>
-            </span>
-        </label>
-    </div>
+    <tr>
+        <td><input name="testprofilesin" id="testprofile-<%= id %>" value="<%= id %>" type="radio" required></td>
+        <td>
+            <label for="testprofile-<%= id %>">
+                OS: <%= p.platform.name %> <%= p.assistiveTechnology.version.text %><br>
+                Browser: <%= p.userAgent.name %> <%= p.userAgent.version.text %><br>
+                Assistive Technology: <%= p.assistiveTechnology.name %> <%= p.assistiveTechnology.version.text %> <br>
+                Plugin: <%= p.plugin.name %> <%= p.plugin.version.text %>
+            </label>
+        </td>
+    </tr>
 </script>
 <script type="text/template" id="test-run-finish-resultsList">
     <header>

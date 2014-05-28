@@ -10,36 +10,44 @@
 		<div class="content">
 			<div class="grid">
 				<ol class="timeline">
-					<li class="timeline-current"><span class="visuallyhidden">Current Step: </span><span><span>Select Profiles</span></span></li>
+					<li class="timeline-current"><span class="visuallyhidden">Current Step: </span><span><span>Select Environment</span></span></li>
 					<li><span><span>Select Tests</span></span></li>
 					<li><span><span>Run Tests</span></span></li>
 					<li><span><span>View Results</span></span></li>
 					<li><span><span>Submit Results</span></span></li>
 				</ol>
-				<h2>Select Testing Profile</h2>
-				<div class="with-filter">
+				<div class="centered">
+					<h2>Select Testing Environment</h2>
+					<!--
 					<aside class="column-first">
 						<h3 class="information"><span class="icon-info"></span> Information</h3>
-						<p>This page allows you to select, add, edit or remove your user testing profiles. These are saved in your profile if you are logged in for future use. Otherwise these are saved temporaly in your browser session (until you close your tab/window).</p>
+						<p>This page allows you to select, add, edit or remove your user testing environments. These are saved in your environment if you are logged in for future use. Otherwise these are saved temporaly in your browser session (until you close your tab/window).</p>
 					</aside>
+					-->
 					<div class="column-second">
-						<header>
-							<h3>Select Profile</h3>
 							<div class="btn-pills">
-								<a href="#/user-profile-add.html" class="btn"><span class="icon-plus-sign"></span> Add Profile</a>
-								<a href="#/user-profile-edit.html/-1" id="editProfileBtn" class="btn"><span class="icon-pencil"></span> Edit Profile</a>
-								<a href="#/user-profiles.html" id="deleteProfileBtn" class="btn"><span class="icon-minus-sign-alt"></span> Delete Profile</a>
+								<a href="#/user-profile-add.html" class="btn"><span class="icon-plus-sign"></span> Add Environment</a>
+								<a href="#/user-profile-edit.html/-1" id="editProfileBtn" class="btn"><span class="icon-pencil"></span> Edit selected Environment</a>
+								<a href="#/user-profiles.html" id="deleteProfileBtn" class="btn"><span class="icon-minus-sign-alt"></span> Delete selected Environment</a>
 							</div>
-						</header>
-						<fieldset class="userProfilesDiv ui-corner-all ui-controlgroup ui-controlgroup-vertical">
+						<table class="full-width environments">
+							<thead>
+								<tr>
+									<th>Select</th>
+									<th>Testing Environment</th>
+								</tr>
+							</thead>
+							<tbody class="userProfilesDiv ui-corner-all ui-controlgroup ui-controlgroup-vertical">
 
-                        </fieldset>
+							</tbody>
+            </table>
+					</div>
+					<div class="steps">
+						<!--<a href="test-run.html" class="btn-primary btn-next"><span class="icon-arrow-right"></span> Next: Carry out Tests</a>-->
+						<a href="#/tests-run.html" class="btn-primary btn-next">Next: Select Test Cases <span class="icon-arrow-right"></span></a>
 					</div>
 				</div>
-			</div>
-			<div class="steps">
-				<!--<a href="test-run.html" class="btn-primary btn-next"><span class="icon-arrow-right"></span> Next: Carry out Tests</a>-->
-				<a href="#/tests-run.html" class="btn-primary btn-next">Next: Select Test Cases <span class="icon-arrow-right"></span></a>
+
 			</div>
 		</div>
 </article>
