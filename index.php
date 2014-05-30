@@ -43,11 +43,7 @@
     <script type="text/javascript" src="js/testresult-views.js"></script>
     <script type="text/javascript" src="js/code.js"></script>
     <script type="text/javascript" src="js/admin.js"></script>
-
     <script type="text/javascript" src="js/mockup.js"></script>
- <script type="text/javascript">
- 	accessdb.config.sessionId = "<?php echo session_id();?>";
- </script>
 </head>
 <body>
 <header role="banner">

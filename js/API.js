@@ -158,6 +158,14 @@
             }
         },
         TESTINGSESSION: {
+            getSession: function (callback) {
+                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTINGSESSION_LOAD + accessdb.sessionId, 'GET', null, function (error, data, status) {
+                    if(!error){
+                        accessdb.sessionId = data.sessionId;
+                    }
+                    callback(error, data, status);
+                });
+            },
             save: function (session, callback) {
                 accessdb.sessionId = session.get("sessionId");
                 Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTINGSESSION_SAVE, 'POST', session, callback);
