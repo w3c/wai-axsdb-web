@@ -21,7 +21,7 @@
     <script src="js/lib/codemirror/css.js"></script>
     <script src="js/lib/codemirror/vbscript.js"></script>
     <script src="js/lib/codemirror/htmlmixed.js"></script>
-    <script type="text/javascript" src="js/lib/jquery.multiFieldExtender-2.0.min.js"></script>
+    <script type="text/javascript" src="js/lib/jquery.multiFieldExtender-2.0.js"></script>
 
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/lib/jquery.form.js"></script>

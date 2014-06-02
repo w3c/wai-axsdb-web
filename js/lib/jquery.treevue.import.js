@@ -39,6 +39,11 @@
             }
 
             $('<label />').text(data.label).attr('for', boxId).appendTo(liNode);
+            //FIXME : remove from here
+            if(data.type == "TestUnitDescription")
+            {
+                $('<a />').text(" test details").attr('href', "#/test.html/"+data.value).attr("class", "btn-small").appendTo(liNode);
+            }
 
         } else { // No checkbox, just add text
             liNode.text(data.label);

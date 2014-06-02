@@ -41,28 +41,30 @@ function TestUnit() {
     };
     $("#test-form-status").val(this.status.toLowerCase());
 };
+TestUnit.loadAndViewTestDetails = function (id){
+    console.log( "test id: " + id );
+    var test = new TestUnit();
+    test.loadById(id, function(t){
+        if(t!==null){
+            t.showTestUnitsDetails();
+            Utils.UIRoleAdapt();
+        }
+        else{
+            $("#test-details-holder").html("No test found with id: " + id);
+        }
+    });
+};
 TestUnit.prototype.showTestUnitsDetails = function()
 {
-    var testurl = this.getTestFileUrl();
-    $("#tu_testUnitId").html(this.testUnitId);
-    $("#tu_title").html(this.title);
-    $("#tu_description").html(this.description);
-    $("#tu_requirement").html(this.technique.nameId + ": " + this.technique.title);
-    $("#tu_webTechnology").html(this.technique.webTechnology);
-    $("#tu_status").html(this.status);
-    $("#tu_date").html(this.date);
-    $("#tu_testurl a").attr("href",this.getTestFileUrl());
-    $("#tu_comment").html(this.comment);
-    $("#tu_question").html(this.testProcedure.yesNoQuestion);
-    $("#tu_expected").html(this.testProcedure.expectedResult);
-    var steps=TestUnit.loadStepsData(this.testProcedure);
-
-    var stepsH = "";
-    for ( var stepId in steps) {
-        var step = steps[stepId].step;
-        stepsH+="<li>"+step+"</li>";
-    }
-    $("#tu_steps").html(stepsH);
+    var steps = TestUnit.loadStepsData(this.testProcedure);
+    var testRef = this.getTestFileUrl();
+    var t = _.clone(this);
+    t.testFile = testRef;
+    t.testProcedure.steps = steps;
+    var tmp = _.template($('#test-details-template').html(), {
+        t: t
+    });
+    $("#test-details-holder").html(tmp);
     //this.showResourceFilesList();
 
 };
@@ -83,7 +85,7 @@ TestUnit.prototype.showInTestingPage = function(){
 TestUnit.prototype.getTestFileUrl = function() {
     var testurl=accessdb.config.URL_TESUITES_ROOT + "notest.html";
     try{
-        testurl = accessdb.config.URL_TESUITES_ROOT + this.technique.webTechnology + "/" + getFileNameWithNoExt(this.subject.testFile.src) + "/"+ this.subject.testFile.src;
+        testurl = accessdb.config.URL_TESUITES_ROOT + this.technique.webTechnology + "/" + Utils.getFileNameWithNoExt(this.subject.testFile.src) + "/"+ this.subject.testFile.src;
     }
     catch (e) {
         // TODO: handle exception
@@ -93,7 +95,7 @@ TestUnit.prototype.getTestFileUrl = function() {
 TestUnit.prototype.getResourceFileUrl = function(src) {
     var testurl=accessdb.config.URL_TESUITES_ROOT + "notest.html";
     try{
-        testurl = accessdb.config.URL_TESUITES_ROOT + this.technique.webTechnology + "/" + getFileNameWithNoExt(this.subject.testFile.src) + "/"+ src;
+        testurl = accessdb.config.URL_TESUITES_ROOT + this.technique.webTechnology + "/" + Utils.getFileNameWithNoExt(this.subject.testFile.src) + "/"+ src;
     }
     catch (e) {
         // TODO: handle exception
@@ -103,23 +105,15 @@ TestUnit.prototype.getResourceFileUrl = function(src) {
 TestUnit.prototype.loadById = function(id,callback) {
     var obj = this;
     accessdb.API.TEST.findByUnitId(id, function(error, data, status){
-        obj.setData(data);
+        if(!error)
+            obj.setData(data);
+        else
+            obj = null;
         callback(obj);
     }); 
 };
-TestUnit.prototype.deleteTest = function(callback) {
-    var url = accessdb.config.services.URL_SERVICE_DELETE_TESTUNIT +accessdb.session.get("sessionId") + "/" + this.id; 
-    $.ajax({
-        'url': url,
-        data: {}, 
-        type : "DELETE",
-        error: function(xhr, status) {
-            callback(xhr.status); 
-        },
-        complete: function(xhr, statusText){
-            callback(xhr.status); 
-        }
-    });
+TestUnit.delete = function(testUnitId, callback) {
+   accessdb.API.ADMIN.deleteDeepTest(testUnitId, callback);
 };
 TestUnit.prototype.loadByIdSync = function(id) {
     var obj = this;
@@ -391,11 +385,13 @@ TestUnit.loadStepsData = function(testProcedure)
     for ( var stepId in steps) {
         var step = steps[stepId];
         var txt = step.step;
-        var stepData = {
-            step : txt,
-            orderId : step.orderId
-        };
-        stepsData.push(stepData);
+        if(txt!==undefined){
+            var stepData = {
+                step : txt,
+                orderId : step.orderId
+            };
+            stepsData.push(stepData);
+        }
     }
     stepsData.sort(SortByOrder);
     return stepsData;

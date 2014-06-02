@@ -1,11 +1,23 @@
 (function () {
     /**
-     * The public read only API
-     * require; utils.js
+     * axsDB REST API implementation
+     * @See https://github.com/w3c/wai-axsdb-services
      */
     window.accessdb = window.accessdb || {};
     window.accessdb.config = window.accessdb.config || {};
+
+    // Config to override
     window.accessdb.config.URL_API_ROOT = "http://www.w3.org/WAI/accessibility-support/api/";
+    window.accessdb.config.loadingStart = function(holder){
+        var div = $('<div class="progress"><div>Loading…</div></div>');
+        $(holder).empty();
+        $(holder).append(div);
+    };
+    window.accessdb.config.loadingEnd = loadingEnd=function(holder){
+        $(holder).find(".progress").remove();
+    };
+    // end config
+
     window.accessdb.sessionId = null,
     window.accessdb.Models = window.accessdb.Models || {};
     window.accessdb.Models.Filter = function (page) {
@@ -40,6 +52,7 @@
         URL_SERVICE_INSERT_TESTUNIT: "test/commit",
         URL_SERVICE_DELETE_RESOURCE_FILE: "test/resource/",
         URL_SERVICE_DELETE_TESTUNIT: "test/",
+        URL_SERVICE_DELETE_DEEP_TESTUNIT: "admin/tests/deepdelete/", //{sessionId}/{nameid}",
         URL_SERVICE_GET_TESTUNITS: "test",
         URL_SERVICE_GET_TESTUNITS_TREE: "test/tree",
         // TestResult resource
@@ -72,94 +85,116 @@
     }
     window.accessdb.API = {
         WCAG2: {
-            findTechnqueByName: function (techId) {
-
-            },
             deleteDeepTechnique: function (nameId, callback) {
                 var url = accessdb.config.services.URL_SERVICE_ADMIN_DEL_TECHNIQUE_DEEP + accessdb.sessionId + "/" + nameId;
-                Utils.ajaxAsyncWithCallBack(url, "DELETE", null, callback, true);
+                ajax(url, "DELETE", null, callback, true);
             },
             getWebtechsTreeData: function (callback) {
-                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TECHNIQUES_TECHS, "GET", null, callback);
+                ajax(accessdb.config.services.URL_SERVICE_TECHNIQUES_TECHS, "GET", null, callback);
             },
             getWCAG2TreeData: function (level, callback) {
                 level = level || "AA";
-                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TECHNIQUES_WCAG2 + level, "GET", null, callback);
+                ajax(accessdb.config.services.URL_SERVICE_TECHNIQUES_WCAG2 + level, "GET", null, callback);
+            }
+        },
+        QUERY: {
+            doQuery: function (query, callback) {
+                var url = accessdb.config.services.URL_SERVICE_QUERY + encodeURI(query);
+                ajax(url, "GET", null,  function (error, data, status) {
+                    if(!error){
+                        callback(null, data.list);
+                    }
+                    else{
+                        console.warn("error while querying" + error);
+                        callback(error);
+                    }
+                });
             }
         },
         TEST: {
             findByUnitId: function (testId, callback) {
-                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_TESTUNITS + "/" + testId, "GET", null, callback);
+                ajax(accessdb.config.services.URL_SERVICE_GET_TESTUNITS + "/" + testId, "GET", null, callback);
             },
             countAll: function (callback) {
                 var query = "select count(distinct u.testUnitId) from TestUnitDescription as u";
-                Utils.doSelectQueryWithCallBack(accessdb.config.services.URL_SERVICE_QUERY, query, function (error, data, status) {
-                    if (data && data.list && data.list[0])
-                        data = data.list[0];
-                    else
-                        data = null;
-                    callback(error, data, status);
+                accessdb.API.QUERY.doQuery(query, function (error, rows) {
+                    if(!error && rows && rows[0]){
+                        callback(rows[0]);
+                    }
+                    callback(null);
                 });
             },
             getTestsTreeData : function (filter, callback){
-                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_TESTUNITS_TREE, "POST", filter, callback);
+                ajax(accessdb.config.services.URL_SERVICE_GET_TESTUNITS_TREE, "POST", filter, callback);
             },
             deleteResourceFile : function(fileId,testId, callback, tatgetE){
-                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_DELETE_RESOURCE_FILE + accessdb.sessionId + "/" + testId+ "/" + fileId , "DELETE", null, callback, tatgetE);
+                ajax(accessdb.config.services.URL_SERVICE_DELETE_RESOURCE_FILE + accessdb.sessionId + "/" + testId+ "/" + fileId , "DELETE", null, callback, tatgetE);
+            },
+            deleteTest : function(id, callback) {
+                var url = accessdb.config.services.URL_SERVICE_DELETE_TESTUNIT + accessdb.sessionId + "/" + id;
+                ajax(url , "DELETE", null, callback);
+
             }
+
         },
         TESTRESULT: {
             getATTree: function (filter, callback) {
-                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_AT, "POST", filter, callback);
+                ajax(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_AT, "POST", filter, callback);
             },
             getUATree: function (filter, callback) {
-                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_UA, "POST", filter, callback);
+                ajax(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_UA, "POST", filter, callback);
             },
             getOSTree: function (filter, callback) {
-                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_OS, "POST", filter, callback);
+                ajax(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_OS, "POST", filter, callback);
             },
             persistBunch: function (bunch, callback) {
-                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTRESULT_PERSIST, 'POST', bunch, callback);
+                ajax(accessdb.config.services.URL_SERVICE_TESTRESULT_PERSIST, 'POST', bunch, callback);
             },
             getDataOverview: function (filter, callback, targetE) {
                 var url = accessdb.config.services.URL_SERVICE_TESTRESULT_DATAOVERVIEW;
-                Utils.ajaxAsyncWithCallBack(url, "POST", filter, function (error, data, status) {
+                ajax(url, "POST", filter, function (error, data, status) {
                     if(data)
                         data = data.list;
                     callback(error, data, status);
                 }, targetE);
+            },
+            getResultsByTechnique : function(filter, techniqueNameId, callback, targetE){
+                ajax(accessdb.config.services.URL_SERVICE_TESTRESULT_VIEWTECHNIQUE + techniqueNameId, "POST", filter, callback, targetE);
+            },
+            getResultsFullViewByTechnique : function(filter, techniqueNameId, callback, targetE){
+                ajax(accessdb.config.services.URL_SERVICE_TESTRESULT_FULLVIEWTECHNIQUE + techniqueNameId, "POST", filter, callback, targetE);
+            },
+            getATVersionsOfATName : function(name, callback){
+                var query = "select distinct testingProfile.assistiveTechnology.version.text " +
+                    "from TestResult where testingProfile.assistiveTechnology.name='"+name+"'";
+                accessdb.API.QUERY.doQuery(query, callback);
             }
         },
         WEBTECHNOLOGIES: {
             findAll: function (callback) {
                 var query = "from WebTechnology as t order by t.nameId";
-                Utils.doSelectQueryWithCallBack(accessdb.config.services.URL_SERVICE_QUERY, query, function (error, data, status) {
-                    if (data && data.list)
-                        data = data.list || null;
-                    callback(error, data, status);
-                });
+                accessdb.API.QUERY.doQuery(query, callback);
             }
         },
-
         PROFILE: {
             findByUserId: function (userId, callback) {
-                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_GET_ALLUSERPROFILES + userId + "/" + accessdb.sessionId, "GET", null, callback);
+                ajax(accessdb.config.services.URL_SERVICE_GET_ALLUSERPROFILES + userId + "/" + accessdb.sessionId, "GET", null, callback);
             },
             insertUserProfile: function (userId, profile, callback) {
-                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_POST_PROFILE + userId + "/" + accessdb.sessionId,
+                ajax(accessdb.config.services.URL_SERVICE_POST_PROFILE + userId + "/" + accessdb.sessionId,
                     "POST", profile, callback);
             },
             updateUserProfile: function (userId, profile, callback) {
-                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_PUT_PROFILE + accessdb.sessionId, "POST", profile, callback);
+                ajax(accessdb.config.services.URL_SERVICE_PUT_PROFILE + accessdb.sessionId, "POST", profile, callback);
             },
             deleteUserProfile: function (id, callback) {
-                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_DELETE_PROFILE + id + "/" + accessdb.sessionId,
+                ajax(accessdb.config.services.URL_SERVICE_DELETE_PROFILE + id + "/" + accessdb.sessionId,
                     "DELETE", {}, callback);
             }
         },
         TESTINGSESSION: {
             getSession: function (callback) {
-                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTINGSESSION_LOAD + accessdb.sessionId, 'GET', null, function (error, data, status) {
+                ajax(accessdb.config.services.URL_SERVICE_TESTINGSESSION_LOAD + accessdb.sessionId, 'GET', null, function (error, data, status) {
                     if(!error){
                         accessdb.sessionId = data.sessionId;
                     }
@@ -168,18 +203,54 @@
             },
             save: function (session, callback) {
                 accessdb.sessionId = session.get("sessionId");
-                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTINGSESSION_SAVE, 'POST', session, callback);
+                ajax(accessdb.config.services.URL_SERVICE_TESTINGSESSION_SAVE, 'POST', session, callback);
             },
             persist: function (session, callback) {
-                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_TESTINGSESSION_PERSIST + accessdb.sessionId,
+                ajax(accessdb.config.services.URL_SERVICE_TESTINGSESSION_PERSIST + accessdb.sessionId,
                     'POST', session, callback);
             },
             login: function (loginData, callback, targetE) {
-                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_LOGIN, 'POST', loginData, callback, targetE);
+                ajax(accessdb.config.services.URL_SERVICE_LOGIN, 'POST', loginData, callback, targetE);
             },
             logout: function (session, callback) {
-                Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_LOGOUT + accessdb.sessionId, 'POST', null, callback);
+                ajax(accessdb.config.services.URL_SERVICE_LOGOUT + accessdb.sessionId, 'POST', null, callback);
+            }
+        },
+        ADMIN: {
+            deleteDeepTest : function(testUnitId, callback) {
+                var url = accessdb.config.services.URL_SERVICE_DELETE_DEEP_TESTUNIT + accessdb.sessionId + "/" + testUnitId;
+                ajax(url , "DELETE", null, callback);
             }
         }
+    };
+
+    function ajax(url, method, data, callback, targetE)
+    {
+        if(targetE){
+            window.accessdb.config.loadingStart(targetE);
+        }
+        $.ajax({
+            url: url,
+            dataType: "json",
+            contentType: "application/json",
+            type : method,
+            data : JSON.stringify(data),
+            async: true,
+            cache: false,
+            timeout: 30000,
+            processData: false,
+            success: function(data, textStatus, jqXHR){
+                if(targetE){
+                    window.accessdb.config.loadingEnd(targetE);
+                }
+                callback(null, data, jqXHR.status);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                if(targetE){
+                    window.accessdb.config.loadingEnd(targetE);
+                }
+                callback(jqXHR, null, null);
+            }
+        });
     };
 })();
