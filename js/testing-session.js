@@ -20,16 +20,6 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
     },
     initialize: function () {
         var self = this;
-        self.loadLocalSession();
-        if (self.get("sessionId") && self.get("userId") != null) {
-            if (self.isSessionAuthenticated()) {
-                $(".login-info").html("Log out " + self.get("userId"));
-                $(".login-info").parent().attr("href","#/log-out.html");
-
-            }
-        }
-        else
-            self.set("sessionId", accessdb.config.sessionId);
         this.set("profiles_index", 0);
         this.on('change:userId', function (o) {
             console.log("change:userId");
@@ -178,28 +168,34 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
     login: function (lData, callback, targetE) {
         this.resetLocalSession();
         var self = this;
-        if (self.isValid()) {
-            accessdb.API.TESTINGSESSION.login(lData, function (error, data, status) {
-                if (!error) {
-                    if (data.userId !== null && status===200) {
-                        self.set(data);
-                        self.set("userId",data.userId);
-                        self.load();
-                        UserTestingProfile.loadUserProfilesByUserId(function(error, data1){
-                            accessdb.session.set("userTestingProfiles", data1);
-                        });
-                        callback(true);
+        this.load(function(error){
+            if(error){
+                console.warn("session invalid for login");
+                callback(false);
+            }
+            if (self.isValid()) {
+                accessdb.API.TESTINGSESSION.login(lData, function (error, data, status) {
+                    if (!error) {
+                        if (data.userId !== null && status===200) {
+                            self.set(data);
+                            self.set("userId",data.userId);
+                            self.load();
+                            UserTestingProfile.loadUserProfilesByUserId(function(error, data1){
+                                accessdb.session.set("userTestingProfiles", data1);
+                            });
+                            callback(true);
+                        }
+                        else{
+                            callback(false);
+                        }
                     }
                     else{
+                        console.error(error.status);
                         callback(false);
                     }
-                }
-                else{
-                    console.error(error.status);
-                    callback(false);
-                }
-            }, targetE);
-        }
+                }, targetE);
+            }
+        })
     },
     logout: function (callback) {
         var self = this;
@@ -211,16 +207,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
             callback(error, data, status);
         });
     },
-    isSessionAuthenticated: function () {
-        var data = Utils.ajaxSync(accessdb.config.services.URL_SERVICE_TESTINGSESSION_LOAD + this.get("sessionId"), 'GET',
-            null);
-        var auth = false;
-        if (!data)
-            $("body").html("<p>It seems there is a problem with the server side. Please contact admin</p>");
-        if (data.sessionId)
-            auth = true;
-        return auth;
-    },
+
     resetLocalSession: function () {
         Utils.eraseCookie('accessdb-session-id');
         Utils.eraseCookie('accessdb-session-userId');
@@ -234,7 +221,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         }
         else {
             // TODO: cookie + server side
-            this.set("sessionId", Utils.readCookie("accessdb-session-id") || accessdb.config.sessionId);
+            this.set("sessionId", Utils.readCookie("accessdb-session-id") || accessdb.sessionId);
             if(Utils.readCookie("accessdb-session-userId"))
                 this.set("userId", Utils.readCookie("accessdb-session-userId"));
         }
@@ -252,15 +239,38 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         }
         console.log("session saved in local storage");
     },
-    load: function () {
+    isSessionAuthenticated: function () {
+        var auth = false;
+        if (this.get("userId")!==null && this.get("userId")!=="anon")
+            auth = true;
+        return auth;
+    },
+    load: function (callback) {
+        var self = this;
         this.loadLocalSession();
-        if (this.get("sessionId") && this.get("userId") != null) {
-            if (this.isSessionAuthenticated()) {
-                $(".userid").html("Logout " + this.get("userId"));
+        accessdb.API.TESTINGSESSION.getSession(function(error, data, status){
+            if(error)
+                callback(error);
+            if(status===201){ // new session created server side
+                accessdb.session.set("sessionId", data.sessionId);
+                console.log("New session created: " + self.get("sessionId"));
             }
-        }
-        else
-            this.set("sessionId", accessdb.config.sessionId);
+            else if(status===200){ // existing session
+                accessdb.session.set("sessionId", data.sessionId);
+                if (self.isSessionAuthenticated()) {
+                    $(".login-info").html("Log out " + self.get("userId"));
+                    $(".login-info").parent().attr("href","#/log-out.html");
+                    $(".userid").html(self.get("userId"));
+                }
+            }
+            else{
+                console.warn("unknown state");
+                callback("error");
+            }
+            callback();
+        });
+
+
         this.set("profiles_index", 0);
     },
     initHandlers : function(){

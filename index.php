@@ -21,7 +21,7 @@
     <script src="js/lib/codemirror/css.js"></script>
     <script src="js/lib/codemirror/vbscript.js"></script>
     <script src="js/lib/codemirror/htmlmixed.js"></script>
-    <script type="text/javascript" src="js/lib/jquery.multiFieldExtender-2.0.min.js"></script>
+    <script type="text/javascript" src="js/lib/jquery.multiFieldExtender-2.0.js"></script>
 
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/lib/jquery.form.js"></script>
@@ -44,9 +44,7 @@
     <script type="text/javascript" src="js/testresult-views.js"></script>
     <script type="text/javascript" src="js/code.js"></script>
     <script type="text/javascript" src="js/admin.js"></script>
- <script type="text/javascript">
- 	accessdb.config.sessionId = "<?php echo session_id();?>";
- </script>
+    <script type="text/javascript" src="js/mockup.js"></script>
 </head>
 <body>
 <header role="banner">
@@ -72,6 +70,5 @@
 
 <script type="text/javascript" src="js/router.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
-<script type="text/javascript" src="js/mockup.js"></script>
 </body>
 </html>

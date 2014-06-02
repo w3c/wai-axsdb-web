@@ -5,20 +5,18 @@ window.accessdb.Models.AppRouter = Backbone.Router.extend({
         "home.html": "home",
         "results.html": "results",
         "results-by-technique.html/:id": "test",
-
-
         "test-run.html/:id": "test-run",
         "test-run.html": "test-run",
+        "test.html/:id": "test",
+        "test-delete.html/:id": "test-delete",
         "test-submit.html": "test-submit",
-        "test-submit.html/:id": "test-update",
+        "test-submit.html/:id": "test-edit",
         "tests-finish.html": "tests-finish",
         "tests-run.html": "tests-run",
         "tests-run-submit.html": "tests-run-submit",
         "user-profiles.html": "user-profiles",
         "user-profile-add.html": "user-profile-add",
         "user-profile-edit.html/:id": "user-profile-edit",
-        "test.html/:id": "test",
-
         "log-in.html": "log-in",
         "log-out.html": "log-out",
         "admin.html": "admin-techniques",
@@ -30,7 +28,6 @@ window.accessdb.appRouter = new window.accessdb.Models.AppRouter;
 
 window.accessdb.appRouter.on('route:admin-techniques', function () {
     window.accessdb.appRouter.loadPage("admin-techniques");
-    Utils.UIRoleAdapt();
     accessdb.admin.init();
 });
 window.accessdb.appRouter.on('route:home', function () {
@@ -110,6 +107,22 @@ window.accessdb.appRouter.on('route:test-submit', function () {
     window.accessdb.appRouter.loadPage("test-submit");
     TestUnit.initFormPage();
 });
+window.accessdb.appRouter.on('route:test-edit', function (id) {
+    window.accessdb.appRouter.loadPage("test-submit");
+    TestUnit.initFormPage(id);
+});
+window.accessdb.appRouter.on('route:test-delete', function (id) {
+    TestUnit.delete(id, function(res){
+        if(res && res.status===200){
+            Utils.msg2user("Delete done");
+            window.accessdb.appRouter.loadPage("test-submit");
+        }
+        else{
+            Utils.msg2user("Delete not done");
+            console.warn(error);
+        }
+    })
+});
 window.accessdb.appRouter.on('route:test-update', function (id) {
     window.accessdb.appRouter.loadPage("test-update");
 });
@@ -129,7 +142,7 @@ window.accessdb.appRouter.on('route:tests-run-submit', function () {
 
 window.accessdb.appRouter.on('route:test', function (id) {
     window.accessdb.appRouter.loadPage("test");
-    console.log( "Get post number " + id );
+    TestUnit.loadAndViewTestDetails(id);
 });
 window.accessdb.appRouter.on('route:defaultRoute', function(actions) {
     window.accessdb.appRouter.loadPage("notfound");
@@ -140,6 +153,7 @@ window.accessdb.appRouter.loadPage = function(id){
     $("article").hide();
     this.page = accessdb.config.PAGE_ID_PREFIX + id;
     $("#"+accessdb.config.PAGE_ID_PREFIX + id).show();
+    Utils.UIRoleAdapt();
 };
 window.accessdb.appRouter.redirect = function(page){
     window.location.href = "#/" + page;

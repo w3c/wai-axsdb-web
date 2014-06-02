@@ -1,3 +1,66 @@
+<script type="text/template" id="test-details-template">
+    <div class="roleExpertsOnly">
+        <a class="btn-small" href="#test-submit.html/<%= t.testUnitId %>">Edit Test</a>
+        <a class="btn-small" href="#test-delete.html/<%= t.testUnitId %>">Delete Test</a>
+    </div>
+    <table border="1">
+        <caption>Test Case Details</caption>
+        <tbody>
+            <tr>
+                <th scope="row">ID</th>
+                <td><%= t.testUnitId %></td>
+            </tr>
+            <tr>
+                <th scope="row">Title</th>
+                <td><%= t.title %></td>
+            </tr>
+            <tr>
+                <th scope="row">Technique</th>
+                <td><%= t.technique.nameId %>: <%= t.technique.title %></td>
+            </tr>
+            <tr>
+                <th scope="row">Status</th>
+                <td><%= t.status %></td>
+            </tr>
+            <tr>
+                <th scope="row">Date</th>
+                <td><%= t.date %></td>
+            </tr>
+            <tr>
+                <th scope="row">Description</th>
+                <td><%= t.description %></td>
+            </tr>
+            <tr>
+                <th scope="row">Test Page</th>
+                <td>
+                    <a target="thetest" href="<%= t.testFile %>">Open Test Page in new browser window</a>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Testing Steps</th>
+                <td>
+                    <ol>
+                        <% _.each(t.testProcedure.steps, function(s) { %>
+                        <li><%= s.step %></li>
+                        <% }); %>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Comment</th>
+                <td><%= t.comment %></td>
+            </tr>
+            <tr>
+                <th scope="row">Testing Question</th>
+                <td><%= t.testProcedure.yesNoQuestion %></td>
+            </tr>
+            <tr>
+                <th scope="row">Expected Result</th>
+                <td><%= t.testProcedure.expectedResult %></td>
+            </tr>
+        </tbody>
+    </table>
+</script>
 <script type="text/template" id="test-selected-list-template">
     <li>
         <button class="btn-icon">
