@@ -82,3 +82,21 @@ $(document).ready(function () {
         });
     });
 });
+
+$(document).ready(function(){
+    $('.results .chart, .result-details .chart').peity("pie", {
+      fill: ["green", "#f98"]
+    });
+    $('.results button').on('click', function(){
+      el = $(this);
+      icon = el.find('.icon');
+      iconlabel = icon.find('.visuallyhidden');
+      el.parents('tbody').toggleClass('collapsed');
+      icon.toggleClass('icon-collapse icon-expand');
+      if (icon.is('.icon-expand')) {
+        iconlabel.text('Expand');
+      } else {
+        iconlabel.text('Collapse');
+      }
+    });
+});
