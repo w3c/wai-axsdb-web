@@ -29,6 +29,7 @@
     <script type="text/javascript" src="js/lib/jquery.treevue.js"></script>
     <script type="text/javascript" src="js/lib/jquery.treevue.export.js"></script>
     <script type="text/javascript" src="js/lib/jquery.treevue.import.js"></script>
+    <script type="text/javascript" src="js/lib/jquery.peity.min.js"></script>
     <script type="text/javascript" src="js/lib/async.js"></script>
     <script type="text/javascript" src="js/accessdb.js"></script>
     <script type="text/javascript" src="js/utils.js"></script>
@@ -43,8 +44,6 @@
     <script type="text/javascript" src="js/testresult-views.js"></script>
     <script type="text/javascript" src="js/code.js"></script>
     <script type="text/javascript" src="js/admin.js"></script>
-
-    <script type="text/javascript" src="js/mockup.js"></script>
  <script type="text/javascript">
  	accessdb.config.sessionId = "<?php echo session_id();?>";
  </script>
@@ -73,6 +72,6 @@
 
 <script type="text/javascript" src="js/router.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
-
+<script type="text/javascript" src="js/mockup.js"></script>
 </body>
 </html>
