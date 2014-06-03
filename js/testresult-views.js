@@ -8,48 +8,6 @@
  * }
  *
  */
-
-testcaseData = {
-  "entity": [
-    {
-      "noOfAll": "2",
-      "noOfPass": "1",
-      "testCaseId": "H49_0000073",
-      "testCaseTitle": "Em and strong elements can be used to stress parts of a text"
-    },
-    {
-      "noOfAll": "3",
-      "noOfPass": "1",
-      "testCaseId": "H49_0000074",
-      "testCaseTitle": "sub elements indicate subscript in HTML"
-    },
-    {
-      "noOfAll": "4",
-      "noOfPass": "1",
-      "testCaseId": "H49_0000075",
-      "testCaseTitle": "sup elements indicate superscript in HTML"
-    },
-    {
-      "noOfAll": "5",
-      "noOfPass": "2",
-      "testCaseId": "H49_0000076",
-      "testCaseTitle": "abbr and acronym can identify special text in html"
-    },
-    {
-      "noOfAll": "6",
-      "noOfPass": "3",
-      "testCaseId": "H49_0000077",
-      "testCaseTitle": "b, i and u can identify special text in HTML"
-    },
-    {
-      "noOfAll": "7",
-      "noOfPass": "5",
-      "testCaseId": "H49_0000078",
-      "testCaseTitle": "small identifies special text in HTML"
-    }
-  ]
-};
-
 accessdb.Views.TestResultsDataOverview = function (){
     this.$el = $("#TestResultsDataOverviewDiv");
     this.results = null;
@@ -64,28 +22,30 @@ accessdb.Views.TestResultsDataOverview = function (){
             });
         }
     };
-    this.fetch = function (filter, callback){
+    this.fetch = function (params, callback){
         var self = this;
-        if (!filter){
+        if (!params || params.length<1 ){
             console.warn("No filter defined!");
             callback("No filter defined!", null);
         }
         else {
-            accessdb.API.TESTRESULT.getDataOverview(filter, function (error, data, status) {
+            accessdb.API.TESTRESULT.findByFilterTestResultTechniqueOveview(params.filter, function (error, data, status) {
                 if(!error){
                     console.log(data);
                     self.results = data;
                     callback(null, self.results);
                 }
-                callback(error);
-            }, self.$el);
+                else
+                    callback(error);
+            });
         }
     };
     this.reload = function(){
         var pageId = accessdb.config.PAGE_ID_PREFIX+"results";
         if(accessdb.appRouter.page === pageId){
             var self = this;
-            this.fetch( accessdb.filters[pageId], function(error, data){
+            var params = {filter: accessdb.filters[pageId]};
+            this.fetch(params, function(error, data){
                 if(!error)
                     self.render();
             });
@@ -103,8 +63,8 @@ accessdb.Views.TestResultsDataTestCaseOverview = function (){
             icon =  this.$el.find('.icon');
             iconlabel = icon.find('.visuallyhidden');
             eltbody.toggleClass('collapsed');
-            console.log(testcaseData);
-            var tctemplate = _.template( $("#TestResultsDataOverviewTestCases_template").html(), {results: testcaseData.entity} );
+            console.log(this.results);
+            var tctemplate = _.template( $("#TestResultsDataOverviewTestCases_template").html(), {results: this.results} );
             sistertbody.html( tctemplate );
             icon.toggleClass('icon-collapse icon-expand');
             if (icon.is('.icon-expand')) {
@@ -114,16 +74,32 @@ accessdb.Views.TestResultsDataTestCaseOverview = function (){
             }
         }
     };
-    this.fetch = function (filter, callback){
+    this.fetch = function (params, callback){
         var self = this;
-        self.results = testcaseData;
-        callback();
+        if (!params || params.length<2 ){
+            console.warn("No filter defined!");
+            callback("No filter defined!", null);
+        }
+        else {
+            var filter = params.filter;
+            var techNameId = $(this.$el).val();
+            accessdb.API.TESTRESULT.findByFilterTestResultTestOveview(params.filter, techNameId, function (error, data, status) {
+                if(!error){
+                    console.log(data);
+                    self.results = data;
+                    callback(null, self.results);
+                }
+                else
+                    callback(error);
+            });
+        }
     };
     this.reload = function(){
         var pageId = accessdb.config.PAGE_ID_PREFIX+"results";
         if(accessdb.appRouter.page === pageId){
             var self = this;
-            this.fetch( accessdb.filters[pageId], function(error, data){
+            var params = {filter:accessdb.filters[pageId]};
+            this.fetch(params , function(error, data){
                 if(!error)
                     self.render();
             });

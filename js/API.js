@@ -56,7 +56,9 @@
         URL_SERVICE_GET_TESTUNITS: "test",
         URL_SERVICE_GET_TESTUNITS_TREE: "test/tree",
         // TestResult resource
-        URL_SERVICE_TESTRESULT_DATAOVERVIEW: "testresult/browse/dataoverview",
+        URL_SERVICE_TESTRESULT_BYTECHNIQUE_OVERVIEW: "testresult/browse/bytechnique/overview",
+        URL_SERVICE_TESTRESULT_BYTEST_OVERVIEW: "testresult/browse/bytest/overview/", //{techNameId}
+
         URL_SERVICE_TESTRESULT_FULLVIEWTECHNIQUE: "testresult/browse/fullviewtechnique/",
         URL_SERVICE_TESTRESULT_VIEWTECHNIQUE: "testresult/browse/resultsview/",
         URL_SERVICE_TESTRESULT_TREE_AT: "testresult/browse/at/tree",
@@ -150,14 +152,23 @@
             persistBunch: function (bunch, callback) {
                 ajax(accessdb.config.services.URL_SERVICE_TESTRESULT_PERSIST, 'POST', bunch, callback);
             },
-            getDataOverview: function (filter, callback, targetE) {
-                var url = accessdb.config.services.URL_SERVICE_TESTRESULT_DATAOVERVIEW;
+            findByFilterTestResultTechniqueOveview: function (filter, callback, targetE) {
+                var url = accessdb.config.services.URL_SERVICE_TESTRESULT_BYTECHNIQUE_OVERVIEW;
                 ajax(url, "POST", filter, function (error, data, status) {
                     if(data)
                         data = data.list;
                     callback(error, data, status);
                 }, targetE);
             },
+            findByFilterTestResultTestOveview: function (filter,techNameId, callback, targetE) {
+                var url = accessdb.config.services.URL_SERVICE_TESTRESULT_BYTEST_OVERVIEW + techNameId;
+                ajax(url, "POST", filter, function (error, data, status) {
+                    if(data)
+                        data = data.list;
+                    callback(error, data, status);
+                }, targetE);
+            },
+
             getResultsByTechnique : function(filter, techniqueNameId, callback, targetE){
                 ajax(accessdb.config.services.URL_SERVICE_TESTRESULT_VIEWTECHNIQUE + techniqueNameId, "POST", filter, callback, targetE);
             },
