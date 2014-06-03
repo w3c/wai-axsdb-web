@@ -268,8 +268,7 @@
                     </button>
                 </td>
                 <th scope="row" colspan="2">
-                    <%= r.technique %>: <a href="http://www.w3.org/TR/WCAG20-TECHS/<%= r.technique %>">  <%= r.techniqueTitle %>
-                    <span class="icon-external-link"><span class="visuallyhidden">Link to external page.</span></span></a>
+                    <%= r.technique %>: <a href="http://www.w3.org/TR/WCAG20-TECHS/<%= r.technique %>">  <%= r.techniqueTitle %>&nbsp;<span class="icon-external-link"><span class="visuallyhidden">Link to external page.</span></span></a>
                 </th>
                 <td class="result">
                     <a href="h4.html" class="btn btn-small">
@@ -297,20 +296,13 @@
                     Test Cases
                 </th>
                 <% first = false %>
-                <% }
-               %>
+                <% } %>
                 <th scope="row">
-                    <%= r.testUnitId %>: <a href="http://www.w3.org/TR/WCAG20-TECHS/<%= r.testUnitId %>">  <%= r.testTitle %>
-                    <span class="icon-external-link"><span class="visuallyhidden">Link to external page.</span></span></a>
+                    <%= r.testUnitId %>: <a href="http://www.w3.org/TR/WCAG20-TECHS/<%= r.testCaseId %>">  <%= r.testTitle %>&nbsp;<span class="icon-external-link"><span class="visuallyhidden">Link to external page.</span></span></a>
                 </th>
-
                 <td class="result">
                     <a href="h4.html" class="btn btn-small">
                         <span class="chart" style="display:none"><%= r.noOfPass %>/<%= r.noOfAll %></span>
-                        <%
-                        console.log("template");
-                        console.log(r);
-                        %>
                         <%= r.noOfPass %>/<%= r.noOfAll %>
                         <span class="icon-arrow-right2">
                             <span class="visuallyhidden">Show results</span>
@@ -318,6 +310,5 @@
                     </a>
                 </td>
             </tr>
-
         <% }); %>
 </script>
