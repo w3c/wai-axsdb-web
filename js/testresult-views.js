@@ -57,6 +57,9 @@ accessdb.Views.TestResultsDataOverview = function (){
         if(this.results){
             var template = _.template( $("#TestResultsDataOverview_template").html(), {results: this.results} );
             this.$el.html( template );
+            this.$el.find('.chart').peity("pie", {
+                fill: ["green", "#f98"]
+            });
             this.$el.find('button').on('click', function(){
                 var view = new accessdb.Views.TestResultsDataTestCaseOverview();
                 view.$el = $(this);
@@ -103,9 +106,11 @@ accessdb.Views.TestResultsDataTestCaseOverview = function (){
             icon =  this.$el.find('.icon');
             iconlabel = icon.find('.visuallyhidden');
             eltbody.toggleClass('collapsed');
-            console.log(testcaseData);
             var tctemplate = _.template( $("#TestResultsDataOverviewTestCases_template").html(), {results: testcaseData.entity} );
             sistertbody.html( tctemplate );
+            sistertbody.find('.chart').peity("pie", {
+                fill: ["green", "#f98"]
+            });
             icon.toggleClass('icon-collapse icon-expand');
             if (icon.is('.icon-expand')) {
                 iconlabel.text('Expand');
