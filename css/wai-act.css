@@ -993,66 +993,62 @@ pre[class*="language-"] {
   vertical-align: top;
 }
 /* line 233, ../sass/_asd.scss */
-.results tbody.collapsed tr {
+.results tbody.collapsed + .testcases {
   display: none;
 }
-/* line 235, ../sass/_asd.scss */
-.results tbody.collapsed tr:first-child {
-  display: table-row;
-}
-/* line 242, ../sass/_asd.scss */
+/* line 239, ../sass/_asd.scss */
 .results .result .btn, .results .result .btn-primary, .results .result .btn-small {
   display: block;
 }
-/* line 244, ../sass/_asd.scss */
+/* line 241, ../sass/_asd.scss */
 .results .result .btn > span, .results .result .btn-primary > span, .results .result .btn-small > span {
   float: right;
 }
 
-/* line 251, ../sass/_asd.scss */
+/* line 248, ../sass/_asd.scss */
 .empty {
   border-bottom-width: 0;
   border-top: none;
 }
-/* line 254, ../sass/_asd.scss */
+/* line 251, ../sass/_asd.scss */
 tr:last-child .empty {
   border-bottom-width: 1px;
 }
 
-/* line 259, ../sass/_asd.scss */
+/* line 256, ../sass/_asd.scss */
 .admin {
   background-color: #Fd9;
 }
 
-/* line 263, ../sass/_asd.scss */
+/* line 260, ../sass/_asd.scss */
 div.admin {
   padding: .5em;
 }
 
-/* line 268, ../sass/_asd.scss */
+/* line 265, ../sass/_asd.scss */
 .environments .col1 {
   width: 1em;
   text-align: right;
 }
-/* line 269, ../sass/_asd.scss */
+/* line 266, ../sass/_asd.scss */
 .environments .col2 {
   width: 20em;
 }
-/* line 270, ../sass/_asd.scss */
+/* line 267, ../sass/_asd.scss */
 .environments .col3 {
   width: 7em;
   text-align: center;
 }
-/* line 271, ../sass/_asd.scss */
+/* line 268, ../sass/_asd.scss */
 .environments .editcol {
   white-space: nowrap;
 }
-/* line 272, ../sass/_asd.scss */
+/* line 269, ../sass/_asd.scss */
 .environments td {
   vertical-align: top;
 }
 
-/* line 275, ../sass/_asd.scss */
+/* line 272, ../sass/_asd.scss */
 .box-note {
   margin-bottom: 2em;
 }

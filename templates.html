@@ -282,6 +282,35 @@
                 </td>
             </tr>
         </tbody>
+        <tbody class="testcases"></tbody>
     <% }); %>
 </table>
+</script>
+<script type="text/template" id="TestResultsDataOverviewTestCases_template">
+        <% lresults = results.length %>
+        <% first = true %>
+        <% _.each(results, function(r) { %>
+           <tr>
+                <% if (first) { %>
+                <td class="empty" rowspan="<%=lresults%>"></td>
+                <th scope="rowgroup" rowspan="<%=lresults%>">
+                    Test Cases
+                </th>
+                <% first = false %>
+                <% } %>
+                <th scope="row">
+                    <%= r.testCaseId %>: <a href="http://www.w3.org/TR/WCAG20-TECHS/<%= r.testCaseId %>">  <%= r.testCaseTitle %>
+                    <span class="icon-external-link"><span class="visuallyhidden">Link to external page.</span></span></a>
+                </th>
+                <td class="result">
+                    <a href="h4.html" class="btn btn-small">
+                        <span class="chart" style="display:none"><%= r.noOfPass %>/<%= r.noOfAll %></span>
+                        <%= r.noOfPass %>/<%= r.noOfAll %>
+                        <span class="icon-arrow-right2">
+                            <span class="visuallyhidden">Show results</span>
+                        </span>
+                    </a>
+                </td>
+            </tr>
+        <% }); %>
 </script>
