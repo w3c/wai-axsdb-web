@@ -271,7 +271,7 @@
                     <%= r.technique %>: <a href="http://www.w3.org/TR/WCAG20-TECHS/<%= r.technique %>">  <%= r.techniqueTitle %>&nbsp;<span class="icon-external-link"><span class="visuallyhidden">Link to external page.</span></span></a>
                 </th>
                 <td class="result">
-                    <a href="h4.html" class="btn btn-small">
+                    <a href="#/results-technique.html/<%= r.technique %>" class="btn btn-small">
                         <span class="chart" style="display:none"><%= r.noOfPass %>/<%= r.noOfAll %></span>
                         <%= r.noOfPass %>/<%= r.noOfAll %>
                         <span class="icon-arrow-right2">
@@ -298,10 +298,10 @@
                 <% first = false %>
                 <% } %>
                 <th scope="row">
-                    <%= r.testUnitId %>: <a href="<%= r.testCaseId %>">  <%= r.testTitle %></a> <!-- Link to test case -->
+                    <%= r.testUnitId %>: <a href="#/test.html/<%= r.testUnitId %>">  <%= r.testTitle %></a> <!-- Link to test case -->
                 </th>
                 <td class="result">
-                    <a href="h4.html" class="btn btn-small">
+                    <a href="#/results-test.html/<%= r.testUnitId %>" class="btn btn-small">
                         <span class="chart" style="display:none"><%= r.noOfPass %>/<%= r.noOfAll %></span>
                         <%= r.noOfPass %>/<%= r.noOfAll %>
                         <span class="icon-arrow-right2">
@@ -315,8 +315,8 @@
 <script type="text/template" id="RelatedTestCases_template">
     <% _.each(results, function(r) { %>
         <li>
-            <strong><%= r.testCaseId %>:</strong> <a href="<%= r.testCaseId %>">  <%= r.testCaseTitle %></a>
-            <a href="h4.html" class="btn btn-small">
+            <strong><%= r.testUnitId %>:</strong> <a href="<%= r.testUnitId %>">  <%= r.testTitle %></a>
+            <a href="#/results-test.html/<%= r.testUnitId %>" class="btn btn-small">
                 <span class="chart" style="display:none"><%= r.noOfPass %>/<%= r.noOfAll %></span>
                 <%= r.noOfPass %>/<%= r.noOfAll %>
                 <span class="icon-arrow-right2">
