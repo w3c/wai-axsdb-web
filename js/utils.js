@@ -17,7 +17,11 @@ Array.prototype.remove = function () {
 
 function Utils() {
 };
-
+Utils.urlParam=function (s){
+    if(s==="null")
+        s=null;
+    return s;
+};
 Utils.UIRoleAdapt = function () {
     var userRoles = accessdb.session.get("userRoles") || [];
     $(".accessdbUserMessage").html("");

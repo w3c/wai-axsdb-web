@@ -27,6 +27,8 @@
         this.criteriosLevel = "AAA";
         this.criterios = [];
         this.technologies = [];
+        this.techniques = [];
+        this.tests = [];
         this.ats = [];
         this.uas = [];
         this.oss = [];
@@ -60,6 +62,8 @@
         URL_SERVICE_TESTRESULT_BYTEST_OVERVIEW: "testresult/browse/bytest/overview/", //{techNameId}
 
         URL_SERVICE_TESTRESULT_FULLVIEWTECHNIQUE: "testresult/browse/fullviewtechnique/",
+        URL_SERVICE_TESTRESULT_FULLVIEWTEST: "testresult/browse/fullviewtest/", //{testUnitId}
+
         URL_SERVICE_TESTRESULT_VIEWTECHNIQUE: "testresult/browse/resultsview/",
         URL_SERVICE_TESTRESULT_TREE_AT: "testresult/browse/at/tree",
         URL_SERVICE_TESTRESULT_TREE_UA: "testresult/browse/ua/tree",
@@ -174,6 +178,9 @@
             },
             getResultsFullViewByTechnique : function(filter, techniqueNameId, callback, targetE){
                 ajax(accessdb.config.services.URL_SERVICE_TESTRESULT_FULLVIEWTECHNIQUE + techniqueNameId, "POST", filter, callback, targetE);
+            },
+            getResultsFullViewByTest : function(filter, testId, callback, targetE){
+                ajax(accessdb.config.services.URL_SERVICE_TESTRESULT_FULLVIEWTEST + testId, "POST", filter, callback, targetE);
             },
             getATVersionsOfATName : function(name, callback){
                 var query = "select distinct testingProfile.assistiveTechnology.version.text " +

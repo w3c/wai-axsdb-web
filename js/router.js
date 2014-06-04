@@ -7,6 +7,8 @@ window.accessdb.Models.AppRouter = Backbone.Router.extend({
         "results.html": "results",
         "results-technique.html/:id": "results-technique",
         "results-test.html/:id": "results-test",
+        "results-details.html/ua/:ua/uaver/:uaVer/at/:at/atver/:atVer/filter/:filter": "results-details",
+        "results-details.html/ua/:ua/uaver/:uaVer/at/:at/atver/:atVer": "results-details",
         "test-run.html/:id": "test-run",
         "test-run.html": "test-run",
         "test.html/:id": "test",
@@ -71,7 +73,30 @@ window.accessdb.appRouter.on('route:results-technique', function (id) {
     accessdb.TestResultsFullViewByTechnique.reload({techNameId : id});
 });
 window.accessdb.appRouter.on('route:results-test', function (id) {
+    this.params.testUnitId = id;
+
     window.accessdb.appRouter.loadPage("results-test");
+    accessdb.TreeHelper.loadTrees();
+    accessdb.TestResultsFullViewByTest = new accessdb.Views.TestResultsFullViewByTest();
+    accessdb.TestResultsFullViewByTest.reload({testUnitId : id});
+});
+window.accessdb.appRouter.on('route:results-details', function (ua, uaVer, at, atVer, filter) {
+    if(filter){
+        if(Utils.urlParam(filter)!==null)
+            filter = JSON.parse(decodeURI(filter));
+        else
+            filter = accessdb.filters[accessdb.appRouter.page] || new accessdb.Models.Filter(accessdb.appRouter.page);
+        accessdb.filters[accessdb.appRouter.page] = filter;
+    }
+
+    ua = Utils.urlParam(ua);
+    uaVer = Utils.urlParam(uaVer);
+    at = Utils.urlParam(at);
+    atVer = Utils.urlParam(atVer);
+
+    console.log("fil......ter");
+    console.log(filter);
+    window.accessdb.appRouter.loadPage("results-details");
     //accessdb.TreeHelper.loadTrees();
     //accessdb.TestResultsDataOverview = new accessdb.Views.TestResultsDataOverview();
     //accessdb.TestResultsDataOverview.reload();

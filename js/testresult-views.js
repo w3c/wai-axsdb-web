@@ -107,7 +107,8 @@ accessdb.Views.TestResultsFullViewByTechnique = function (){
     this.results = null;
     this.render = function(){
         if(this.results){
-            var template = _.template( $("#TestResultsFullViewByTechnique_template").html(), {results: this.results} );
+            var filter = accessdb.filters[accessdb.appRouter.page];
+            var template = _.template( $("#TestResultsFullViewByTechnique_template").html(), {results: this.results, filter: filter} );
             this.$el.html( template );
             this.$el.find('.chart').peity("pie", {
                 fill: ["green", "#f98"]
@@ -177,6 +178,51 @@ accessdb.Views.TestResultsFullViewByTechniqueRelatedTests = function (){
     };
     this.reload = function(params){
         var pageId = accessdb.config.PAGE_ID_PREFIX+"results-technique";
+        if(accessdb.appRouter.page === pageId){
+            var self = this;
+            params = params || {};
+            params.filter = accessdb.filters[pageId];
+            this.fetch(params, function(error, data){
+                if(!error)
+                    self.render();
+            });
+        }
+    }
+};
+
+accessdb.Views.TestResultsFullViewByTest = function (){
+    this.$el = $("#TestResultsFullViewByTestDiv");
+    this.results = null;
+    this.render = function(){
+        if(this.results){
+            var filter = accessdb.filters[accessdb.appRouter.page];
+            var template = _.template( $("#TestResultsFullViewByTechnique_template").html(), {results: this.results, filter: filter} );
+            this.$el.html( template );
+            this.$el.find('.chart').peity("pie", {
+                fill: ["green", "#f98"]
+            });
+        }
+    };
+    this.fetch = function (params, callback){
+        var self = this;
+        if (!params || params.length<1 ){
+            console.warn("No filter defined!");
+            callback("No filter defined!", null);
+        }
+        else {
+            accessdb.API.TESTRESULT.getResultsFullViewByTest(params.filter, params.testUnitId, function (error, data, status) {
+                if(!error){
+                    console.log(data);
+                    self.results = data;
+                    callback(null, self.results);
+                }
+                else
+                    callback(error);
+            });
+        }
+    };
+    this.reload = function(params){
+        var pageId = accessdb.config.PAGE_ID_PREFIX+"results-test";
         if(accessdb.appRouter.page === pageId){
             var self = this;
             params = params || {};
