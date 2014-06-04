@@ -298,7 +298,7 @@
                 <% first = false %>
                 <% } %>
                 <th scope="row">
-                    <%= r.testCaseId %>: <a href="http://www.w3.org/TR/WCAG20-TECHS/<%= r.testCaseId %>">  <%= r.testCaseTitle %>&nbsp;<span class="icon-external-link"><span class="visuallyhidden">Link to external page.</span></span></a>
+                    <%= r.testCaseId %>: <a href="<%= r.testCaseId %>">  <%= r.testCaseTitle %></a>
                 </th>
                 <td class="result">
                     <a href="h4.html" class="btn btn-small">
@@ -311,4 +311,18 @@
                 </td>
             </tr>
         <% }); %>
+</script>
+<script type="text/template" id="RelatedTestCases_template">
+    <% _.each(results, function(r) { %>
+        <li>
+            <strong><%= r.testCaseId %>:</strong> <a href="<%= r.testCaseId %>">  <%= r.testCaseTitle %></a>
+            <a href="h4.html" class="btn btn-small">
+                <span class="chart" style="display:none"><%= r.noOfPass %>/<%= r.noOfAll %></span>
+                <%= r.noOfPass %>/<%= r.noOfAll %>
+                <span class="icon-arrow-right2">
+                    <span class="visuallyhidden">Show results</span>
+                </span>
+            </a>
+        </li>
+    <% }); %>
 </script>
