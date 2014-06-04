@@ -69,6 +69,11 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         }
     },
 // Not Backbone
+    isLoggedIn: function() {
+        if(this.get("userId")!=null &&  this.get("userRoles")!=null &&  this.get("userRoles").length>0)
+            return true;
+        return false;
+    },
     isUserAdmin: function () {
         return this.hasUserRole(accessdb.config.USER_ROLE_AXSDBADM_CODE)
             || this.hasUserRole(accessdb.config.USER_ROLE_AXSDBW3C_CODE);

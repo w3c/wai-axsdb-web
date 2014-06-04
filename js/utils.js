@@ -37,6 +37,14 @@ Utils.UIRoleAdapt = function () {
         var msg = $('<p></p>').addClass("accessdbUserMessage").append("You need Admin Role for this action!");
         $(".roleAdminOnly").parent().append(msg);
     }
+    if(accessdb.session.isLoggedIn()){
+        $(".axsdb-only-user").show();
+        $(".axsdb-only-anon").hide();
+    }
+    else{
+        $(".axsdb-only-user").hide();
+        $(".axsdb-only-anon").show();
+    }
 };
 Utils.loadingStart=function(holder){
     var div = $('<div class="progress"><div>Loading…</div></div>');
