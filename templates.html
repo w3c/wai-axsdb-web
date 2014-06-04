@@ -313,6 +313,7 @@
         <% }); %>
 </script>
 <script type="text/template" id="RelatedTestCases_template">
+    <ul id="RelatedTestCases">
     <% _.each(results, function(r) { %>
         <li>
             <strong><%= r.testUnitId %>:</strong> <a href="<%= r.testUnitId %>">  <%= r.testTitle %></a>
@@ -325,6 +326,7 @@
             </a>
         </li>
     <% }); %>
+    </ul>
 </script>
 <script type="text/template" id="Results_template">
     <% _.each(results, function(r) { %>
@@ -358,4 +360,55 @@
             </tbody>
         </table>
     <% }); %>
+</script>
+
+<script type="text/template" id="TestResultsFullViewByTechnique_template">
+    <table class="result-details">
+        <caption>In the columns, you can find browser versions.<br>The rows show assistive technologies.</caption>
+        <% lresults = results.length %>
+        <% firstrow = true %>
+        <% _.each(results.rows, function(row) {
+            if (firstrow) { %>
+                <thead>
+            <% } %>
+            <tr>
+            <% firstcol = true %>
+            <% _.each(row, function(col) {
+                if (firstrow) {
+                    if (col.product) { %>
+                        <th scope="col" data-accessdbproductver="<%= col.product.version.text %>" data-accessdbproductname="<%= col.product.name %>"><span class="visuallyhiddenFIXME"><%= col.product.name %></span> <%= col.product.version.text %></th>
+                    <% }
+                    else { %>
+                        <th scope="col">&nbsp;</th>
+                    <% }
+                }
+                else{
+                    if (firstcol ) {
+                        if (col.product && col.product.name ) {
+                        %>
+                            <th data-accessdbproductver="<%= col.product.version.text %>" data-accessdbproductname="<%= col.product.name %>" colspan="2" scope="row"><%=col.product.name %></th>
+                            <th scope="row"><span class="visuallyhidden"><%=col.product.name %></span> <%= col.product.version.text %></th>
+
+                        <% } else { %>
+                            <th data-accessdbproductver="" data-accessdbproductname="" colspan="1" scope="row">None</th>
+                        <% }
+                     }
+                     else {
+                        if(parseInt(col.noOfAll)>0){
+                        %>
+                            <td><span class="chart"><%=col.noOfPass %>/<%=col.noOfAll %></span> <a title="show test results of this combination" href="" class="TestResultFullViewTechniqueAnchor"><%=col.noOfPass %>/<%=col.noOfAll %></a></td>
+                        <%
+                        } else { %>
+                            <td class="untested">Not tested</td>
+                        <% }
+                    }
+                }
+                if (firstcol) { firstcol = false }
+             }); %>
+            </tr>
+            <% if (firstrow) { %>
+            </thead>
+            <% if (firstrow) { firstrow = false} } %>
+        <% }); %>
+    </table>
 </script>

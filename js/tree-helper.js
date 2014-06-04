@@ -314,7 +314,12 @@ accessdb.TreeHelper = {
     },
     loadTrees : function(event, callback){
         var pageId =   accessdb.appRouter.page;
-        var pagesIds = [accessdb.config.PAGE_ID_PREFIX +"results", accessdb.config.PAGE_ID_PREFIX +"tests-run"];
+        var pagesIds = [
+            accessdb.config.PAGE_ID_PREFIX +"results",
+            accessdb.config.PAGE_ID_PREFIX +"results-technique",
+            accessdb.config.PAGE_ID_PREFIX +"results-test",
+            accessdb.config.PAGE_ID_PREFIX +"tests-run"
+        ];
         if(!_.contains(pagesIds, pageId)){
             if(callback)
                 callback();
@@ -324,6 +329,12 @@ accessdb.TreeHelper = {
         var toLoadTreeIds = [];
         if(pageId ===  accessdb.config.PAGE_ID_PREFIX + "results"){
             toLoadTreeIds = ["AssistiveTechnology","UAgent","Platform","WCAG","WebTechnology"];
+        }
+        else if(pageId ===  accessdb.config.PAGE_ID_PREFIX + "results-technique"){
+            toLoadTreeIds = ["AssistiveTechnology", "UAgent","Platform"];
+        }
+        else if(pageId ===  accessdb.config.PAGE_ID_PREFIX + "results-test"){
+            toLoadTreeIds = ["AssistiveTechnology", "UAgent","Platform"];
         }
         else if(pageId ===  accessdb.config.PAGE_ID_PREFIX + "tests-run"){
             toLoadTreeIds = ["AssistiveTechnology","WCAG","WebTechnology"];

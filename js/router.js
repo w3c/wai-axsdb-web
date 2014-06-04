@@ -61,9 +61,12 @@ window.accessdb.appRouter.on('route:results', function () {
 });
 window.accessdb.appRouter.on('route:results-technique', function (id) {
     window.accessdb.appRouter.loadPage("results-technique");
-    //accessdb.TreeHelper.loadTrees();
-    //accessdb.TestResultsDataOverview = new accessdb.Views.TestResultsDataOverview();
-    //accessdb.TestResultsDataOverview.reload();
+    $(".results-technique-id").html(id);
+    accessdb.TreeHelper.loadTrees();
+    accessdb.TestResultsFullViewByTechniqueRelatedTests = new accessdb.Views.TestResultsFullViewByTechniqueRelatedTests();
+    accessdb.TestResultsFullViewByTechniqueRelatedTests.reload({techNameId : id});
+    accessdb.TestResultsFullViewByTechnique = new accessdb.Views.TestResultsFullViewByTechnique();
+    accessdb.TestResultsFullViewByTechnique.reload({techNameId : id});
 });
 window.accessdb.appRouter.on('route:results-test', function (id) {
     window.accessdb.appRouter.loadPage("results-test");

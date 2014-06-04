@@ -103,11 +103,15 @@ accessdb.Views.TestResultsDataTestCaseOverview = function (){
 };
 
 accessdb.Views.TestResultsFullViewByTechnique = function (){
-    this.$el = $("#TestResultsFullViewByTechnique");
+    this.$el = $("#TestResultsFullViewByTechniqueDiv");
     this.results = null;
     this.render = function(){
         if(this.results){
-
+            var template = _.template( $("#TestResultsFullViewByTechnique_template").html(), {results: this.results} );
+            this.$el.html( template );
+            this.$el.find('.chart').peity("pie", {
+                fill: ["green", "#f98"]
+            });
         }
     };
     this.fetch = function (params, callback){
@@ -128,11 +132,55 @@ accessdb.Views.TestResultsFullViewByTechnique = function (){
             });
         }
     };
-    this.reload = function(){
-        var pageId = accessdb.config.PAGE_ID_PREFIX+"results";
+    this.reload = function(params){
+        var pageId = accessdb.config.PAGE_ID_PREFIX+"results-technique";
         if(accessdb.appRouter.page === pageId){
             var self = this;
-            var params = {filter: accessdb.filters[pageId]};
+            params = params || {};
+            params.filter = accessdb.filters[pageId];
+            this.fetch(params, function(error, data){
+                if(!error)
+                    self.render();
+            });
+        }
+    }
+};
+accessdb.Views.TestResultsFullViewByTechniqueRelatedTests = function (){
+    this.$el = $("#RelatedTestCasesDiv");
+    this.results = null;
+    this.render = function(){
+        if(this.results){
+            var template = _.template( $("#RelatedTestCases_template").html(), {results: this.results} );
+            this.$el.html( template );
+            this.$el.find('.chart').peity("pie", {
+                fill: ["green", "#f98"]
+            });
+        }
+    };
+    this.fetch = function (params, callback){
+        var self = this;
+        if (!params || params.length<2 ){
+            console.warn("No filter defined!");
+            callback("params not defined!", null);
+        }
+        else {
+            accessdb.API.TESTRESULT.findByFilterTestResultTestOveview(params.filter, params.techNameId, function (error, data, status) {
+                if(!error){
+                    console.log(data);
+                    self.results = data;
+                    callback(null, self.results);
+                }
+                else
+                    callback(error);
+            });
+        }
+    };
+    this.reload = function(params){
+        var pageId = accessdb.config.PAGE_ID_PREFIX+"results-technique";
+        if(accessdb.appRouter.page === pageId){
+            var self = this;
+            params = params || {};
+            params.filter = accessdb.filters[pageId];
             this.fetch(params, function(error, data){
                 if(!error)
                     self.render();
