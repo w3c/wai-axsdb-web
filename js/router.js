@@ -1,5 +1,6 @@
 window.accessdb.Models.AppRouter = Backbone.Router.extend({
     page : null,
+    params : {},
     routes: {
         "": "home",
         "home.html": "home",
@@ -60,6 +61,7 @@ window.accessdb.appRouter.on('route:results', function () {
     accessdb.TestResultsDataOverview.reload();
 });
 window.accessdb.appRouter.on('route:results-technique', function (id) {
+    this.params.techniqueNameId = id;
     window.accessdb.appRouter.loadPage("results-technique");
     $(".results-technique-id").html(id);
     accessdb.TreeHelper.loadTrees();

@@ -7,49 +7,44 @@ accessdb.TreeHelper = {
         $(".webTechTreeDiv").on('treevue:change', function (event) {
             accessdb.TreeHelper.populateFilters();
             accessdb.TreeHelper.loadTrees(event);
-            if(accessdb.TestResultsDataOverview)
-                accessdb.TestResultsDataOverview.reload();
-            TestUnit.loadTestsTree();
+            accessdb.TreeHelper.loadDataViews();
         });
         $("input[name=conformance]").on('change', function (event) {
             accessdb.TreeHelper.populateFilters();
             accessdb.TreeHelper.loadTrees(event);
-            if(accessdb.TestResultsDataOverview)
-                accessdb.TestResultsDataOverview.reload();
-            TestUnit.loadTestsTree();
+            accessdb.TreeHelper.loadDataViews();
         });
         $(".criteriaTreeDiv").on('treevue:change', function (event) {
             accessdb.TreeHelper.populateFilters();
             accessdb.TreeHelper.loadTrees(event);
-            if(accessdb.TestResultsDataOverview)
-                accessdb.TestResultsDataOverview.reload();
-            TestUnit.loadTestsTree();
+            accessdb.TreeHelper.loadDataViews();
         });
         $(".atTreeDiv").on('treevue:change', function (event) {
             accessdb.TreeHelper.populateFilters();
             accessdb.TreeHelper.loadTrees(event);
-            if(accessdb.TestResultsDataOverview)
-                accessdb.TestResultsDataOverview.reload();
-            TestUnit.loadTestsTree();
+            accessdb.TreeHelper.loadDataViews();
         });
         $(".uaTreeDiv").on('treevue:change', function (event) {
             accessdb.TreeHelper.populateFilters();
             accessdb.TreeHelper.loadTrees(event);
-            if(accessdb.TestResultsDataOverview)
-                accessdb.TestResultsDataOverview.reload();
-            TestUnit.loadTestsTree();
+            accessdb.TreeHelper.loadDataViews();
         });
         $(".osTreeDiv").on('treevue:change', function (event) {
             accessdb.TreeHelper.populateFilters();
             accessdb.TreeHelper.loadTrees(event);
-            if(accessdb.TestResultsDataOverview)
-                accessdb.TestResultsDataOverview.reload();
-            TestUnit.loadTestsTree();
+            accessdb.TreeHelper.loadDataViews();
         });
         // Test selection page
         $("#thetestsTreeDiv").on('treevue:change', function (event) {
             accessdb.TreeHelper.importTests($("#thetestsTreeDiv ul"));
         });
+    },
+    loadDataViews: function (){
+        if(accessdb.TestResultsDataOverview)
+            accessdb.TestResultsDataOverview.reload();
+        if(accessdb.TestResultsFullViewByTechnique)
+            accessdb.TestResultsFullViewByTechnique.reload({techNameId : accessdb.appRouter.params.techniqueNameId});
+        TestUnit.loadTestsTree();
     },
     uncheckTestFromTree: function (liId) {
         var input = $("#" + divId + " input[value='" + liId + "'] ")[0];
@@ -152,56 +147,69 @@ accessdb.TreeHelper = {
         return list;
     },
     importProducts: function (holder, type) {
-        var nodeList = $(holder).treevueJson();
-        nodeList = nodeList[0].children;
         var list = [];
-        for (var ind in nodeList) {
-            var nodeProduct = nodeList[ind];
-            var nodeVersions = nodeProduct.children;
-            for (var k in nodeVersions) {
-                var versionNode = nodeVersions[k];
-                if (versionNode.selected) {
-                    list.push({
-                        id: k,
-                        type: type,
-                        name: nodeProduct.label,
-                        version: versionNode.label
-                    });
+        try{
+            var nodeList = $(holder).treevueJson();
+            nodeList = nodeList[0].children;
+            for (var ind in nodeList) {
+                var nodeProduct = nodeList[ind];
+                var nodeVersions = nodeProduct.children;
+                for (var k in nodeVersions) {
+                    var versionNode = nodeVersions[k];
+                    if (versionNode.selected) {
+                        list.push({
+                            id: k,
+                            type: type,
+                            name: nodeProduct.label,
+                            version: versionNode.label
+                        });
+                    }
                 }
             }
+        }
+        catch(e){
+
         }
         return list;
     },
     importTechnologies: function (holder) {
-        var nodeList = $(holder).treevueJson();
-        var nodeListChildren = nodeList[0].children;
         var list = [];
-        for (var ind in nodeListChildren) {
-            var node = nodeListChildren[ind];
-            if (node.selected) {
-                list.push(node.label);
+        try{
+            var nodeList = $(holder).treevueJson();
+            var nodeListChildren = nodeList[0].children;
+            for (var ind in nodeListChildren) {
+                var node = nodeListChildren[ind];
+                if (node.selected) {
+                    list.push(node.label);
+                }
             }
+        }
+        catch(e){
+
         }
         return list;
     },
     importCriteria: function (holder) {
-        var nodeList = $(holder).treevueJson();
-        var nodeListChildren = nodeList[0].children;
         var list = [];
-        for (var ind in nodeListChildren) {
-            accessdb.TreeHelper.treeNodeTolist(nodeListChildren[ind], "SuccessCriterio", list);
+        try{
+            var nodeList = $(holder).treevueJson();
+            var nodeListChildren = nodeList[0].children;
+            for (var ind in nodeListChildren) {
+                accessdb.TreeHelper.treeNodeTolist(nodeListChildren[ind], "SuccessCriterio", list);
+            }
         }
+        catch(e){
+
+        }
+
         return list;
     },
     populateFilter : function(filter) {
         filter.criteriosLevel = $('input[name=conformance]:checked', "#" + filter.page).val() || filter.criteriosLevel;
         filter.criterios = accessdb.TreeHelper.importCriteria("#" + filter.page + " .criteriaTreeDiv > ul");
-        if (filter.page === accessdb.config.PAGE_ID_PREFIX +  "results") {
             filter.ats = accessdb.TreeHelper.importProducts("#" + filter.page + " .atTreeDiv > ul", "AssistiveTechnology");
             filter.uas = accessdb.TreeHelper.importProducts("#" + filter.page + " .uaTreeDiv > ul", "UAgent");
             filter.oss = accessdb.TreeHelper.importProducts("#" + filter.page + " .osTreeDiv > ul", "Platform");
-        }
-        if ($("#" + filter.page + " .webTechTreeDiv > ul").length > 0)
             filter.technologies = accessdb.TreeHelper.importTechnologies("#" + filter.page + " .webTechTreeDiv > ul");
         $(".scSelected").html(filter.criterios.length);
         console.log(filter);
