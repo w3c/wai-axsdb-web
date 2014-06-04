@@ -1,13 +1,3 @@
-/**
- * assuming results an array of json objects ;
- * {
-    noOfAll: "0"
-    noOfPass: "0"
-    technique: "ARIA6"
-    techniqueTitle: "Using aria-label to provide labels for objects"
- * }
- *
- */
 accessdb.Views.TestResultsDataOverview = function (){
     this.$el = $("#TestResultsDataOverviewDiv");
     this.results = null;
@@ -112,3 +102,41 @@ accessdb.Views.TestResultsDataTestCaseOverview = function (){
     }
 };
 
+accessdb.Views.TestResultsFullViewByTechnique = function (){
+    this.$el = $("#TestResultsFullViewByTechnique");
+    this.results = null;
+    this.render = function(){
+        if(this.results){
+
+        }
+    };
+    this.fetch = function (params, callback){
+        var self = this;
+        if (!params || params.length<1 ){
+            console.warn("No filter defined!");
+            callback("No filter defined!", null);
+        }
+        else {
+            accessdb.API.TESTRESULT.getResultsFullViewByTechnique(params.filter, params.techNameId, function (error, data, status) {
+                if(!error){
+                    console.log(data);
+                    self.results = data;
+                    callback(null, self.results);
+                }
+                else
+                    callback(error);
+            });
+        }
+    };
+    this.reload = function(){
+        var pageId = accessdb.config.PAGE_ID_PREFIX+"results";
+        if(accessdb.appRouter.page === pageId){
+            var self = this;
+            var params = {filter: accessdb.filters[pageId]};
+            this.fetch(params, function(error, data){
+                if(!error)
+                    self.render();
+            });
+        }
+    }
+};

@@ -4,7 +4,8 @@ window.accessdb.Models.AppRouter = Backbone.Router.extend({
         "": "home",
         "home.html": "home",
         "results.html": "results",
-        "results-by-technique.html/:id": "test",
+        "results-technique.html/:id": "results-technique",
+        "results-test.html/:id": "results-test",
         "test-run.html/:id": "test-run",
         "test-run.html": "test-run",
         "test.html/:id": "test",
@@ -57,6 +58,18 @@ window.accessdb.appRouter.on('route:results', function () {
     accessdb.TreeHelper.loadTrees();
     accessdb.TestResultsDataOverview = new accessdb.Views.TestResultsDataOverview();
     accessdb.TestResultsDataOverview.reload();
+});
+window.accessdb.appRouter.on('route:results-technique', function (id) {
+    window.accessdb.appRouter.loadPage("results-technique");
+    //accessdb.TreeHelper.loadTrees();
+    //accessdb.TestResultsDataOverview = new accessdb.Views.TestResultsDataOverview();
+    //accessdb.TestResultsDataOverview.reload();
+});
+window.accessdb.appRouter.on('route:results-test', function (id) {
+    window.accessdb.appRouter.loadPage("results-test");
+    //accessdb.TreeHelper.loadTrees();
+    //accessdb.TestResultsDataOverview = new accessdb.Views.TestResultsDataOverview();
+    //accessdb.TestResultsDataOverview.reload();
 });
 window.accessdb.appRouter.on('route:user-profiles', function () {
     window.accessdb.appRouter.loadPage("user-profiles");
