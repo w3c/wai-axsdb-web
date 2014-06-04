@@ -288,7 +288,7 @@
 <script type="text/template" id="TestResultsDataOverviewTestCases_template">
         <% lresults = results.length %>
         <% first = true %>
-        <% _.each(results, function(r) { %>
+        <% _.each(results, function(r) {        %>
            <tr>
                 <% if (first) { %>
                 <td class="empty" rowspan="<%=lresults%>"></td>
@@ -298,7 +298,7 @@
                 <% first = false %>
                 <% } %>
                 <th scope="row">
-                    <%= r.testCaseId %>: <a href="<%= r.testCaseId %>">  <%= r.testCaseTitle %></a>
+                    <%= r.testUnitId %>: <a href="<%= r.testCaseId %>">  <%= r.testTitle %></a> <!-- Link to test case -->
                 </th>
                 <td class="result">
                     <a href="h4.html" class="btn btn-small">
