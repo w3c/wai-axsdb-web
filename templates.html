@@ -326,3 +326,36 @@
         </li>
     <% }); %>
 </script>
+<script type="text/template" id="Results_template">
+    <% _.each(results, function(r) { %>
+        <table class="testcase-details">
+            <caption><strong>Testcase:</strong> <a href="#linktotestcase"><%= r.testUnitId %></a>: <%=r.testTitle%></caption>
+            <col class="col1"> <col class="col2"> <col class="col3"> <col class="col4"> <col class="col5"> <col class="col6 admin roleAdminOnly">
+            <thead>
+                <tr>
+                    <th>Result</th>
+                    <th>Operating System</th>
+                    <th>Plugin</th>
+                    <th>Contributor</th>
+                    <th>Comment</th>
+                    <th class="roleAdminOnly">Admin</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% _.each(r.testResults, function(t) { %>
+                <tr>
+                    <td class="<%=t.result%>"><%=t.result%></td>
+                    <td><%=t.os%></td>
+                    <td><%=t.plugin%></td>
+                    <td><%=t.contributor%></td>
+                    <td><%=t.comment%></td>
+                    <td class="roleAdminOnly">
+                        <button class="btn"><span class="icon-pencil"></span> Edit</button>
+                        <button class="btn"><span class="icon-minus-sign-alt"></span> Delete</button>
+                    </td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% }); %>
+</script>
