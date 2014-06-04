@@ -1,14 +1,14 @@
-<article id="axsdb-page-tech-details">
+<article id="axsdb-page-results-technique">
     <h1 class="page-title">
         Accessibility Support Database
     </h1>
     <nav class="navbar" role="navigation">
-       <a href="#/home.html" class="btn-small"><span class="icon-home"></span> Home</a>
-       <a href="#/log-in.html" class="btn-small login"><span class="icon-unlock-alt"></span> <span class="login-info">Log In</span></a>
+	   <a href="#/home.html" class="btn-small"><span class="icon-home"></span> Home</a>
+	   <a href="#/log-in.html" class="btn-small login"><span class="icon-unlock-alt"></span> <span class="login-info">Log In</span></a>
     </nav>
     <div class="content">
-        <div class="grid">
-            <h2>Details for Technique <span><strong>H4:</strong> Creating a logical tab order through links, form controls, and objects</span></h2>
+	    <div class="grid">
+		    <h2>Details for Technique <span><strong>H4:</strong> Creating a logical tab order through links, form controls, and objects</span></h2>
             <table class="result-details">
                 <caption>In the columns, you can find browser versions.<br>The rows show assistive technologies.</caption>
                 <thead>
@@ -82,6 +82,24 @@
                         </tr>
                 </tbody>
             </table>
+            <h3>Test cases covering this technique:</h3>
+            <ul id="RelatedTestCases">
+                <!-- Put data from Template “RelatedTestCases_template” here -->
+                <li>73: Em and strong elements can be used to stress parts of a text
+                    <a href="h4.html" class="btn btn-small">
+                        <span class="chart" style="display:none"><%= r.noOfPass %>/<%= r.noOfAll %></span>
+                        <%= r.noOfPass %>/<%= r.noOfAll %>
+                        <span class="icon-arrow-right2">
+                            <span class="visuallyhidden">Show results</span>
+                        </span>
+                    </a>
+                </li>
+                <li>74: sub elements indicate subscript in HTML</li>
+                <li>75: sup elements indicate superscript in HTML</li>
+                <li>76: abbr and acronym can identify special text in html</li>
+                <li>77: b, i and u can identify special text in HTML</li>
+                <li>78: small identifies special text in HTML</li>
+            </ul>
         </div>
     </div>
 </article>
