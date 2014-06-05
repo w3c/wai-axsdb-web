@@ -1,35 +1,29 @@
 <script type="text/template" id="test-details-template">
-    <div class="content">
-        <div class="grid">
-            <h2><span class="id"><%= t.testUnitId %></span>: <%= t.title %></h2>
-            <div class="">
-                <div class="column-second">
-                    <div class="roleExpertsOnly admin">
-                        <a class="btn" href="#test-submit.html/<%= t.testUnitId %>"><span class="icon-pencil"></span> Edit Test</a>
-                        <a class="btn" href="#test-delete.html/<%= t.testUnitId %>"><span class="icon-minus-sign-alt"></span> Delete Test</a>
-                    </div>
-                    <p><strong>Related Technique:</strong> <%= t.technique.nameId %>: <%= t.technique.title %></p>
-                    <h3>Test Content</h3>
-                    <h4>Test Procedure:</h4>
-                    <ol>
-                        <% _.each(t.testProcedure.steps, function(s) { %>
-                        <li><%= s.step %></li>
-                        <% }); %>
-                    </ol>
-                    <h4>Test File(s):</h4>
-                    <p><a class="btn" target="thetest" href="<%= t.testFile %>">Open test page <span class="icon-new-window"><span class="visuallyhidden">in a new window</span></span></a></p>
-                    <h4>Test Question:</h4>
-                    <p><%= t.testProcedure.yesNoQuestion %></p>
-                    <h4>Expected Result:</h4>
-                    <p><%= t.testProcedure.expectedResult %></p>
-                    <h3>More Information</h3>
-                    <p><strong>Status:</strong> <%= t.status %></p>
-                    <p><strong>Date:</strong> <%= t.date %></p>
-                    <p><strong>Description:</strong> <%= t.description %></p>
-                    <p><strong>Comment:</strong> <%= t.comment %></p>
-                </div>
-            </div>
+    <h2><span class="id"><%= t.testUnitId %></span>: <%= t.title %></h2>
+    <div class="column-second">
+        <div class="roleExpertsOnly admin">
+            <a class="btn" href="#test-submit.html/<%= t.testUnitId %>"><span class="icon-pencil"></span> Edit Test</a>
+            <a class="btn" href="#test-delete.html/<%= t.testUnitId %>"><span class="icon-minus-sign-alt"></span> Delete Test</a>
         </div>
+        <p><strong>Related Technique:</strong> <%= t.technique.nameId %>: <%= t.technique.title %></p>
+        <h3>Test Content</h3>
+        <h4>Test Procedure:</h4>
+        <ol>
+            <% _.each(t.testProcedure.steps, function(s) { %>
+            <li><%= s.step %></li>
+            <% }); %>
+        </ol>
+        <h4>Test File(s):</h4>
+        <p><a class="btn" target="thetest" href="<%= t.testFile %>">Open test page <span class="icon-new-window"><span class="visuallyhidden">in a new window</span></span></a></p>
+        <h4>Test Question:</h4>
+        <p><%= t.testProcedure.yesNoQuestion %></p>
+        <h4>Expected Result:</h4>
+        <p><%= t.testProcedure.expectedResult %></p>
+        <h3>More Information</h3>
+        <p><strong>Status:</strong> <%= t.status %></p>
+        <p><strong>Date:</strong> <%= t.date %></p>
+        <p><strong>Description:</strong> <%= t.description %></p>
+        <p><strong>Comment:</strong> <%= t.comment %></p>
     </div>
 </script>
 <script type="text/template" id="test-selected-list-template">
