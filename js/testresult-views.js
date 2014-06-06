@@ -234,3 +234,83 @@ accessdb.Views.TestResultsFullViewByTest = function (){
         }
     }
 };
+
+accessdb.Views.TestResultsDetails = function (){
+    this.$el = $("#Results");
+    this.results = null;
+    this.render = function(){
+        if(this.results){
+            var groupedResults = _.groupBy(this.results, 'testUnitDescription');
+            var results = [];
+            for (r in groupedResults){
+                var resPerTest = groupedResults[r];
+                var testResult = {
+                    testUnitId: r,
+                    testResults : []
+                }
+                for (ress in resPerTest) {
+                    var res = resPerTest[ress];
+
+                    if(res.testingProfile){
+                        testResult.testResults.push({
+                            result: res.resultValue,
+                            os: res.testingProfile.platform.name + " " + res.testingProfile.platform.version.text,
+                            plugin: res.testingProfile.plugin.name ,
+                            comment: res.comment,
+                            contributor: "TODO"
+                        });
+                    }
+                }
+                results.push(testResult);
+
+            }
+            var filter = accessdb.filters[accessdb.appRouter.page];
+            var template = _.template( $("#Results_template").html(), {results: results} );
+            this.$el.html( template );
+            this.$el.find('.chart').peity("pie", {
+                fill: ["green", "#f98"]
+            });
+        }
+    };
+    this.fetch = function (params, callback){
+        var self = this;
+        console.log(params);
+        if (!params || params.length<4 ){
+            console.warn("No filter defined!");
+            callback("No filter defined!", null);
+        }
+        else {
+            var filter = _.clone(params.filter);
+            if(params.ua)
+            filter.uas = [{name: params.ua, version: params.uaVer}];
+            if(params.at)
+                filter.ats = [{name: params.at, version: params.atVer}];
+            else
+                filter.ats = [];
+
+            console.log(filter);
+
+            accessdb.API.TESTRESULT.filter(filter, function (error, data, status) {
+                if(!error){
+                    console.log(data);
+                    self.results = data;
+                    callback(null, self.results);
+                }
+                else
+                    callback(error);
+            });
+        }
+    };
+    this.reload = function(params){
+        var pageId = accessdb.config.PAGE_ID_PREFIX+"results-details";
+        if(accessdb.appRouter.page === pageId){
+            var self = this;
+            params = params || {};
+            params.filter = accessdb.filters[pageId];
+            this.fetch(params, function(error, data){
+                if(!error)
+                    self.render();
+            });
+        }
+    }
+};

@@ -81,6 +81,8 @@ window.accessdb.appRouter.on('route:results-test', function (id) {
     accessdb.TestResultsFullViewByTest.reload({testUnitId : id});
 });
 window.accessdb.appRouter.on('route:results-details', function (ua, uaVer, at, atVer, filter) {
+    window.accessdb.appRouter.loadPage("results-details");
+
     if(filter){
         if(Utils.urlParam(filter)!==null)
             filter = JSON.parse(decodeURI(filter));
@@ -88,18 +90,16 @@ window.accessdb.appRouter.on('route:results-details', function (ua, uaVer, at, a
             filter = accessdb.filters[accessdb.appRouter.page] || new accessdb.Models.Filter(accessdb.appRouter.page);
         accessdb.filters[accessdb.appRouter.page] = filter;
     }
+    var params = {
+        ua : Utils.urlParam(ua),
+        uaVer : Utils.urlParam(uaVer),
+        at : Utils.urlParam(at),
+        atVer : Utils.urlParam(atVer),
+        filter : filter
+    }
 
-    ua = Utils.urlParam(ua);
-    uaVer = Utils.urlParam(uaVer);
-    at = Utils.urlParam(at);
-    atVer = Utils.urlParam(atVer);
-
-    console.log("fil......ter");
-    console.log(filter);
-    window.accessdb.appRouter.loadPage("results-details");
-    //accessdb.TreeHelper.loadTrees();
-    //accessdb.TestResultsDataOverview = new accessdb.Views.TestResultsDataOverview();
-    //accessdb.TestResultsDataOverview.reload();
+    accessdb.TestResultsDetails = new accessdb.Views.TestResultsDetails();
+    accessdb.TestResultsDetails.reload(params);
 });
 window.accessdb.appRouter.on('route:user-profiles', function () {
     window.accessdb.appRouter.loadPage("user-profiles");

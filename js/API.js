@@ -63,7 +63,7 @@
 
         URL_SERVICE_TESTRESULT_FULLVIEWTECHNIQUE: "testresult/browse/fullviewtechnique/",
         URL_SERVICE_TESTRESULT_FULLVIEWTEST: "testresult/browse/fullviewtest/", //{testUnitId}
-
+        URL_SERVICE_TESTRESULT_FILTER: "testresult/filter",
         URL_SERVICE_TESTRESULT_VIEWTECHNIQUE: "testresult/browse/resultsview/",
         URL_SERVICE_TESTRESULT_TREE_AT: "testresult/browse/at/tree",
         URL_SERVICE_TESTRESULT_TREE_UA: "testresult/browse/ua/tree",
@@ -144,6 +144,9 @@
 
         },
         TESTRESULT: {
+            filter: function(filter, callback){
+                ajax(accessdb.config.services.URL_SERVICE_TESTRESULT_FILTER, "POST", filter, callback);
+            },
             getATTree: function (filter, callback) {
                 ajax(accessdb.config.services.URL_SERVICE_TESTRESULT_TREE_AT, "POST", filter, callback);
             },
