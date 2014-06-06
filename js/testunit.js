@@ -8,7 +8,7 @@ function TestUnit() {
     this.creator = "W3C";
     this.version = "0.1";
     this.comment = "[no comment]";
-    var myDate = new Date();    
+    var myDate = new Date();
     this.creator = accessdb.session.get("userId");
     var cdate = myDate.getFullYear() + '-' + (myDate.getMonth() + 1) + "-"
             + (myDate.getDate());
@@ -37,7 +37,7 @@ function TestUnit() {
                 id:-1,
                 mediatype:"",
                 src:""
-            }]  
+            }]
     };
     $("#test-form-status").val(this.status.toLowerCase());
 };
@@ -110,14 +110,14 @@ TestUnit.prototype.loadById = function(id,callback) {
         else
             obj = null;
         callback(obj);
-    }); 
+    });
 };
 TestUnit.delete = function(testUnitId, callback) {
    accessdb.API.ADMIN.deleteDeepTest(testUnitId, callback);
 };
 TestUnit.prototype.loadByIdSync = function(id) {
     var obj = this;
-    var data = Utils.ajaxSync(accessdb.config.services.URL_SERVICE_GET_TESTUNITS + "/" + id, "GET",null);   
+    var data = Utils.ajaxSync(accessdb.config.services.URL_SERVICE_GET_TESTUNITS + "/" + id, "GET",null);
     if(obj)
         obj.setData(data);
     return obj;
@@ -177,7 +177,7 @@ TestUnit.prototype.buildForm = function()
     $("#test-form-expectedResult").val(""+this.testProcedure.expectedResult );
     $("#test-form-comment").val(this.comment);
     $("#test-form-status").val(this.status);
-    var testurl = this.getTestFileUrl();    
+    var testurl = this.getTestFileUrl();
     //avoid caching my passing random param
     testurl = testurl + "?date="+new Date().toString();
     $.get(testurl, function(data) {
@@ -186,10 +186,10 @@ TestUnit.prototype.buildForm = function()
     var stepsData=TestUnit.loadStepsData(this.testProcedure);
     $("#test-form-steps ol li + li").remove();
     $("#test-form-steps ol li").EnableMultiField({
-        linkText: 'Add more',
+        linkText: '<span class="btn"><span class="icon-plus-sign"><span class="visuallyhidden">Add more</span></span></span>',
         linkClass: 'addMoreFields',
         enableRemove: true,
-        removeLinkText: 'Remove',
+        removeLinkText: '<span class="btn"><span class="icon-minus-sign-alt"><span class="visuallyhidden">Remove</span></span></span>',
         removeLinkClass: 'removeFields',
         confirmOnRemove: false,
         confirmationMsgOnRemove: 'Are you sure you wish to remove this step?',
@@ -200,14 +200,14 @@ TestUnit.prototype.buildForm = function()
         maxItemsAllowedToAdd: null,
         maxItemReachedCallback: null,
         data: stepsData
-        }); 
+        });
     var resourceFilesData=[];
     $("#test-form-resourceFiles ol li + li").remove();
     $("#test-form-resourceFiles ol li").EnableMultiField({
-        linkText: 'Add more',
+        linkText: '<span class="btn"><span class="icon-plus-sign"><span class="visuallyhidden">Add more</span></span></span>',
         linkClass: 'addMoreFields',
         enableRemove: true,
-        removeLinkText: 'Remove',
+        removeLinkText: '<span class="btn"><span class="icon-minus-sign-alt"><span class="visuallyhidden">Remove</span></span></span>',
         removeLinkClass: 'removeFields',
         confirmOnRemove: false,
         confirmationMsgOnRemove: 'Are you sure you wish to remove this file?',
@@ -218,7 +218,7 @@ TestUnit.prototype.buildForm = function()
         maxItemsAllowedToAdd: null,
         maxItemReachedCallback: null,
         data: resourceFilesData
-        }); 
+        });
     this.showResourceFilesList(true);
 };
 TestUnit.prototype.showResourceFilesList = function (edit)
@@ -264,7 +264,7 @@ TestUnit.prototype.showResourceFilesList = function (edit)
                     });
                 });
                 filesLI.append(aDel);
-            } 
+            }
             filesUL.append(filesLI);
         }
         $(".testCaseResourceFilesDiv").html(filesUL);
@@ -287,10 +287,10 @@ TestUnit.prototype.initForm = function (sessionId)
     $("#test-form-sessionId").attr("value",sessionId);
     var stepsE = $("#test-form-steps ol li:first");
     stepsE.EnableMultiField({
-        linkText: 'Add more',
+        linkText: '<span class="btn"><span class="icon-plus-sign"><span class="visuallyhidden">Add more</span></span></span>',
         linkClass: 'addMoreFields',
         enableRemove: true,
-        removeLinkText: 'Remove',
+        removeLinkText: '<span class="btn"><span class="icon-minus-sign-alt"><span class="visuallyhidden">Remove</span></span></span>',
         removeLinkClass: 'removeFields',
         confirmOnRemove: false,
         confirmationMsgOnRemove: 'Are you sure you wish to remove this step?',
@@ -305,10 +305,10 @@ TestUnit.prototype.initForm = function (sessionId)
     var fileE = $("#test-form-resourceFiles ol li:first");
     //$(fileE).replaceWith( fileE = $(fileE).clone( true ) );
     fileE.EnableMultiField({
-        linkText: 'Add more',
+        linkText: '<span class="btn"><span class="icon-plus-sign"><span class="visuallyhidden">Add more</span></span></span>',
         linkClass: 'addMoreFields',
         enableRemove: true,
-        removeLinkText: 'Remove',
+        removeLinkText: '<span class="btn"><span class="icon-minus-sign-alt"><span class="visuallyhidden">Remove</span></span></span>',
         removeLinkClass: 'removeFields',
         confirmOnRemove: false,
         confirmationMsgOnRemove: 'Are you sure you wish to remove this resource?',
@@ -328,12 +328,12 @@ TestUnit.prototype.isValid = function()
     if(this.title.length<5)
         errors.push("Please type a valid (more than 5 chars) title");
     if(this.technique.nameId.length<2)
-        errors.push("Please select a valid technique"); 
+        errors.push("Please select a valid technique");
     if(this.testProcedure.step.length<1)
         errors.push("Please insert steps for test procedure");
     if(this.testProcedure.yesNoQuestion.length<2)
-        errors.push("Please type criteria for test procedure"); 
-    this.reportValidation(errors);  
+        errors.push("Please type criteria for test procedure");
+    this.reportValidation(errors);
     return errors.length < 1;
 };
 TestUnit.prototype.reportValidation = function(errors){
@@ -346,7 +346,7 @@ TestUnit.prototype.reportValidation = function(errors){
         $("#testform_erros").append("<li></li>");
         for(var errorId in errors){
             var li = $("<li></li>").append(errors[errorId]);
-            ul.append(li);          
+            ul.append(li);
         }
         $("#testformValidation").append(ul);
         $("#testformValidation").scrollTop();
@@ -361,9 +361,9 @@ TestUnit.prototype.submitForm = function ()
     {
         var json_text = JSON.stringify(this, null, 2);
         $("#test-form-TestUnitDescription").val(json_text);
-        $("#test-form").submit();    
+        $("#test-form").submit();
         return true;
-    }   
+    }
     else
         return false;
 };

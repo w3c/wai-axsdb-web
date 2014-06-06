@@ -82,38 +82,36 @@
                                     <textarea name="testCode" id="test-form-code" cols="30" rows="10"></textarea>
                                 </span>
                         </div>
-                        <fieldset id="test-form-resourceFiles" class="form-row required">
-                            <legend>Resource Files (referable in the HTML code by their name)</legend>
-                            <div class="form-block">
-                                <ol>
-                                    <li>
-                                        <input type="file" name="resourceFile" />
-                                    </li>
-                                </ol>
-                            <fieldset>
-                                <legend>Available resource files</legend>
-                                <div class="testCaseResourceFilesDiv"></div>
-                            </fieldset>
-                           </div>
-                        </fieldset>
                     </div>
+                    <fieldset id="test-form-resourceFiles" class="required">
+                        <legend>Resource Files (referable in the HTML code by their name)</legend>
+                        <div class="form-block">
+                            <ol>
+                                <li>
+                                    <input type="file" name="resourceFile" />
+                                </li>
+                            </ol>
+                        <fieldset>
+                            <legend>Available resource files</legend>
+                            <div class="testCaseResourceFilesDiv"></div>
+                        </fieldset>
+                       </div>
+                    </fieldset>
                 </fieldset>
                 <fieldset class="form-row required">
                     <legend>Test Procedure</legend>
                     <p>Provide information on how to run the test case</p>
+                    <fieldset id="test-form-steps">
+                        <legend>Testing steps</legend>
+                        <span>
+                        <ol>
+                            <li>
+                                <textarea recname="step" type="text" class=test-form-step name="step"></textarea>
+                            </li>
+                        </ol>
+                            </span>
+                    </fieldset>
                     <div class="form-block">
-                        <div class="form-row required">
-                            <fieldset id="test-form-steps">
-                                <legend>Testing steps</legend>
-                                <span>
-                                <ol>
-                                    <li>
-                                        <textarea recname="step" type="text" class=test-form-step name="step"></textarea>
-                                    </li>
-                                </ol>
-                                    </span>
-                            </fieldset>
-                        </div>
                         <div class="form-row required">
                             <label for="test-form-yesNoQuestion">Testing Question</label>
                             <span>
