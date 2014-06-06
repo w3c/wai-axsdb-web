@@ -296,7 +296,7 @@
 <script type="text/template" id="Results_template">
     <% _.each(results, function(r) { %>
         <table class="testcase-details">
-            <caption><strong>Testcase:</strong> <a href="#linktotestcase"><%= r.testUnitId %></a>: <%=r.testTitle%></caption>
+            <caption><strong>Testcase:</strong> <a href="#/results-test.html/<%= r.testUnitId %>"><%= r.testUnitId %></a>: <%=r.testTitle%></caption>
             <col class="col1"> <col class="col2"> <col class="col3"> <col class="col4"> <col class="col5"> <col class="col6 admin roleAdminOnly">
             <thead>
                 <tr>
@@ -305,7 +305,9 @@
                     <th>Plugin</th>
                     <th>Contributor</th>
                     <th>Comment</th>
+                    <% if(accessdb.session.isUserAdmin()) { %>
                     <th class="roleAdminOnly">Admin</th>
+                    <% } %>
                 </tr>
             </thead>
             <tbody>
@@ -316,10 +318,12 @@
                     <td><%=t.plugin%></td>
                     <td><%=t.contributor%></td>
                     <td><%=t.comment%></td>
+                    <% if(accessdb.session.isUserAdmin()) { %>
                     <td class="roleAdminOnly">
-                        <button class="btn"><span class="icon-pencil"></span> Edit</button>
-                        <button class="btn"><span class="icon-minus-sign-alt"></span> Delete</button>
+                        <button class="btn" value="<%= t.id %>"><span class="icon-pencil"></span> Edit</button>
+                        <button class="btn" value="<%= t.id %>"><span class="icon-minus-sign-alt"></span> Delete</button>
                     </td>
+                    <% } %>
                 </tr>
                 <% }); %>
             </tbody>

@@ -253,6 +253,7 @@ accessdb.Views.TestResultsDetails = function (){
 
                     if(res.testingProfile){
                         testResult.testResults.push({
+                            id: res.id,
                             result: res.resultValue,
                             os: res.testingProfile.platform.name + " " + res.testingProfile.platform.version.text,
                             plugin: res.testingProfile.plugin.name ,
@@ -262,14 +263,11 @@ accessdb.Views.TestResultsDetails = function (){
                     }
                 }
                 results.push(testResult);
-
             }
             var filter = accessdb.filters[accessdb.appRouter.page];
             var template = _.template( $("#Results_template").html(), {results: results} );
             this.$el.html( template );
-            this.$el.find('.chart').peity("pie", {
-                fill: ["green", "#f98"]
-            });
+            Utils.UIRoleAdapt();
         }
     };
     this.fetch = function (params, callback){
