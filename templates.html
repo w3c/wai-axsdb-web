@@ -224,7 +224,10 @@
                 <th>Passed</th>
             </tr>
         </thead>
-        <% _.each(results, function(r) { %>
+        <% _.each(results, function(r) {
+            if(r.noOfAll>0)
+            {
+        %>
         <tbody class="collapsed">
            <tr>
                 <td class="liketh">
@@ -247,7 +250,9 @@
             </tr>
         </tbody>
         <tbody class="testcases"></tbody>
-    <% }); %>
+    <%
+        }
+        }); %>
 </table>
 </script>
 <script type="text/template" id="TestResultsDataOverviewTestCases_template">
@@ -378,9 +383,7 @@
                             accessdb.p.at = col.product.name;
                             accessdb.p.atVer = col.product.version.text;
                         %>
-                            <th data-accessdbproductver="<%= col.product.version.text %>" data-accessdbproductname="<%= col.product.name %>" colspan="2" scope="row"><%=col.product.name %></th>
-                            <th scope="row"><span class="visuallyhidden"><%=col.product.name %></span> <%= col.product.version.text %></th>
-
+                            <th data-accessdbproductver="<%= col.product.version.text %>" data-accessdbproductname="<%= col.product.name %>" colspan="1" scope="row"><%=col.product.name %> <%= col.product.version.text %></th>
                         <% } else { %>
                             <th data-accessdbproductver="" data-accessdbproductname="" colspan="1" scope="row">None</th>
                         <% }

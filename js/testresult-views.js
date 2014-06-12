@@ -30,7 +30,7 @@ accessdb.Views.TestResultsDataOverview = function (){
                 }
                 else
                     callback(error);
-            });
+            }, this.$el);
         }
     };
     this.reload = function(){
@@ -86,7 +86,7 @@ accessdb.Views.TestResultsDataTestCaseOverview = function (){
                 }
                 else
                     callback(error);
-            });
+            }, this.$el);
         }
     };
     this.reload = function(){
@@ -130,7 +130,7 @@ accessdb.Views.TestResultsFullViewByTechnique = function (){
                 }
                 else
                     callback(error);
-            });
+            }, this.$el);
         }
     };
     this.reload = function(params){
@@ -173,7 +173,7 @@ accessdb.Views.TestResultsFullViewByTechniqueRelatedTests = function (){
                 }
                 else
                     callback(error);
-            });
+            }, this.$el);
         }
     };
     this.reload = function(params){
@@ -218,7 +218,7 @@ accessdb.Views.TestResultsFullViewByTest = function (){
                 }
                 else
                     callback(error);
-            });
+            }, this.$el);
         }
     };
     this.reload = function(params){
@@ -240,7 +240,7 @@ accessdb.Views.TestResultsDetails = function (){
     this.results = null;
     this.render = function(){
         if(this.results){
-            var groupedResults = _.groupBy(this.results, 'testUnitDescription');
+            var groupedResults = _.groupBy(this.results, 'testUnitId');
             var results = [];
             for (r in groupedResults){
                 var resPerTest = groupedResults[r];
@@ -258,7 +258,7 @@ accessdb.Views.TestResultsDetails = function (){
                             os: res.testingProfile.platform.name + " " + res.testingProfile.platform.version.text,
                             plugin: res.testingProfile.plugin.name ,
                             comment: res.comment,
-                            contributor: "TODO"
+                            contributor: res.userId
                         });
                     }
                 }
@@ -280,14 +280,11 @@ accessdb.Views.TestResultsDetails = function (){
         else {
             var filter = _.clone(params.filter);
             if(params.ua)
-            filter.uas = [{name: params.ua, version: params.uaVer}];
+            filter.uas = [{id: "0", name: params.ua, type:"UAgent", version: params.uaVer}];
             if(params.at)
-                filter.ats = [{name: params.at, version: params.atVer}];
+                filter.ats = [{id:"0", name: params.at, type:"AssistiveTechnology", version: params.atVer}];
             else
                 filter.ats = [];
-
-            console.log(filter);
-
             accessdb.API.TESTRESULT.filter(filter, function (error, data, status) {
                 if(!error){
                     console.log(data);
@@ -296,7 +293,7 @@ accessdb.Views.TestResultsDetails = function (){
                 }
                 else
                     callback(error);
-            });
+            }, this.$el);
         }
     };
     this.reload = function(params){

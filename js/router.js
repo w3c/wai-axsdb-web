@@ -73,8 +73,11 @@ window.accessdb.appRouter.on('route:results-technique', function (id) {
     accessdb.TestResultsFullViewByTechnique.reload({techNameId : id});
 });
 window.accessdb.appRouter.on('route:results-test', function (id) {
+    TestUnit.prototype.loadById(id, function(test){
+        $(".results-test-id").html(test.testUnitId);
+        $(".results-test-title").html(test.title);
+    });
     this.params.testUnitId = id;
-
     window.accessdb.appRouter.loadPage("results-test");
     accessdb.TreeHelper.loadTrees();
     accessdb.TestResultsFullViewByTest = new accessdb.Views.TestResultsFullViewByTest();
