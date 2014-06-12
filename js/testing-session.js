@@ -184,11 +184,12 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
                         if (data.userId !== null && status===200) {
                             self.set(data);
                             self.set("userId",data.userId);
-                            self.load();
-                            UserTestingProfile.loadUserProfilesByUserId(function(error, data1){
-                                accessdb.session.set("userTestingProfiles", data1);
+                            self.load(function(error){
+                                UserTestingProfile.loadUserProfilesByUserId(function(error, data1){
+                                    accessdb.session.set("userTestingProfiles", data1);
+                                });
+                                callback(true);
                             });
-                            callback(true);
                         }
                         else{
                             callback(false);
