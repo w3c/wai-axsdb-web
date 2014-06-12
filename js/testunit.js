@@ -528,8 +528,13 @@ TestUnit.viewTestUnitIdList = function(){
     for(var i=0;i<tests.length;i++){
         var test = tests[i];
         if(test){
-            var li = _.template($('#test-selected-list-template').html(), {test:{testUnitId:  test, title:  accessdb.testTitles[test]}});
-            $(ul).append(li);
+            try {
+                var li = _.template($('#test-selected-list-template').html(), {test: {testUnitId: test, title: accessdb.testTitles[test]}});
+                $(ul).append(li);
+            }
+            catch (e){
+                console.error(e);
+            }
         }
     }
 };

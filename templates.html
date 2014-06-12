@@ -57,7 +57,7 @@
     </header>
     <ul>
         <% _.each(results, function(r) { %>
-            <li><%= r.testUnitId %> [Outcome: <%= r.resultValue %> with Profile:
+            <li><%= r.testUnitDescription %> [Outcome: <%= r.resultValue %> with Profile:
                  <%= r.testingProfile.platform.name %> <%= r.testingProfile.assistiveTechnology.version.text %> ,
                  <%= r.testingProfile.userAgent.name %> <%= r.testingProfile.userAgent.version.text %> ,
                  <%= r.testingProfile.assistiveTechnology.name %> <%= r.testingProfile.assistiveTechnology.version.text %> ,

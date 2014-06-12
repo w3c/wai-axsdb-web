@@ -23,7 +23,7 @@ accessdb.Models.TestingHelper = function (){
             });
             $(document).on("click", ".skipme", function (event) {
                 event.preventDefault();
-                var hasNext = accessdb.testingRunne.loadNext();
+                var hasNext = accessdb.testingRunner.skipAndNext();
                 if(!hasNext){
                     accessdb.appRouter.redirect("tests-finish.html")
                 }
@@ -52,6 +52,14 @@ accessdb.Models.TestingHelper = function (){
                 return true;
             }
             return false;
+        },
+        skipAndNext: function () {
+            testIds = _.filter(testIds, function(item) {
+                return item !== test.testUnitId;
+            });
+            accessdb.session.set("testUnitIdList", _.clone(testIds));
+            //testIds.push(test.testUnitId);
+            return this.loadNext();
         },
         saveAndLoadNext : function(){
             this.prepareResult();
