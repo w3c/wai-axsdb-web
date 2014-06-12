@@ -171,8 +171,8 @@ TestUnit.prototype.buildForm = function()
     $("#test-form-version").val(this.version);
     $("#test-form-date").val(this.date);
     $("#test-form-requirement").val(this.technique.nameId);
-    $("#test-form-reqRef").prop('disabled', true);
-    $("#test-form-reqRef").val(this.technique.title);
+    $("#test-form-technique").prop('disabled', true);
+    $("#test-form-technique").val(this.technique.nameId + ": "+this.technique.title);
     $("#test-form-yesNoQuestion").val(this.testProcedure.yesNoQuestion);
     $("#test-form-expectedResult").val(""+this.testProcedure.expectedResult );
     $("#test-form-comment").val(this.comment);
@@ -220,6 +220,7 @@ TestUnit.prototype.buildForm = function()
         data: resourceFilesData
         });
     this.showResourceFilesList(true);
+    Utils.UIRoleAdapt();
 };
 TestUnit.prototype.showResourceFilesList = function (edit)
 {
@@ -243,20 +244,21 @@ TestUnit.prototype.showResourceFilesList = function (edit)
                 $(aDel).on('click', function(event)
                 {
                     var fileId = $(event.target).closest(".removeMe").attr("data-accessdb-id");
-                    var testUnitId = accessdb.session.get("currentTestUnit").testUnitId;
                     var sessionId = accessdb.session.get("sessionId");
-                    TestUnit.deleteResourceFile(sessionId,fileId,testUnitId, function(error, data, status){
-                        console.log(data.status);
+                    TestUnit.deleteResourceFile(sessionId,fileId, function(error, data, status){
+                        console.log(status);
                         if(error){
                             Utils.msg2user("There was a problem deleting the resource file. Please try again");
                         }
                         else{
-                            if(data.status===200)
+                            if(status===200)
                             {
-                                accessdb.session.get("currentTestUnit").subject.resources = jQuery.grep(accessdb.session.get("currentTestUnit").subject.resources, function( a ) {
+                                var testUnit = new TestUnit();
+                                testUnit.setData(data);
+                                testUnit.subject.resources = jQuery.grep(testUnit.subject.resources, function( a ) {
                                     return (a.id+"") !== fileId;
                                 });
-                                accessdb.session.get("currentTestUnit").showResourceFilesList(true);
+                                testUnit.showResourceFilesList(true);
                             }
                             else if(data.status === 401)
                                 Utils.msg2user("It seems you are not authorized to delete this resource. Please logout and login again.");
@@ -280,10 +282,10 @@ TestUnit.prototype.initForm = function (sessionId)
     var myDate = new Date();
     var cdate = myDate.getFullYear()+ '-' + (myDate.getMonth()+1)  + "-" + (myDate.getDate()) ;
     $("#test-form-date").attr("value",cdate);
+    $("#test-form-technique").prop('disabled', false);
+    $("#test-form-technique").val("");
     //$("#test-form-status").attr("value","UNCONFIRMED");
     $("#test-form-language").attr("value","en");
-   // $("#test-form-testUnitId").attr("value",getURLParameter("testUnitId"));
-   // $("#test-form-date" ).datepicker( "option", "dateFormat", accessdb.config.DATE_FORMAT );
     $("#test-form-sessionId").attr("value",sessionId);
     var stepsE = $("#test-form-steps ol li:first");
     stepsE.EnableMultiField({
@@ -367,8 +369,8 @@ TestUnit.prototype.submitForm = function ()
     else
         return false;
 };
-TestUnit.deleteResourceFile = function(sessionId,fileId,testUnitId, callback) {
-    accessdb.API.TEST.deleteResourceFile(fileId, testUnitId, callback);
+TestUnit.deleteResourceFile = function(sessionId,fileId, callback) {
+    accessdb.API.TEST.deleteResourceFile(fileId, callback);
 };
 TestUnit.getTestsTreeData = function(callback){
     accessdb.API.TEST.getTestsTreeData(accessdb.filters["axsdb-page-tests-run"], callback);

@@ -7,7 +7,7 @@
     window.accessdb.config = window.accessdb.config || {};
 
     // Config to override
-    window.accessdb.config.URL_API_ROOT = "http://www.w3.org/WAI/accessibility-support/api/";
+    window.accessdb.config.URL_API_ROOT = "http://www.w3.org/WAI/accessibility-support/api_dev/";
     window.accessdb.config.loadingStart = function(holder){
         var div = $('<div class="progress"><div>Loading…</div></div>');
         $(holder).empty();
@@ -80,6 +80,10 @@
         // Admin resource
         URL_SERVICE_ADMIN_DEL_TECHNIQUE_DEEP: "admin/techniques/deepdelete/", //{sessionId}/{nameid}
         URL_SERVICE_ADMIN_TECHNICKSPARSE: "admin/techniques/",
+        URL_SERVICE_ADMIN_IMPORT_TESTS: "admin/import/tests",
+        URL_SERVICE_ADMIN_EXPORT_TESTS: "admin/export/tests",//{path}
+        URL_SERVICE_ADMIN_IMPORT_TESTRESULTS: "admin/import/testresults/", //{path}
+        URL_SERVICE_ADMIN_EXPORT_TESTRESULTS: "admin/export/testresults/",
         // Rating Resource
         URL_SERVICE_INSERT_RATING: "rating/commit",
         URL_SERVICE_GET_RATINGS_BYRATEDID: "rating/browse",
@@ -133,8 +137,8 @@
             getTestsTreeData : function (filter, callback){
                 ajax(accessdb.config.services.URL_SERVICE_GET_TESTUNITS_TREE, "POST", filter, callback);
             },
-            deleteResourceFile : function(fileId,testId, callback, tatgetE){
-                ajax(accessdb.config.services.URL_SERVICE_DELETE_RESOURCE_FILE + accessdb.sessionId + "/" + testId+ "/" + fileId , "DELETE", null, callback, tatgetE);
+            deleteResourceFile : function(fileId, callback, tatgetE){
+                ajax(accessdb.config.services.URL_SERVICE_DELETE_RESOURCE_FILE + accessdb.sessionId + "/" + fileId , "DELETE", null, callback, tatgetE);
             },
             deleteTest : function(id, callback) {
                 var url = accessdb.config.services.URL_SERVICE_DELETE_TESTUNIT + accessdb.sessionId + "/" + id;
@@ -241,6 +245,24 @@
             deleteDeepTest : function(testUnitId, callback) {
                 var url = accessdb.config.services.URL_SERVICE_DELETE_DEEP_TESTUNIT + accessdb.sessionId + "/" + testUnitId;
                 ajax(url , "DELETE", null, callback);
+            },
+            exportTests : function(callback) {
+                var url = accessdb.config.services.URL_SERVICE_ADMIN_EXPORT_TESTS;
+                ajax(url , "GET", null, callback);
+            },
+            exportTestResults : function(callback) {
+                var url = accessdb.config.services.URL_SERVICE_ADMIN_EXPORT_TESTRESULTS;
+                ajax(url , "GET", null, callback);
+            },
+            importTests : function(serverPath, callback) {
+                serverPath = serverPath || "/tmp/accessdbexports/index.xml";
+                var url = accessdb.config.services.URL_SERVICE_ADMIN_IMPORT_TESTS + "?path=" + serverPath;
+                ajax(url , "GET", null, callback);
+            },
+            importTestResults : function(serverPath, callback) {
+                serverPath = serverPath || "/tmp/accessdbexports/testresults.xml";
+                var url = accessdb.config.services.URL_SERVICE_ADMIN_IMPORT_TESTRESULTS + "?path=" + serverPath;
+                ajax(url , "GET", null, callback);
             }
         }
     };
@@ -269,6 +291,9 @@
             error: function(jqXHR, textStatus, errorThrown) {
                 if(targetE){
                     window.accessdb.config.loadingEnd(targetE);
+                }
+                if(jqXHR.status===200){
+                    callback(null, {}, jqXHR.status);
                 }
                 callback(jqXHR, null, null);
             }

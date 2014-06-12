@@ -57,28 +57,31 @@ accessdb.code.showLibraries = function () {
     }
 };
 accessdb.code.initeditor = function () {
-    var mixedMode = {
-        name: "htmlmixed",
-        scriptTypes: [
-            {matches: /\/x-handlebars-template|\/x-mustache/i,
-                mode: null},
-            {matches: /(text|application)\/(x-)?vb(a|script)/i,
-                mode: "vbscript"}
-        ]
-    };
-    accessdb.code.editorDoc = CodeMirror.fromTextArea(document.getElementById('test-form-code'), {
-        // your settings here
-        lineNumbers: true,
-        smartIndent: true,
-        tabSize: 4,
-        indentWithTabs: true,
-        matchBrackets: true,
-        //  tabMode: "indent",
-        //  smartIndent :true,
-        mode: mixedMode
-    });
-    accessdb.code.editorDoc.setValue( _.template($('#test-submit-code-template').html(), { title : "Test file title"}));
-    accessdb.code.editorDoc.focus();
+    if(!accessdb.code.editorDoc){
+
+        var mixedMode = {
+            name: "htmlmixed",
+            scriptTypes: [
+                {matches: /\/x-handlebars-template|\/x-mustache/i,
+                    mode: null},
+                {matches: /(text|application)\/(x-)?vb(a|script)/i,
+                    mode: "vbscript"}
+            ]
+        };
+        accessdb.code.editorDoc = CodeMirror.fromTextArea(document.getElementById('test-form-code'), {
+            // your settings here
+            lineNumbers: true,
+            smartIndent: true,
+            tabSize: 4,
+            indentWithTabs: true,
+            matchBrackets: true,
+            //  tabMode: "indent",
+            //  smartIndent :true,
+            mode: mixedMode
+        });
+        accessdb.code.editorDoc.setValue( _.template($('#test-submit-code-template').html(), { title : "Test file title"}));
+       // accessdb.code.editorDoc.focus();
+    }
 
 };
 accessdb.code.reseteditor = function () {
