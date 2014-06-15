@@ -1,5 +1,5 @@
 var nowDate = new Date();
-var SERVICES_ROOT = accessdb.config.URL_API_ROOT;
+var SERVICES_ROOT = window.accessdb.config.URL_API_ROOT;
 var QUERY_URL = SERVICES_ROOT + "query/";
 
 var WorkBench = {

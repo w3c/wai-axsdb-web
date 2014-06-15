@@ -299,6 +299,12 @@
     </ul>
 </script>
 <script type="text/template" id="Results_template">
+    <h2>Browse Test Results for <%=params.type%> <%=params.typeValue%>, <%=params.ua%> <%=params.uaVer%> with <%=params.at%> <%=params.atVer%></h2>
+    <div class="">
+        <div class="column-second">
+            <div id="Results"><!-- Template: Results_template --></div>
+        </div>
+    </div>
     <% _.each(results, function(r) { %>
         <table class="testcase-details">
             <caption><strong>Testcase:</strong> <a href="#/results-test.html/<%= r.testUnitId %>"><%= r.testUnitId %></a>: <%=r.testTitle%></caption>
@@ -346,14 +352,14 @@
             at: undefined,
             atVer : undefined,
             toUrl : function(){
-                var url = "ua/" + (this.ua || "null");
-                url = url + "/uaver/" + (this.uaVer || "null");
-                url = url + "/at/" + (this.at || "null");
-                url = url + "/atver/" + (this.atVer || "null");
-        console.log(filter);
-                url = url + "/filter/" + encodeURI(JSON.stringify(filter));
-                return url;
-            }
+                    var url = "type/" + params.type + "/typevalue/" + params.typeValue;
+                    url = url + "/ua/" + (this.ua || "null");
+                    url = url + "/uaver/" + (this.uaVer || "null");
+                    url = url + "/at/" + (this.at || "null");
+                    url = url + "/atver/" + (this.atVer || "null");
+                   // url = url + "/filter/" + encodeURI(JSON.stringify(params.filter));
+                    return url;
+                }
             };
         %>
         <% firstrow = true %>

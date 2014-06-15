@@ -45,7 +45,7 @@ accessdb.TreeHelper = {
         if(accessdb.TestResultsFullViewByTechnique)
             accessdb.TestResultsFullViewByTechnique.reload({techNameId : accessdb.appRouter.params.techniqueNameId});
         if(accessdb.TestResultsFullViewByTest)
-            accessdb.TestResultsFullViewByTest.reload({techNameId : accessdb.appRouter.params.testUnitId});
+            accessdb.TestResultsFullViewByTest.reload({testUnitId : accessdb.appRouter.params.testUnitId});
         TestUnit.loadTestsTree();
     },
     uncheckTestFromTree: function (liId) {

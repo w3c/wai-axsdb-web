@@ -7,8 +7,8 @@ window.accessdb.Models.AppRouter = Backbone.Router.extend({
         "results.html": "results",
         "results-technique.html/:id": "results-technique",
         "results-test.html/:id": "results-test",
-        "results-details.html/ua/:ua/uaver/:uaVer/at/:at/atver/:atVer/filter/:filter": "results-details",
-        "results-details.html/ua/:ua/uaver/:uaVer/at/:at/atver/:atVer": "results-details",
+        "results-details.html/type/:type/typevalue/:typeValue/ua/:ua/uaver/:uaVer/at/:at/atver/:atVer/filter/:filter": "results-details",
+        "results-details.html/type/:type/typevalue/:typeValue/ua/:ua/uaver/:uaVer/at/:at/atver/:atVer": "results-details",
         "test-run.html/:id": "test-run",
         "test-run.html": "test-run",
         "test.html/:id": "test",
@@ -83,24 +83,31 @@ window.accessdb.appRouter.on('route:results-test', function (id) {
     accessdb.TestResultsFullViewByTest = new accessdb.Views.TestResultsFullViewByTest();
     accessdb.TestResultsFullViewByTest.reload({testUnitId : id});
 });
-window.accessdb.appRouter.on('route:results-details', function (ua, uaVer, at, atVer, filter) {
+window.accessdb.appRouter.on('route:results-details-filter', function (type, typeValue, ua, uaVer, at, atVer, filter) {
     window.accessdb.appRouter.loadPage("results-details");
-
-    if(filter){
-        if(Utils.urlParam(filter)!==null)
-            filter = JSON.parse(decodeURI(filter));
-        else
-            filter = accessdb.filters[accessdb.appRouter.page] || new accessdb.Models.Filter(accessdb.appRouter.page);
-        accessdb.filters[accessdb.appRouter.page] = filter;
-    }
+    filter = JSON.parse(decodeURI(filter));
     var params = {
         ua : Utils.urlParam(ua),
         uaVer : Utils.urlParam(uaVer),
         at : Utils.urlParam(at),
         atVer : Utils.urlParam(atVer),
-        filter : filter
+        filter : filter,
+        type: type,
+        typeValue : typeValue
     }
-
+    accessdb.TestResultsDetails = new accessdb.Views.TestResultsDetails();
+    accessdb.TestResultsDetails.reload(params);
+});
+window.accessdb.appRouter.on('route:results-details', function (type, typeValue, ua, uaVer, at, atVer) {
+    window.accessdb.appRouter.loadPage("results-details");
+    var params = {
+        ua : Utils.urlParam(ua),
+        uaVer : Utils.urlParam(uaVer),
+        at : Utils.urlParam(at),
+        atVer : Utils.urlParam(atVer),
+        type: type,
+        typeValue : typeValue
+    }
     accessdb.TestResultsDetails = new accessdb.Views.TestResultsDetails();
     accessdb.TestResultsDetails.reload(params);
 });

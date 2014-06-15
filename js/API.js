@@ -62,7 +62,7 @@
         URL_SERVICE_TESTRESULT_BYTEST_OVERVIEW: "testresult/browse/bytest/overview/", //{techNameId}
 
         URL_SERVICE_TESTRESULT_FULLVIEWTECHNIQUE: "testresult/browse/fullviewtechnique/",
-        URL_SERVICE_TESTRESULT_FULLVIEWTEST: "testresult/browse/fullviewtest/", //{testUnitId}
+        URL_SERVICE_TESTRESULT_FULLVIEWTESTURL_SERVICE_TESTRESULT_FULLVIEWTEST: "testresult/browse/fullviewtest/", //{testUnitId}
         URL_SERVICE_TESTRESULT_FILTER: "testresult/filter",
         URL_SERVICE_TESTRESULT_VIEWTECHNIQUE: "testresult/browse/resultsview/",
         URL_SERVICE_TESTRESULT_TREE_AT: "testresult/browse/at/tree",
