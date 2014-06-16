@@ -12,7 +12,10 @@ accessdb.Views.TestResultsDataOverview = function (){
             this.$el.find('button').on('click', function(){
                 var view = new accessdb.Views.TestResultsDataTestCaseOverview();
                 view.$el = $(this);
-                view.reload();
+                if($(this).closest("tbody").next().children().length>0)
+                    view.render();
+                else
+                    view.reload();
             });
         }
     };
@@ -31,7 +34,7 @@ accessdb.Views.TestResultsDataOverview = function (){
                 }
                 else
                     callback(error);
-            }, this.$el);
+            }, self.$el);
         }
     };
     this.reload = function(params){
@@ -52,23 +55,23 @@ accessdb.Views.TestResultsDataTestCaseOverview = function (){
     this.results = null;
     this.params = null;
     this.render = function(){
+        eltbody =  this.$el.parents('tbody');
+        sistertbody = eltbody.next(); // tbody.testcases
+        icon =  this.$el.find('.icon');
+        iconlabel = icon.find('.visuallyhidden');
+        eltbody.toggleClass('collapsed');
         if(this.results){
-            eltbody =  this.$el.parents('tbody');
-            sistertbody = eltbody.next(); // tbody.testcases
-            icon =  this.$el.find('.icon');
-            iconlabel = icon.find('.visuallyhidden');
-            eltbody.toggleClass('collapsed');
             var tctemplate = _.template( $("#TestResultsDataOverviewTestCases_template").html(), {results: this.results} );
             sistertbody.html( tctemplate );
-            sistertbody.find('.chart').peity("pie", {
-                fill: ["green", "#f98"]
-            });
-            icon.toggleClass('icon-collapse icon-expand');
-            if (icon.is('.icon-expand')) {
-                iconlabel.text('Expand');
-            } else {
-                iconlabel.text('Collapse');
-            }
+        }
+        sistertbody.find('.chart').peity("pie", {
+            fill: ["green", "#f98"]
+        });
+        icon.toggleClass('icon-collapse icon-expand');
+        if (icon.is('.icon-expand')) {
+            iconlabel.text('Expand');
+        } else {
+            iconlabel.text('Collapse');
         }
     };
     this.fetch = function (callback){
@@ -88,7 +91,7 @@ accessdb.Views.TestResultsDataTestCaseOverview = function (){
                 }
                 else
                     callback(error);
-            }, this.$el);
+            }, self.$el.closest("tbody").next());
         }
     };
     this.reload = function(params){

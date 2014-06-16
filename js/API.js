@@ -10,10 +10,12 @@
     window.accessdb.config.URL_API_ROOT = "http://www.w3.org/WAI/accessibility-support/api_dev/";
     window.accessdb.config.loadingStart = function(holder){
         var div = $('<div class="progress"><div>Loading…</div></div>');
+        $(holder).attr("aria-busy", true);
         $(holder).empty();
         $(holder).append(div);
     };
     window.accessdb.config.loadingEnd = loadingEnd=function(holder){
+        $(holder).attr("aria-busy", false);
         $(holder).find(".progress").remove();
     };
     // end config
