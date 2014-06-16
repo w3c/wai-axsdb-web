@@ -1052,18 +1052,22 @@ div.admin {
 .environments td {
   vertical-align: top;
 }
+/* line 275, ../sass/_asd.scss */
+.environments td:first-child {
+  text-align: right;
+}
 
-/* line 276, ../sass/_asd.scss */
+/* line 281, ../sass/_asd.scss */
 .box-note {
   margin-bottom: 2em;
 }
 
-/* line 281, ../sass/_asd.scss */
+/* line 286, ../sass/_asd.scss */
 #test-form-resourceFiles li, #test-form-steps li {
   margin-bottom: 0.25em;
 }
 
-/* line 286, ../sass/_asd.scss */
+/* line 291, ../sass/_asd.scss */
 a.removeFields, a.addMoreFields {
   text-decoration: none;
 }
