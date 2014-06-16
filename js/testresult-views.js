@@ -1,6 +1,7 @@
 accessdb.Views.TestResultsDataOverview = function (){
     this.$el = $("#TestResultsDataOverviewDiv");
     this.results = null;
+    this.params = null;
     this.render = function(){
         if(this.results){
             var template = _.template( $("#TestResultsDataOverview_template").html(), {results: this.results} );
@@ -15,14 +16,14 @@ accessdb.Views.TestResultsDataOverview = function (){
             });
         }
     };
-    this.fetch = function (params, callback){
+    this.fetch = function (callback){
         var self = this;
-        if (!params || params.length<1 ){
+        if (!this.params || this.params.length<1 ){
             console.warn("No filter defined!");
             callback("No filter defined!", null);
         }
         else {
-            accessdb.API.TESTRESULT.findByFilterTestResultTechniqueOveview(params.filter, function (error, data, status) {
+            accessdb.API.TESTRESULT.findByFilterTestResultTechniqueOveview(this.params.filter, function (error, data, status) {
                 if(!error){
                     console.log(data);
                     self.results = data;
@@ -37,8 +38,9 @@ accessdb.Views.TestResultsDataOverview = function (){
         var pageId = accessdb.config.PAGE_ID_PREFIX+"results";
         if(accessdb.appRouter.page === pageId){
             var self = this;
-            var params = {filter: accessdb.filters[pageId]};
-            this.fetch(params, function(error, data){
+            this.params = params || {};
+            this.params.filter = _.clone(accessdb.filters[pageId]);
+            this.fetch(function(error, data){
                 if(!error)
                     self.render();
             });
@@ -48,6 +50,7 @@ accessdb.Views.TestResultsDataOverview = function (){
 accessdb.Views.TestResultsDataTestCaseOverview = function (){
     this.$el = null;
     this.results = null;
+    this.params = null;
     this.render = function(){
         if(this.results){
             eltbody =  this.$el.parents('tbody');
@@ -68,16 +71,16 @@ accessdb.Views.TestResultsDataTestCaseOverview = function (){
             }
         }
     };
-    this.fetch = function (params, callback){
+    this.fetch = function (callback){
         var self = this;
-        if (!params || params.length<2 ){
+        if (!this.params || this.params.length<2 ){
             console.warn("No filter defined!");
             callback("No filter defined!", null);
         }
         else {
-            var filter = params.filter;
+            var filter = this.params.filter;
             var techNameId = $(this.$el).val();
-            accessdb.API.TESTRESULT.findByFilterTestResultTestOveview(params.filter, techNameId, function (error, data, status) {
+            accessdb.API.TESTRESULT.findByFilterTestResultTestOveview(this.params.filter, techNameId, function (error, data, status) {
                 if(!error){
                     console.log(data);
                     self.results = data;
@@ -89,11 +92,12 @@ accessdb.Views.TestResultsDataTestCaseOverview = function (){
         }
     };
     this.reload = function(params){
+        this.params = params || {};
         var pageId = accessdb.config.PAGE_ID_PREFIX+"results";
         if(accessdb.appRouter.page === pageId){
             var self = this;
-            var params = {filter:accessdb.filters[pageId]};
-            this.fetch(params , function(error, data){
+            this.params.filter = _.clone(accessdb.filters[pageId]);
+            this.fetch(function(error, data){
                 if(!error)
                     self.render();
             });

@@ -339,20 +339,20 @@ TestUnit.prototype.isValid = function()
     return errors.length < 1;
 };
 TestUnit.prototype.reportValidation = function(errors){
-    $("#testformValidation").empty();
+    $("#test-form-validation").empty();
     if(errors.length>0){
         var h = $("<h3></h3>");
         h.text(errors.length+ " error(s) in Submission");
-        $("#testformValidation").append(h);
+        $("#test-form-validation").append(h);
         var ul = $("<ol></ol>");
         $("#testform_erros").append("<li></li>");
-        for(var errorId in errors){
-            var li = $("<li></li>").append(errors[errorId]);
+        for(var i=0; i<errors.length;i++){
+            var li = $("<li></li>").append(errors[i]);
             ul.append(li);
         }
-        $("#testformValidation").append(ul);
-        $("#testformValidation").scrollTop();
-        $("#testformValidation").focus();
+        $("#test-form-validation").append(ul);
+        $("#test-form-validation").scrollTop();
+        $("#test-form-validation").focus();
         $("html, body").animate({ scrollTop: 0 }, "slow");
     }
 };
@@ -494,8 +494,14 @@ TestUnit.initFormPage = function (id) {
                 msg = "Changes saved!";
             else if (xhr.status == 401)
                 msg = "Either you have no permission or your Session has been expired. Please try to logout and login again";
+            else
+                msg = "Unknown error: HTTP Code: " + xhr.status;
+            console.log(xhr.responseText)
             Utils.loadingEnd("#testformValidation");
             Utils.msg2user(msg);
+        },
+        success: function(data){
+            console.log(data);
         }
     });
     $("#test-form-code-library").on("change", function (event) {
