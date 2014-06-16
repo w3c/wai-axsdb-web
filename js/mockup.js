@@ -50,16 +50,26 @@ $(document).ready(function () {
         e.preventDefault();
         $(this).parent().remove();
     });
-    $('.box-collapsed .box-content').hide();
-    $('.box-collapsible .box-caption').attr('tabindex', 0).attr('role', 'button').on('click', function () {
-        $(this).parent().find('.box-content').toggle('slow');
-        var n = $(this).parent().find('.box-content li').length;
-        if ($(this).text().indexOf('show') > 0) {
+
+    var toggleBox = function (btn) {
+        $(btn).parent().find('.box-content').toggle('slow');
+        var n = $(btn).parent().find('.box-content li').length;
+        if ($(btn).text().indexOf('show') > 0) {
             $(".inqueueshowhide").text('hide');
         } else {
             $(".inqueueshowhide").text('show');
         }
-    });
+    }
+
+
+    $('.box-collapsed .box-content').hide();
+    $('.box-collapsible .box-caption').attr('tabindex', 0).attr('role', 'button').on('click', function () {
+        toggleBox(this);
+    }).on("keyup", function(event) {
+        if ( event.which == 13 ) {
+            toggleBox(this);
+        }
+    });;
 
     $(document).ready(function () {
         function ReplaceAll(Source, stringToFind, stringToReplace) {
