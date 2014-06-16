@@ -474,6 +474,7 @@ TestUnit.initFormPage = function (id) {
         timeout: 7000,
         beforeSend: function () {
             $(".progress").show();
+            $("#test-form-validation").empty();
             status.empty();
             var percentVal = '0%';
             bar.width(percentVal);
@@ -486,19 +487,25 @@ TestUnit.initFormPage = function (id) {
             percent.html(percentVal);
         },
         complete: function (xhr) {
-            Utils.loadingStart("#testformValidation");
+            Utils.loadingStart("#test-form-validation");
             accessdb.code.reseteditor();
             console.log("upload completed" + xhr.status);
             var msg = xhr.responseText;
-            if (xhr.status == 201)
+            if (xhr.status == 200)
                 msg = "Changes saved!";
             else if (xhr.status == 401)
                 msg = "Either you have no permission or your Session has been expired. Please try to logout and login again";
             else
                 msg = "Unknown error: HTTP Code: " + xhr.status;
-            console.log(xhr.responseText)
-            Utils.loadingEnd("#testformValidation");
-            Utils.msg2user(msg);
+            console.log(xhr.responseText);
+            Utils.loadingEnd("#test-form-validation");
+            var test = JSON.parse(xhr.responseText);
+            var url = accessdb.config.URL_WEBAPP_ROOT + "#/test.html/" + test.testUnitId;
+            var p1 = $('<p/>').append(msg);
+            var p2 = $('<p/>').append($('<a/>').attr("href",url).append("View saved test"));
+            $("#test-form-validation").append(p1);
+            $("#test-form-validation").append(p2);
+
         },
         success: function(data){
             console.log(data);

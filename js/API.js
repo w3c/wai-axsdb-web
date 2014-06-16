@@ -280,7 +280,7 @@
             data : JSON.stringify(data),
             async: true,
             cache: false,
-            timeout: 30000,
+            timeout: 40000,
             processData: false,
             success: function(data, textStatus, jqXHR){
                 if(targetE){
@@ -294,6 +294,7 @@
                 }
                 if(jqXHR.status===200){
                     callback(null, {}, jqXHR.status);
+                    return;
                 }
                 callback(jqXHR, null, null);
             }

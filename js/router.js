@@ -158,21 +158,23 @@ window.accessdb.appRouter.on('route:test-run', function (id) {
 });
 window.accessdb.appRouter.on('route:test-submit', function () {
     window.accessdb.appRouter.loadPage("test-submit");
+    $("#test-form-validation").empty();
     TestUnit.initFormPage();
 });
 window.accessdb.appRouter.on('route:test-edit', function (id) {
     window.accessdb.appRouter.loadPage("test-submit");
+    $("#test-form-validation").empty();
     TestUnit.initFormPage(id);
 });
 window.accessdb.appRouter.on('route:test-delete', function (id) {
-    TestUnit.delete(id, function(res){
-        if(res && res.status===200){
+    TestUnit.delete(id, function(error, data, status){
+        if(status && status===200){
             Utils.msg2user("Delete done");
             window.accessdb.appRouter.loadPage("test-submit");
         }
         else{
             Utils.msg2user("Delete not done");
-            console.warn(error);
+            console.error(error);
         }
     })
 });

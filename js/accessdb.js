@@ -5,7 +5,7 @@
         Views: {},
         config: {
             PAGE_ID_PREFIX: "axsdb-page-",
-            URL_WEBAPP_ROOT: "http://www.w3.org/WAI/accessibility-support/",
+            URL_WEBAPP_ROOT: "http://www.w3.org/WAI/accessibility-support/dev/",
             URL_SITE_ROOT: "",
             URL_TESUITES_ROOT: "http://www.w3.org/WAI/accessibility-support/testfiles_dev/",
             FORM_TESTUNIT_FORMFIELD_TESTFILE: "testFile",

@@ -179,6 +179,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
                 callback(false);
             }
             if (self.isValid()) {
+                lData.sessionId = self.get("sessionId");
                 accessdb.API.TESTINGSESSION.login(lData, function (error, data, status) {
                     if (!error) {
                         if (data.userId !== null && status===200) {
@@ -189,15 +190,18 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
                                     accessdb.session.set("userTestingProfiles", data1);
                                 });
                                 callback(true);
+                                return;
                             });
                         }
                         else{
                             callback(false);
+                            return;
                         }
                     }
                     else{
                         console.error(error.status);
                         callback(false);
+                        return;
                     }
                 }, targetE);
             }
@@ -226,10 +230,11 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
             this.set(JSON.parse(sessionStorage["accessdb-session"]));
         }
         else {
-            // TODO: cookie + server side
             this.set("sessionId", Utils.readCookie("accessdb-session-id") || accessdb.sessionId);
             if(Utils.readCookie("accessdb-session-userId"))
                 this.set("userId", Utils.readCookie("accessdb-session-userId"));
+            if(Utils.readCookie("accessdb-session-userRoles"))
+                this.set("userRoles", Utils.readCookie("accessdb-session-userRoles"));
         }
         console.log("session loaded from local storage");
     },
@@ -238,10 +243,13 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
             Utils.createCookie("accessdb-session-id", this.get("sessionId"), 10);
         if (this.get("userId"))
             Utils.createCookie("accessdb-session-userId", this.get("userId"), 10);
+        if (this.get("userRoles"))
+            Utils.createCookie("accessdb-session-userRoles", this.get("userRoles"), 10);
         if (Utils.supports_html5_storage()) {
             sessionStorage.setItem("accessdb-session", JSON.stringify(this));
         }
         else {
+            console.error("Node html5 storage supported by your browser");
         }
         console.log("session saved in local storage");
     },
