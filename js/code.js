@@ -7,8 +7,9 @@ accessdb.code = {
         },
         {
             name: "jQuery UI latest",
-            value: "<link href='http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css' rel='stylesheet' type='text/css' />\n" +
-                "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js'></script>",
+            value: "<link href='http://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css' rel='stylesheet' type='text/css' />" +
+                    "<script src='http://code.jquery.com/jquery-1.8.3.min.js'></script>"+
+                    "<script src='http://code.jquery.com/ui/1.9.2/jquery-ui.js'></script>",
             group: "jQuery UI"
         }
     ],
