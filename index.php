@@ -2,7 +2,7 @@
 	session_start();
 ?>
 <!doctype html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <title>Accessibility Support Database</title>
