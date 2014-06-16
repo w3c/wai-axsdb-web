@@ -33,7 +33,7 @@ accessdb.code.updateTitle = function () {
     el.html(editorVal);
     var aa = $(el).find("title")[0];
     $(aa).text(newtitle);
-    var newCode = "<!DOCTYPE html>\n<html>\n";
+    var newCode = "<!DOCTYPE html>\n<html lang=\"en\">\n";
     newCode = newCode + $(el).html().replace(new RegExp('\n\n', 'gim'), '');
     newCode = newCode + "\n</html>";
     accessdb.code.editorDoc.setValue(newCode);
