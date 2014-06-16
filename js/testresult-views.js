@@ -239,7 +239,7 @@ accessdb.Views.TestResultsFullViewByTest = function (){
             params.filter = accessdb.filters[pageId];
             params.type = "Test";
             params.typeValue = params.testUnitId;
-            this.params = params;
+            this.params = _.clone(params);
             this.fetch(function(error, data){
                 if(!error)
                     self.render();
