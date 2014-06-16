@@ -6,9 +6,20 @@
         <a href="#/home.html" class="btn-small"><span class="icon-home"></span> Home</a>
 	<a href="#/log-in.html" class="btn-small login"><span class="icon-unlock-alt"></span> <span class="login-info">Log In</span></a>
     </nav>
+    <h2>Add Testing Environment</h2>
+    <p>Define an environment that you want to use to run test cases</p>
     <form>
         <input type="hidden" id="testProfileId" value="-1" />
         <fieldset>
+	    <legend>About the Environment:</legend>
+	    <label title="A user friendly name for user to identify it" for="profileName">Name: </label>
+	    <input style="width: 30em;" placeholder="An optional human readable name for easier identification" type="text" name="profileName"  id="profileName" value=""/>
+	    <br/>
+	    <label for="profileComment">Comment: </label><br>
+	    <textarea name="profileComment" id="profileComment" cols="60" placeholder="Some comment" style="width:100%;" ></textarea>
+	    <br/>
+	</fieldset>
+	<fieldset>
             <legend>User Agent:</legend>
             <label for="userAgent" required>Name: </label>
             <input type="text" name="userAgent" id="userAgent" />
@@ -36,15 +47,6 @@
             <label for="plugin_ver">Version: </label>
             <input type="text" name="plugin_ver" id="plugin_ver" />
         </fieldset>
-        <fieldset>
-            <legend>Additional Information :</legend>
-            <label title="A user friendly name for user to identify it" for="profileName">Profile Name: </label>
-            <input style="width: 30em;" placeholder="An optional human readable name for easier identification" type="text" name="profileName"  id="profileName" value=""/>
-            <br/>
-            <label for="profileComment">Profile Comment: </label>
-            <textarea name="profileComment" id="profileComment" cols="60" placeholder="Some comment" ></textarea>
-            <br/>
-        </fieldset>
-        <a style="width: 10em;height: 1.5em;display: block;text-align: center;vertical-align: middle;" href="#/user-profiles.html" class="btn testprofileSave">Save profile</a>
+	<a role="button" style="width: 10em;height: 1.5em;display: block;text-align: center;vertical-align: middle;" href="#/user-profiles.html" class="btn testprofileSave">Save profile</a>
     </form>
 </article>
