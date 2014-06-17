@@ -373,7 +373,7 @@ TestUnit.deleteResourceFile = function(sessionId,fileId, callback) {
     accessdb.API.TEST.deleteResourceFile(fileId, callback);
 };
 TestUnit.getTestsTreeData = function(callback){
-    accessdb.API.TEST.getTestsTreeData(accessdb.filters["axsdb-page-tests-run"], callback);
+    accessdb.API.TEST.getTestsTreeData(accessdb.session.get("testsFilter"), callback);
 };
 TestUnit.loadStepsData = function(testProcedure)
 {
@@ -570,7 +570,7 @@ TestUnit.loadTests = function (ids, callback){
 }
 
 TestUnit.loadTestsTree = function (){
-    var filter = accessdb.filters[accessdb.config.PAGE_ID_PREFIX + "tests-run"];
+    var filter = accessdb.session.get("testsFilter");
     if(accessdb.appRouter.page !== accessdb.config.PAGE_ID_PREFIX + "tests-run"){
         return;
     }

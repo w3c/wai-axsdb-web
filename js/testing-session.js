@@ -13,7 +13,9 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         userId: null,
         userRoles: [],
         lastTestUnit: null,        //TODO: put this and more from accessdb to java session for sync
-        pCounter: -10
+        pCounter: -10,
+        resultsFilter : new window.accessdb.Models.Filter(),
+        testsFilter : new window.accessdb.Models.Filter()
     },
     url: function () {
         return accessdb.config.URL_API_ROOT + "testingsession/browse/" + this.get("sessionId");

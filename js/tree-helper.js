@@ -1,7 +1,17 @@
 accessdb.TreeHelper = {
-    populateFilters : function(){
-        var filter = accessdb.filters[accessdb.appRouter.page];
-        accessdb.TreeHelper.populateFilter(filter);
+    populateFilters : function(pageId){
+        pageId = pageId || accessdb.appRouter.page;
+        if(pageId.indexOf("results")>=0)
+            filter = accessdb.session.get("resultsFilter");
+        else
+            filter = accessdb.session.get("testsFilter");
+        filter.page = pageId;
+        filter = accessdb.TreeHelper.populateFilter(filter);
+        if(pageId.indexOf("results")>=0)
+            filter = accessdb.session.set("resultsFilter", _.clone(filter));
+        else
+            filter = accessdb.session.set("testsFilter", _.clone(filter));
+        accessdb.session.save();
     },
     initHandlers : function(){
         $(".webTechTreeDiv").on('treevue:change', function (event) {
@@ -216,6 +226,7 @@ accessdb.TreeHelper = {
         $(".scSelected").html(filter.criterios.length);
         console.log(filter);
         console.log(filter.criterios.length);
+        return filter;
     },
     loadTree : function(filter, treeIds, callback){
         if(treeIds.indexOf("WCAG")>=0){
@@ -250,8 +261,19 @@ accessdb.TreeHelper = {
                 treeData.label = "All";
                 treeData.collapsed = false;
                 var processDatafn = function (data){
-                    if(data.type === "AssistiveTechnology" && _.contains(filter.ats, data.value))
-                        data.selected = true;
+                    if(data.type === "AssistiveTechnology"){
+                        var ready = _.matches({name: data.value});
+                        var readyToGoList = _.filter(filter.ats, ready);
+                        if(readyToGoList.length>0)
+                            data.selected = true;
+                    }
+                    if(data.type === "AssistiveTechnology_version"){
+                        var ready = _.matches({version: data.value});
+                        var readyToGoList = _.filter(filter.ats, ready);
+                        if(readyToGoList.length>0)
+                            data.selected = true;
+                    }
+
                     return data;
                 };
                 $.treevue([treeData],  filter.page+"-accessdb-ATTree",processDatafn).appendTo('.atTreeDiv');
@@ -370,20 +392,28 @@ accessdb.TreeHelper = {
                     break;
             }
         }
-        else{
-            accessdb.filters[pageId] = new window.accessdb.Models.Filter(pageId);
+        var skipPopulate = false;
+        if(pageId.indexOf("results")>=0){
+            filter = accessdb.session.get("resultsFilter");
+            if(pageId.indexOf("results-")>=0) {
+                skipPopulate = true;
+            }
         }
-        filter = accessdb.filters[pageId];
-        accessdb.TreeHelper.doLoadTrees(toLoadTreeIds, filter, callback);
+        else
+            filter = accessdb.session.get("testsFilter");
+        filter.page = pageId;
+        accessdb.TreeHelper.doLoadTrees(toLoadTreeIds, filter, callback, skipPopulate);
     },
-    doLoadTrees : function(treeIds, filter, callback){
+    doLoadTrees : function(treeIds, filter, callback, skipPopulate){
+        skipPopulate = skipPopulate || true;
         if(treeIds.length<1){
             if(callback)
                 callback();
             return;
         }
         try{
-            accessdb.TreeHelper.populateFilter(filter);
+            if(!skipPopulate)
+                accessdb.TreeHelper.populateFilter(filter);
         }
         catch(e){
             console.warn("accessdb.TreeHelper.populateFilter failed");

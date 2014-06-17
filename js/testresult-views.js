@@ -42,7 +42,7 @@ accessdb.Views.TestResultsDataOverview = function (){
         if(accessdb.appRouter.page === pageId){
             var self = this;
             this.params = params || {};
-            this.params.filter = _.clone(accessdb.filters[pageId]);
+            this.params.filter = accessdb.session.get("resultsFilter");
             this.fetch(function(error, data){
                 if(!error)
                     self.render();
@@ -99,7 +99,7 @@ accessdb.Views.TestResultsDataTestCaseOverview = function (){
         var pageId = accessdb.config.PAGE_ID_PREFIX+"results";
         if(accessdb.appRouter.page === pageId){
             var self = this;
-            this.params.filter = _.clone(accessdb.filters[pageId]);
+            this.params.filter = accessdb.session.get("resultsFilter");
             this.fetch(function(error, data){
                 if(!error)
                     self.render();
@@ -143,7 +143,7 @@ accessdb.Views.TestResultsFullViewByTechnique = function (){
         if(accessdb.appRouter.page === pageId){
             var self = this;
             params = params || {};
-            params.filter = accessdb.filters[pageId];
+            params.filter = accessdb.session.get("resultsFilter");
             params.type = "Technique";
             params.typeValue = params.techNameId;
             this.params = params;
@@ -190,7 +190,7 @@ accessdb.Views.TestResultsFullViewByTechniqueRelatedTests = function (){
         if(accessdb.appRouter.page === pageId){
             var self = this;
             params = params || {};
-            params.filter = accessdb.filters[pageId];
+            params.filter = accessdb.session.get("resultsFilter");
             this.params = params;
             this.fetch(function(error, data){
                 if(!error)
@@ -205,7 +205,7 @@ accessdb.Views.TestResultsFullViewByTest = function (){
     this.params = null;
     this.render = function(){
         if(this.results){
-            var filter = accessdb.filters[accessdb.appRouter.page];
+            var filter = accessdb.session.get("resultsFilter");
             var template = _.template( $("#TestResultsFullViewByTechnique_template").html(), {
                 results: this.results,
                 params: this.params
@@ -239,7 +239,7 @@ accessdb.Views.TestResultsFullViewByTest = function (){
         if(accessdb.appRouter.page === pageId){
             var self = this;
             params = params || {};
-            params.filter = accessdb.filters[pageId];
+            params.filter = accessdb.session.get("resultsFilter");
             params.type = "Test";
             params.typeValue = params.testUnitId;
             this.params = _.clone(params);
@@ -279,7 +279,7 @@ accessdb.Views.TestResultsDetails = function (){
                 }
                 results.push(testResult);
             }
-            var filter = accessdb.filters[accessdb.appRouter.page];
+            var filter = accessdb.session.get("resultsFilter");
             var template = _.template($("#Results_template").html(), {
                 results: results,
                 params: this.params}
@@ -326,7 +326,7 @@ accessdb.Views.TestResultsDetails = function (){
         if(accessdb.appRouter.page === pageId){
             var self = this;
             params = params || {};
-            params.filter = _.clone(accessdb.filters[pageId]) || new accessdb.Models.Filter(accessdb.appRouter.page);
+            params.filter = accessdb.session.get("resultsFilter");
             this.params = params;
             this.fetch(function(error, data){
                 if(!error)
