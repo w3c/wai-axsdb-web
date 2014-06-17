@@ -205,6 +205,9 @@ UserTestingProfile.showTestingProfiles = function () {
                 $(".userProfilesDiv").find("#"+selected).attr("checked", true);
                 selected = undefined;
             }
+            $('.environments tr').on('click', function() {
+                $(this).find('input').prop('checked', 'checked');
+            });
         }
     }
     return session.get("userTestingProfiles").length;

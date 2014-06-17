@@ -69,7 +69,7 @@ $(document).ready(function () {
         if ( event.which == 13 ) {
             toggleBox(this);
         }
-    });;
+    });
 
     $(document).ready(function () {
         function ReplaceAll(Source, stringToFind, stringToReplace) {
