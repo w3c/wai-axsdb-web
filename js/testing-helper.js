@@ -1,33 +1,37 @@
 accessdb.Models.TestingHelper = function (){
+    var handlersInited = false;
     var testIds = null;
     var holder = "#testingForm";
     var test, testResult, userProfile = null;
     var count = 0;
     return {
         initHandlers : function(){
-            // on remove from the selected tests
-            $(document).on("click", "span.icon.icon-remove", function (event) {
-                event.preventDefault();
-                var id = $(event.target).find("span").attr("aria-described-by");
-                accessdb.session.removeFromQueue(id);
-                accessdb.TreeHelper.updateTreeFromTestList();
-            });
+            if(!handlersInited) {
+                // on remove from the selected tests
+                $(document).on("click", "span.icon.icon-remove", function (event) {
+                    event.preventDefault();
+                    var id = $(event.target).find("span").attr("aria-described-by");
+                    accessdb.session.removeFromQueue(id);
+                    accessdb.TreeHelper.updateTreeFromTestList();
+                });
 
-            // #/run-test.html
-            $(document).on("click", ".do_next", function (event) {
-                event.preventDefault();
-                var hasNext = accessdb.testingRunner.saveAndLoadNext();
-                if(!hasNext){
-                    accessdb.appRouter.redirect("tests-finish.html")
-                }
-            });
-            $(document).on("click", ".skipme", function (event) {
-                event.preventDefault();
-                var hasNext = accessdb.testingRunner.skipAndNext();
-                if(!hasNext){
-                    accessdb.appRouter.redirect("tests-finish.html")
-                }
-            });
+                // #/run-test.html
+                $(document).on("click", ".do_next", function (event) {
+                    event.preventDefault();
+                    var hasNext = accessdb.testingRunner.saveAndLoadNext();
+                    if (!hasNext) {
+                        accessdb.appRouter.redirect("tests-finish.html")
+                    }
+                });
+                $(document).on("click", ".skipme", function (event) {
+                    event.preventDefault();
+                    var hasNext = accessdb.testingRunner.skipAndNext();
+                    if (!hasNext) {
+                        accessdb.appRouter.redirect("tests-finish.html")
+                    }
+                });
+                handlersInited = true;
+            }
         },
         start: function () {
             count = 0;
