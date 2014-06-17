@@ -273,7 +273,6 @@ accessdb.TreeHelper = {
                         if(readyToGoList.length>0)
                             data.selected = true;
                     }
-
                     return data;
                 };
                 $.treevue([treeData],  filter.page+"-accessdb-ATTree",processDatafn).appendTo('.atTreeDiv');
@@ -292,8 +291,18 @@ accessdb.TreeHelper = {
                 treeData.label = "All";
                 treeData.collapsed = false;
                 var processDatafn = function (data){
-                    if(data.type === "UAgent" && _.contains(filter.uas, data.value))
-                        data.selected = true;
+                    if(data.type === "UAgent"){
+                        var ready = _.matches({name: data.value});
+                        var readyToGoList = _.filter(filter.ats, ready);
+                        if(readyToGoList.length>0)
+                            data.selected = true;
+                    }
+                    if(data.type === "UAgent_version"){
+                        var ready = _.matches({version: data.value});
+                        var readyToGoList = _.filter(filter.ats, ready);
+                        if(readyToGoList.length>0)
+                            data.selected = true;
+                    }
                     return data;
                 };
                 $.treevue([treeData],  filter.page+"-accessdb-UATree", processDatafn).appendTo('.uaTreeDiv');
@@ -308,14 +317,22 @@ accessdb.TreeHelper = {
             Utils.loadingStart(".osTreeDiv");
             accessdb.API.TESTRESULT.getOSTree(filter, function(error, data, status){
                 $(".osTreeDiv").empty();
-                var treeData = null;
-                if(filter.oss.length<1)
-                    treeData = data;
+                var treeData = data;
                 treeData.label = "All";
                 treeData.collapsed = false;
                 var processDatafn = function (data){
-                    if(data.type === "Platform" && _.contains(filter.oss, data.value))
-                        data.selected = true;
+                    if(data.type === "Platform"){
+                        var ready = _.matches({name: data.value});
+                        var readyToGoList = _.filter(filter.ats, ready);
+                        if(readyToGoList.length>0)
+                            data.selected = true;
+                    }
+                    if(data.type === "Platform_version"){
+                        var ready = _.matches({version: data.value});
+                        var readyToGoList = _.filter(filter.ats, ready);
+                        if(readyToGoList.length>0)
+                            data.selected = true;
+                    }
                     return data;
                 };
                 $.treevue([treeData],  filter.page+"-accessdb-OSTree", processDatafn).appendTo('.osTreeDiv');
