@@ -248,6 +248,8 @@ UserTestingProfile.prototype.prepareAddForm = function () {
     $("#os_arch").val(window.navigator.platform);
     $(".testprofileSave").removeClass("testprofileEdit");
     $("#testProfileId").val("-1");
+    var heading = $("#"+accessdb.appRouter.page + " h2");
+    $(heading).text("Add Testing Environment");
 };
 UserTestingProfile.prototype.prepareEditForm = function () {
     initAutoCompleteField("#assistiveTechnology", accessdb.config.services.URL_SERVICE_GET_ASSISTIVETECHNOLOGIES);
@@ -265,6 +267,8 @@ UserTestingProfile.prototype.prepareEditForm = function () {
     $("#os_arch").val(this.profile.platform.architecture);
     $(".testprofileSave").addClass("testprofileEdit");
     $("#testProfileId").val(this.id);
+    var heading = $("#"+accessdb.appRouter.page + " h2");
+    $(heading).text("Edit Testing Environment");
 };
 UserTestingProfile.prototype.loadDataFromForm = function () {
     this.profile.assistiveTechnology = extractProductInfo("#assistiveTechnology");
