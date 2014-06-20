@@ -124,6 +124,8 @@ UserTestingProfile.persistUserProfile = function (p, callback) {
         else {
             accessdb.session.set("pCounter", accessdb.session.get("pCounter") - 1);
             p.id = accessdb.session.get("pCounter");
+            if(accessdb.session.get("userTestingProfiles")==null)
+                accessdb.session.set("userTestingProfiles",[]);
             accessdb.session.get("userTestingProfiles").push(p);
         }
         accessdb.session.save(function () {
@@ -177,10 +179,11 @@ UserTestingProfile.getUserProfileById = function (id) {
 UserTestingProfile.showTestingProfiles = function () {
     var session = accessdb.session;
     $(".userProfilesDiv").empty();
-    if (session.get("userTestingProfiles").length > 0) {
-        for (var i=0;i<session.get("userTestingProfiles").length;i++)
+    var userTestingProfiles = session.get("userTestingProfiles") || [];
+    if (userTestingProfiles.length > 0) {
+        for (var i=0;i<userTestingProfiles.length;i++)
         {
-            var userProfile = session.get("userTestingProfiles")[i];
+            var userProfile = userTestingProfiles[i];
             var testProfile = userProfile.profile;
             testProfile.platform = testProfile.platform || new Product();
             testProfile.userAgent = testProfile.userAgent || new Product();
@@ -211,7 +214,7 @@ UserTestingProfile.showTestingProfiles = function () {
             });
         }
     }
-    return session.get("userTestingProfiles").length;
+    return userTestingProfiles.length;
 };
 UserTestingProfiletoDetailsText = function (p) {
     var s = "";
