@@ -208,7 +208,12 @@ window.accessdb.appRouter.loadPage = function(id){
     $("article").hide();
     this.page = accessdb.config.PAGE_ID_PREFIX + id;
     $("#"+accessdb.config.PAGE_ID_PREFIX + id).show();
-    $("title").text($("#" +this.page+" .page-title").text().trim())
+    var pageheading = $("#" +this.page+" .content h2");
+    if (pageheading.length) {
+        $("title").text(pageheading.text().trim())
+    } else {
+        $("title").text('Accessibility Support Database');
+    }
     Utils.UIRoleAdapt();
 };
 window.accessdb.appRouter.redirect = function(page){
