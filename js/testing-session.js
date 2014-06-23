@@ -3,7 +3,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
     defaults: {
         //Note that if this structure changes need to change server side object also
         sessionName: null,
-        sessionId: null, 
+        sessionId: null,
         testProfileId: "-1",
         testUnitIdList: [],
         testResultList: [],
@@ -317,7 +317,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
                     }
                     else
                     {
-                        Utils.msg2user("User failed to login. Please try again.");
+                        Utils.msg2user("The username or password entered is not correct. Please try again.");
                         return false;
                     }
                 }, "#infodiv");
