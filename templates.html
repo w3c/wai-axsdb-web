@@ -83,7 +83,7 @@
         </div>
         <p>You have carried out <strong><%= results.length %> tests that can be published</strong>. Please confirm this contribution.</p>
         <div class="form-submit">
-            <a href="#/tests-run-submit.html" id="testResultsPersist" class="btn-primary btn-next" type="submit"><span class="icon-ok-sign"></span> Submit Test Results</a>
+            <a role="button" href="#/tests-run-submit.html" id="testResultsPersist" class="btn-primary btn-next" type="submit"><span class="icon-ok-sign"></span> Submit Test Results</a>
         </div>
     </form>
 </script>
@@ -139,7 +139,7 @@
                 </div>
                 <div class="form-submit">
                     <button class="btn skipme" type="button"><span class="icon-skip-sign"></span> Skip Test and Load Next</button>
-                    <a href="#/test-run.html" class="btn-primary btn-next do_next" type="submit"><span class="icon-ok-sign"></span> Save Test and Load Next</a>
+                    <a role="button" href="#/test-run.html" class="btn-primary btn-next do_next" type="submit"><span class="icon-ok-sign"></span> Save Test and Load Next</a>
                     <!--
                         <button class="btn-primary btn-next" type="submit"><span class="icon-ok-sign"></span> Save Test and Load Next</button>
                     -->
@@ -239,7 +239,7 @@
                     <%= r.technique %>: <a href="http://www.w3.org/TR/WCAG20-TECHS/<%= r.technique %>">  <%= r.techniqueTitle %>&nbsp;<span class="icon-external-link"><span class="visuallyhidden">Link to external page.</span></span></a>
                 </th>
                 <td class="result">
-                    <a href="#/results-technique.html/<%= r.technique %>" class="btn btn-small">
+                    <a role="button" href="#/results-technique.html/<%= r.technique %>" class="btn btn-small">
                         <span class="chart" style="display:none"><%= r.noOfPass %>/<%= r.noOfAll %></span>
                         <%= r.noOfPass %>/<%= r.noOfAll %>
                         <span class="icon-arrow-right2">
@@ -268,10 +268,10 @@
                 <% first = false %>
                 <% } %>
                 <th scope="row">
-                    <%= r.testUnitId %>: <a href="#/test.html/<%= r.testUnitId %>">  <%= r.testTitle %></a> <!-- Link to test case -->
+                    <%= r.testUnitId %>: <a role="button" href="#/test.html/<%= r.testUnitId %>">  <%= r.testTitle %></a> <!-- Link to test case -->
                 </th>
                 <td class="result">
-                    <a href="#/results-test.html/<%= r.testUnitId %>" class="btn btn-small">
+                    <a role="button" href="#/results-test.html/<%= r.testUnitId %>" class="btn btn-small">
                         <span class="chart" style="display:none"><%= r.noOfPass %>/<%= r.noOfAll %></span>
                         <%= r.noOfPass %>/<%= r.noOfAll %>
                         <span class="icon-arrow-right2">
@@ -286,8 +286,8 @@
     <ul id="RelatedTestCases">
     <% _.each(results, function(r) { %>
         <li>
-            <strong><%= r.testUnitId %>:</strong> <a href="#/results-test.html/<%= r.testUnitId %>">  <%= r.testTitle %></a>
-            <a href="#/results-test.html/<%= r.testUnitId %>" class="btn btn-small">
+            <strong><%= r.testUnitId %>:</strong> <a role="button" href="#/results-test.html/<%= r.testUnitId %>">  <%= r.testTitle %></a>
+            <a role="button" href="#/results-test.html/<%= r.testUnitId %>" class="btn btn-small">
                 <span class="chart" style="display:none"><%= r.noOfPass %>/<%= r.noOfAll %></span>
                 <%= r.noOfPass %>/<%= r.noOfAll %>
                 <span class="icon-arrow-right2">
@@ -307,7 +307,7 @@
     </div>
     <% _.each(results, function(r) { %>
         <table class="testcase-details">
-            <caption><strong>Testcase:</strong> <a href="#/results-test.html/<%= r.testUnitId %>"><%= r.testUnitId %></a>: <%=r.testTitle%></caption>
+            <caption><strong>Testcase:</strong> <a role="button" href="#/results-test.html/<%= r.testUnitId %>"><%= r.testUnitId %></a>: <%=r.testTitle%></caption>
             <col class="col1"> <col class="col2"> <col class="col3"> <col class="col4"> <col class="col5"> <col class="col6 admin roleAdminOnly">
             <thead>
                 <tr>
