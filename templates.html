@@ -1,25 +1,25 @@
 <script type="text/template" id="test-details-template">
-    <h2><span class="id"><%= t.testUnitId %></span>: <%= t.title %></h2>
+    <h1><span class="id"><%= t.testUnitId %></span>: <%= t.title %></h1>
     <div class="column-second">
         <div class="roleExpertsOnly admin">
             <a class="btn" href="#test-submit.html/<%= t.testUnitId %>"><span class="icon-pencil"></span> Edit Test</a>
             <a class="btn" href="#test-delete.html/<%= t.testUnitId %>"><span class="icon-minus-sign-alt"></span> Delete Test</a>
         </div>
         <p><strong>Related Technique:</strong> <%= t.technique.nameId %>: <%= t.technique.title %></p>
-        <h3>Test Content</h3>
-        <h4>Test Procedure:</h4>
+        <h2>Test Content</h2>
+        <h3>Test Procedure:</h3>
         <ol>
             <% _.each(t.testProcedure.steps, function(s) { %>
             <li><%= s.step %></li>
             <% }); %>
         </ol>
-        <h4>Test File(s):</h4>
+        <h3>Test File(s):</h3>
         <p><a class="btn" target="thetest" href="<%= t.testFile %>">Open test page <span class="icon-new-window"><span class="visuallyhidden">in a new window</span></span></a></p>
-        <h4>Test Question:</h4>
+        <h3>Test Question:</h3>
         <p><%= t.testProcedure.yesNoQuestion %></p>
-        <h4>Expected Result:</h4>
+        <h3>Expected Result:</h3>
         <p><%= t.testProcedure.expectedResult %></p>
-        <h3>More Information</h3>
+        <h2>More Information</h2>
         <p><strong>Status:</strong> <%= t.status %></p>
         <p><strong>Date:</strong> <%= t.date %></p>
         <p><strong>Description:</strong> <%= t.description %></p>
@@ -53,7 +53,7 @@
 </script>
 <script type="text/template" id="test-run-finish-resultsList">
     <header>
-        <h3>Test Results</h3>
+        <h2>Test Results</h2>
     </header>
     <ul>
         <% _.each(results, function(r) { %>
@@ -70,7 +70,7 @@
         <% }); %>
     </ul>
     <header>
-        <h3>Submit test results</h3>
+        <h2>Submit test results</h2>
     </header>
     <form action="#">
         <div class="form-block">
@@ -89,15 +89,15 @@
 </script>
 <script type="text/template" id="test-run-template">
         <header>
-            <h3><span class="subheading">Test : <%= test.testUnitId %></span> <%= test.title %></h3>
+            <h2><span class="subheading">Test : <%= test.testUnitId %></span> <%= test.title %></h2>
         </header>
         <section>
-            <h4>Test Description</h4>
+            <h3>Test Description</h3>
             <p><%= test.testUnitId %></p>
         </section>
 
         <section>
-            <h4>Test Procedure</h4>
+            <h3>Test Procedure</h3>
             <ol>
                 <% _.each(test.testProcedure.steps, function(s) { %>
                 <li><%= s.step %></li>
@@ -106,12 +106,12 @@
         </section>
 
         <section>
-            <h4>Test File(s)</h4>
+            <h3>Test File(s)</h3>
             <a href="<%= test.testFile %>" class="btn" target="_blank">Open test file <span class="icon-new-window"><span class="visuallyhidden">in a new window</span></span></a>
         </section>
         <form id="testingForm" action="#">
             <section>
-                <h4>Test Results</h4>
+                <h3>Test Results</h3>
                 <fieldset>
                     <legend><%= test.testProcedure.yesNoQuestion %></legend>
                     <div class="form-block">
@@ -299,7 +299,7 @@
     </ul>
 </script>
 <script type="text/template" id="Results_template">
-    <h2>Test Results for <%=params.type%> <%=params.typeValue%>, <%=params.ua%> <%=params.uaVer%> with <%=params.at%> <%=params.atVer%></h2>
+    <h1>Test Results for <%=params.type%> <%=params.typeValue%>, <%=params.ua%> <%=params.uaVer%> with <%=params.at%> <%=params.atVer%></h1>
     <div class="">
         <div class="column-second">
             <div id="Results"><!-- Template: Results_template --></div>

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#input_search').on('keyup', function () {
+    $('.input-search').on('keyup', function () {
         var val = $(this).val(),
             tr = $('tbody tr'),
             reg = new RegExp(val, "i");

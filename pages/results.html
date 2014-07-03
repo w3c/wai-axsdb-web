@@ -1,27 +1,24 @@
 <article id="axsdb-page-results">
-    <h1 class="page-title">
-        Accessibility Support Database
-    </h1>
     <nav class="navbar" role="navigation">
 	<a role="button" href="#/home.html" class="btn-small"><span class="icon-home"></span> Home</a>
 	<a role="button" href="#/log-in.html" class="btn-small login"><span class="icon-unlock-alt"></span> <span class="login-info">Log In</span></a>
     </nav>
     <div class="content">
 	    <div class="grid">
-		    <h2>Browse Test Results</h2>
+		    <h1>Browse Test Results</h1>
             <form action="#">
                 <div role="search" class="flush right">
                     <label for="input_search">Search:</label>
-                    <input type="search" placeholder="e.g. H24, text, …" id="input_search">
+                    <input type="search" placeholder="e.g. H24, text, …" id="input_search" class="input-search">
                 </div>
             </form>
             <div class="with-filter">
                 <aside class="column-first" aria-label="Filter results">
                     <div class="column-filters">
-                        <h3>Filter test cases</h3>
+                        <h2>Filter test cases</h2>
                         <form action="#">
                             <div class="">
-                                <h4>Conformance Level</h4>
+                                <h3>Conformance Level</h3>
                                 <div>
                                     <div>
                                         <label><input type="radio" data-axsdb-filtertype="wcaglevel" name="conformance" value="AAA"> A &amp; AA &amp; AAA</label>
@@ -35,24 +32,24 @@
                                 </div>
                             </div>
                             <div class="">
-                                <h4>Success Criteria</h4>
+                                <h3>Success Criteria</h3>
                                 <div class="criteriaTreeDiv" data-axsdb-filtertype="WCAG">
                                 </div>
                             </div>
                             <div class="">
-                                <h4>Assistive Technology</h4>
+                                <h3>Assistive Technology</h3>
                                 <div class="atTreeDiv" data-axsdb-filtertype="AssistiveTechnology"></div>
                             </div>
                             <div class="">
-                                <h4>Browser</h4>
+                                <h3>Browser</h3>
                                 <div class="uaTreeDiv" data-axsdb-filtertype="UAgent"></div>
                             </div>
                             <div class="">
-                                <h4>Operating System</h4>
+                                <h3>Operating System</h3>
                                 <div class="osTreeDiv" data-axsdb-filtertype="Platform"></div>
                             </div>
                             <div class="">
-                                <h4>Web Technology</h4>
+                                <h3>Web Technology</h3>
                                 <div class="webTechTreeDiv" data-axsdb-filtertype="WebTechnology"></div>
                             </div>
 
@@ -68,5 +65,4 @@
                 </div>
             </div>
         </div>
-    </div>
 </article>

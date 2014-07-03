@@ -46,7 +46,7 @@
     <script type="text/javascript" src="js/admin.js"></script>
     <script type="text/javascript" src="js/mockup.js"></script>
 </head>
-<body>
+<body class="axsdb">
 <header role="banner">
     <div class="w3c-wai-header">
         <a href="/"><img src="http://w3.org/2008/site/images/logo-w3c-mobile-lg" alt="W3C" height="53" width="90"></a>
@@ -54,7 +54,10 @@
     </div>
 </header>
 <main role="main" aria-live="assertive">
-        <div role="alert" id="msg2user" title="Feedback dialog"></div>
+    <div class="page-title">
+        Accessibility Support Database
+    </div>
+    <div role="alert" id="msg2user" title="Feedback dialog"></div>
 
 <?php
 	foreach (glob("pages/*.html") as $filename)
@@ -63,7 +66,27 @@
 	}
 	?>
 </main>
-<footer role="complimentary" aria-label="Document info">
+<footer role="contentinfo" aria-label="Document info">
+
+    <div>
+        <ul>
+      <li><strong>Development Team:</strong> Daniel Pöll (Johannes Kepler University Linz), Wilco Fiers (accessibility.nl), Evangelos Vlachogiannis (Fraunhofer Institute), Bim Egan, Eric Eggert (both W3C WAI), and Shadi Abou-Zahra (Project Lead, W3C WAI).</li>
+      <li><strong>Developed with support</strong> from the <a href="http://www.w3.org/WAI/ACT/">WAI-ACT</a> project, co-funded by the European Commission <abbr title="Information Society Technologies">IST</abbr> Programme.</li>
+    </ul>
+
+    <p><strong>This is a prototype that is not yet approved. We are refining the code to fix known bugs. Please send bug reports and improvement suggestions through the <a href="https://github.com/w3c/wai-axsdb-web/issues">GitHub Issues List</a>.</strong></p>
+    <div class="copyright">
+      <p>
+        <a rel="Copyright" href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2014
+        <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup>
+                (
+                    <a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>,
+                    <a href="http://www.ercim.org/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>,
+                    <a href="http://www.keio.ac.jp/">Keio</a>,
+            <a href="http://ev.buaa.edu.cn/">Beihang</a>), All Rights Reserved. W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
+         <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a>,               <a rel="Copyright" href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a>               and <a rel="Copyright" href="http://www.w3.org/Consortium/Legal/copyright-software">software licensing</a> rules apply. Your interactions with this site are in accordance with our <a href="http://www.w3.org/Consortium/Legal/privacy-statement#Public">public</a>
+               and <a href="http://www.w3.org/Consortium/Legal/privacy-statement#Members">Member</a>privacy statements.</p>                   </div><!-- ends copyright -->
+    </div>
 
 </footer>
 <?php include "templates.html"; ?>

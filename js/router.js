@@ -208,7 +208,7 @@ window.accessdb.appRouter.loadPage = function(id){
     $("article").hide();
     this.page = accessdb.config.PAGE_ID_PREFIX + id;
     $("#"+accessdb.config.PAGE_ID_PREFIX + id).show();
-    var pageheading = $("#" +this.page+" .content h2");
+    var pageheading = $("#" +this.page+" h1");
     if (pageheading.length) {
         $("title").text(pageheading.text().trim())
     } else {
