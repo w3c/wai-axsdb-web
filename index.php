@@ -49,14 +49,14 @@
 <body class="axsdb">
 <header role="banner">
     <div class="w3c-wai-header">
-        <a href="/"><img src="http://w3.org/2008/site/images/logo-w3c-mobile-lg" alt="W3C" height="53" width="90"></a>
-        <a href="/WAI/" class="wai"><img src="http://www.w3.org/WAI/images/wai-temp" alt="Web Accessibility Initiative"></a>
+        <a href="/"><img src="img/w3c.png" alt="W3C" width="90"></a>
+        <a href="/WAI/" class="wai"><img src="img/wai.png" alt="Web Accessibility Initiative"></a>
     </div>
 </header>
 <main role="main" aria-live="assertive">
     <div class="page-title">
         Accessibility Support Database
-        <span class="subheading unapproved">Unapproved Prototype</span>
+        <span class="subheading"><span class="unapproved">Unapproved Prototype</span></span>
     </div>
     <div role="alert" id="msg2user" title="Feedback dialog"></div>
 
@@ -71,7 +71,7 @@
 
     <div>
         <ul>
-      <li><strong>Development Team:</strong> Daniel Pöll (Johannes Kepler University Linz), Wilco Fiers (accessibility.nl), Evangelos Vlachogiannis (Fraunhofer Institute), Bim Egan, Eric Eggert (both W3C WAI), and Shadi Abou-Zahra (Project Lead, W3C WAI).</li>
+      <li><strong>Development Team:</strong> Shadi Abou-Zahra (Project Lead, W3C WAI), Evangelos Vlachogiannis (Fraunhofer Institute), Eric Eggert (W3C WAI), Wilco Fiers (accessibility.nl), Daniel Pöll (Johannes Kepler University Linz), and Bim Egan (W3C WAI).</li>
       <li><strong>Developed with support</strong> from the <a href="http://www.w3.org/WAI/ACT/">WAI-ACT</a> project, co-funded by the European Commission <abbr title="Information Society Technologies">IST</abbr> Programme.</li>
     </ul>
 

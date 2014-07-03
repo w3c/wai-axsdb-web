@@ -207,8 +207,13 @@ window.accessdb.appRouter.on('route:defaultRoute', function(actions) {
 window.accessdb.appRouter.loadPage = function(id){
     $("article").hide();
     this.page = accessdb.config.PAGE_ID_PREFIX + id;
-    $("#"+accessdb.config.PAGE_ID_PREFIX + id).show();
-    var pageheading = $("#" +this.page+" h1");
+    $("#"+this.page).show();
+
+    var pageheading = "";
+    if (!(this.page === "axsdb-page-home")) {
+        pageheading = $("#"+this.page+" h1");
+    }
+    console.log(pageheading);
     if (pageheading.length) {
         $("title").text(pageheading.text().trim())
     } else {
