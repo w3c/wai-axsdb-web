@@ -56,6 +56,7 @@
 <main role="main" aria-live="assertive">
     <div class="page-title">
         Accessibility Support Database
+        <span class="subheading unapproved">Unapproved Prototype</span>
     </div>
     <div role="alert" id="msg2user" title="Feedback dialog"></div>
 

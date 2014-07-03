@@ -654,7 +654,7 @@ pre[class*="language-"] {
   font-style: italic;
 }
 /* line 30, ../sass/wai-act.scss */
-.font-primary, body, .id, h1 .subheading, h2 .subheading, .navigation .topic .subheading, h3 .subheading, .page-title .subheading, .content.draft h2::before, .content.draft .navigation .topic::before, .navigation .content.draft .topic::before, .box-caption, figure figcaption, table.testcase-details caption a, table.testcase-details caption strong {
+.font-primary, body, .id, h1 .subheading, h2 .subheading, .navigation .topic .subheading, h3 .subheading, .page-title .subheading, .content.draft h2::before, .content.draft .navigation .topic::before, .navigation .content.draft .topic::before, .box-caption, figure figcaption, table.testcase-details caption a, table.testcase-details caption strong, .subheading.unapproved {
   font-family: "Trebuchet MS", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
 }
 
@@ -2152,6 +2152,18 @@ footer .navigation .focusable.topic:focus,
 /* line 1198, ../sass/wai-act.scss */
 .treevue label:hover {
   background: rgba(0, 0, 0, 0.05);
+}
+
+/* line 1202, ../sass/wai-act.scss */
+.subheading.unapproved {
+  background-color: #FCC;
+  line-height: 1.5;
+  display: inline-block;
+  font-weight: bold;
+  padding: 0 .2em;
+  vertical-align: middle;
+  font-size: .5em;
+  margin-right: .25em;
 }
 
 /**
