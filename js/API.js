@@ -7,7 +7,7 @@
     window.accessdb.config = window.accessdb.config || {};
 
     // Config to override
-    window.accessdb.config.URL_API_ROOT = "http://www.w3.org/WAI/accessibility-support/api_dev/";
+    window.accessdb.config.URL_API_ROOT = "http://www.w3.org/WAI/accessibility-support/api/";
     window.accessdb.config.loadingStart = function(holder){
         var div = $('<div class="progress"><div>Loading…</div></div>');
         $(holder).attr("aria-busy", true);
@@ -295,7 +295,11 @@
                     window.accessdb.config.loadingEnd(targetE);
                 }
                 if(jqXHR.status===200){
-                    callback(null, {}, jqXHR.status);
+                    callback(null, jqXHR.responseJSON, jqXHR.status);
+                    return;
+                }
+                if(jqXHR.status===403){
+                    callback(null, jqXHR.responseJSON, jqXHR.status);
                     return;
                 }
                 callback(jqXHR, null, null);

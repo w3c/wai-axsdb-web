@@ -173,15 +173,15 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         this.set("testUnitIdList", newList);
     },
     login: function (lData, callback, targetE) {
-        this.resetLocalSession();
+        //this.resetLocalSession();
         var self = this;
         this.load(function(error){
             if(error){
                 console.warn("session invalid for login");
                 callback(false);
             }
-            if (self.isValid()) {
-                lData.sessionId = self.get("sessionId");
+           // if (self.isValid()) {
+                lData.sessionId = accessdb.sessionId;
                 accessdb.API.TESTINGSESSION.login(lData, function (error, data, status) {
                     if (!error) {
                         if (data.userId !== null && status===200) {
@@ -206,7 +206,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
                         return;
                     }
                 }, targetE);
-            }
+           // }
         })
     },
     logout: function (callback) {
@@ -222,37 +222,43 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
 
     resetLocalSession: function () {
         Utils.eraseCookie('accessdb-session-id');
+        /*
         Utils.eraseCookie('accessdb-session-userId');
         Utils.eraseCookie('accessdb-session-userRoles');
         sessionStorage.removeItem("accessdb-session");
         console.log("session reset in local storage");
+    */
     },
     loadLocalSession: function () {
+        this.set("sessionId", Utils.readCookie("accessdb-session-id") || accessdb.sessionId);
+        /*
+         if(Utils.readCookie("accessdb-session-userId"))
+            this.set("userId", Utils.readCookie("accessdb-session-userId"));
+        if(Utils.readCookie("accessdb-session-userRoles"))
+            this.set("userRoles", Utils.readCookie("accessdb-session-userRoles"));
+
         if (Utils.supports_html5_storage() && sessionStorage["accessdb-session"]) {
             this.set(JSON.parse(sessionStorage["accessdb-session"]));
         }
-        else {
-            this.set("sessionId", Utils.readCookie("accessdb-session-id") || accessdb.sessionId);
-            if(Utils.readCookie("accessdb-session-userId"))
-                this.set("userId", Utils.readCookie("accessdb-session-userId"));
-            if(Utils.readCookie("accessdb-session-userRoles"))
-                this.set("userRoles", Utils.readCookie("accessdb-session-userRoles"));
-        }
+        */
         console.log("session loaded from local storage");
     },
     saveLocalSession: function () {
         if (this.get("sessionId"))
             Utils.createCookie("accessdb-session-id", this.get("sessionId"), 10);
+        /*
         if (this.get("userId"))
             Utils.createCookie("accessdb-session-userId", this.get("userId"), 10);
         if (this.get("userRoles"))
             Utils.createCookie("accessdb-session-userRoles", this.get("userRoles"), 10);
+
         if (Utils.supports_html5_storage()) {
             sessionStorage.setItem("accessdb-session", JSON.stringify(this));
         }
         else {
-            console.error("Node html5 storage supported by your browser");
+            console.error("No html5 storage supported by your browser");
         }
+         */
         console.log("session saved in local storage");
     },
     isSessionAuthenticated: function () {
@@ -263,21 +269,26 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
     },
     load: function (callback) {
         var self = this;
-        this.loadLocalSession();
+        accessdb.sessionId = Utils.readCookie("accessdb-session-id") || accessdb.sessionId;
         accessdb.API.TESTINGSESSION.getSession(function(error, data, status){
-            if(error)
+            if(error){
                 callback(error);
-            if(status===201){ // new session created server side
-                accessdb.session.set("sessionId", data.sessionId);
-                console.log("New session created: " + self.get("sessionId"));
+                return;
             }
-            else if(status===200){ // existing session
-                accessdb.session.set("sessionId", data.sessionId);
-                if (self.isSessionAuthenticated()) {
-                    $(".login-info").html("Log out " + self.get("userId"));
-                    $(".login-info").parent().attr("href","#/log-out.html");
-                    $(".userid").html(self.get("userId"));
-                }
+            if(status===403){ // not auth
+               // accessdb.session.set("sessionId", data.sessionId);
+                //self.saveLocalSession();
+                console.log("unauth session: " + accessdb.sessionId);
+            }
+            else if(status>=200){ // auth session
+                accessdb.session.attributes = data;
+                    if(self.get("userId")!=null){
+                        //accessdb.session.set("sessionId", data.sessionId);
+                        $(".login-info").html("Log out " + self.get("userId"));
+                        $(".login-info").parent().attr("href","#/log-out.html");
+                        $(".userid").html(self.get("userId"));
+                    }
+
             }
             else{
                 console.warn("unknown state");
