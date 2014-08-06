@@ -605,7 +605,7 @@ TestUnit.loadTestsTree = function (){
             if(data)
                 $(".tests_count_all").html(data);
         });
-        $.treevue(data.children,  filter.page+"-teststree").appendTo('#thetestsTreeDiv');
+        $.treevue(data.children,  filter.page+"-teststree", {useAria: false}).appendTo('#thetestsTreeDiv');
         Utils.loadingEnd(".webTechTreeDiv");
         accessdb.TreeHelper.updateTreeFromTestList();
     });

@@ -246,7 +246,7 @@ accessdb.TreeHelper = {
                         data.selected = true;
                     return data;
                 };
-                $.treevue([treeData], filter.page, processDatafn).appendTo('.criteriaTreeDiv');
+                $.treevue([treeData], filter.page, {useAria: false}).appendTo('.criteriaTreeDiv');
                 Utils.loadingEnd(".criteriaTreeDiv");
                 callback("WCAG");
             });
@@ -275,7 +275,7 @@ accessdb.TreeHelper = {
                     }
                     return data;
                 };
-                $.treevue([treeData],  filter.page+"-accessdb-ATTree",processDatafn).appendTo('.atTreeDiv');
+                $.treevue([treeData], filter.page+"-accessdb-ATTree", {useAria: false}).appendTo('.atTreeDiv');
                 Utils.loadingEnd(".atTreeDiv");
                 callback("AssistiveTechnology");
             });
@@ -305,7 +305,7 @@ accessdb.TreeHelper = {
                     }
                     return data;
                 };
-                $.treevue([treeData],  filter.page+"-accessdb-UATree", processDatafn).appendTo('.uaTreeDiv');
+                $.treevue([treeData],  filter.page+"-accessdb-UATree", {useAria: false}).appendTo('.uaTreeDiv');
                 Utils.loadingEnd(".uaTreeDiv");
                 callback("UA");
             });
@@ -335,7 +335,7 @@ accessdb.TreeHelper = {
                     }
                     return data;
                 };
-                $.treevue([treeData],  filter.page+"-accessdb-OSTree", processDatafn).appendTo('.osTreeDiv');
+                $.treevue([treeData],  filter.page+"-accessdb-OSTree", {useAria: false}).appendTo('.osTreeDiv');
                 Utils.loadingEnd(".osTreeDiv");
                 callback("OS");
             });
@@ -355,7 +355,7 @@ accessdb.TreeHelper = {
                         data.selected = true;
                     return data;
                 };
-                $.treevue([treeData],  filter.page+"-accessdb-webtechs", processDatafn).appendTo('.webTechTreeDiv');
+                $.treevue([treeData],  filter.page+"-accessdb-webtechs", {useAria: false}).appendTo('.webTechTreeDiv');
                 Utils.loadingEnd(".webTechTreeDiv");
                 callback("WebTechnology");
             });

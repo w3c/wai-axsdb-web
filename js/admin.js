@@ -96,7 +96,7 @@ accessdb.admin.init = function (){
                     }
                     Utils.ajaxAsyncWithCallBack(accessdb.config.services.URL_SERVICE_WEBTECHSWITHTECHNIQUES_TREE, "GET", null, function(data){
                         $("#adminWebTechAndTechniqueTreeDiv").empty();
-                        $.treevue([data], "adminWebTechAndTechniqueTree").appendTo('#adminWebTechAndTechniqueTreeDiv');
+                        $.treevue([data], "adminWebTechAndTechniqueTree", {useAria: false}).appendTo('#adminWebTechAndTechniqueTreeDiv');
                     });
                     console.log(data);
 

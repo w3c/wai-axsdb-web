@@ -67,7 +67,7 @@
 	}
 	?>
 </main>
-<footer role="contentinfo" aria-label="Document info">
+<footer role="complimentary" aria-label="Document info">
 
     <div>
         <ul>
