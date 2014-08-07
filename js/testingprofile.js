@@ -280,7 +280,7 @@ UserTestingProfile.prototype.loadDataFromForm = function () {
     this.profile.userAgent = extractProductInfo("#userAgent");
     this.profile.plugin = extractProductInfo("#plugin");
     this.profile.profileName = $("#profileName").val();
-    this.profileComment = $("#profileComment").val();
+    this.profile.profileComment = $("#profileComment").val();
     this.id = parseInt($("#testProfileId").val());
 };
 
