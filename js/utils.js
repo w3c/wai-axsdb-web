@@ -24,13 +24,13 @@ Utils.urlParam=function (s){
 };
 Utils.UIRoleAdapt = function () {
     var userRoles = accessdb.session.get("userRoles") || [];
-    $(".accessdbUserMessage").html("");
+    $(".accessdbUserMessage").remove();
     if (accessdb.session.isUserCollaborator()) {
         $(".roleExpertsOnly").show();
     }
     else {
         $(".roleExpertsOnly").hide();
-        var msg = $('<p></p>').addClass("accessdbUserMessage").append("You need Collaborator Role for this action!");
+        var msg = $('<p role="alert"></p>').addClass("accessdbUserMessage").append("You need Collaborator Role for this action!");
         $(".roleExpertsOnly").parent().append(msg);
     }
     if (accessdb.session.isUserAdmin()) {
@@ -38,7 +38,7 @@ Utils.UIRoleAdapt = function () {
     }
     else {
         $(".roleAdminOnly").hide();
-        var msg = $('<p></p>').addClass("accessdbUserMessage").append("You need Admin Role for this action!");
+        var msg = $('<p role="alert"></p>').addClass("accessdbUserMessage").append("You need Admin Role for this action!");
         $(".roleAdminOnly").parent().append(msg);
     }
     if(accessdb.session.isLoggedIn()){
@@ -159,3 +159,60 @@ Utils.arrayToSqlVal = function (arr) {
     val = val.replace(/\"/g, '\'');
     return val;
 };
+
+Utils.sortResultsTable = function (table) {
+    var cols1st = $(table).find("thead th");
+    var cols = [];
+    var first = null;
+    var count = 1;
+    $.each(cols1st, function (key, value) {
+        count++;
+        if (first != null) {
+            var col = {
+                key: $(value).text(),
+                cell: value,
+                cells: $(table).find("td:nth-child(" + count + ")").get()
+            };
+            //    console.log(col );
+            cols.push(col);
+        }
+        else {
+            first = value;
+        }
+    });
+    cols = _.sortBy(cols, "key");
+    cols.unshift({
+        key: " ",
+        cell: first,
+        cells: $(table).find("th:nth-child(1)").get()}
+    );
+    $(table).empty();
+    var noRows = 0;
+    var currentRow = 0;
+    var noCols = cols.length;
+    var thead = $("<thead/>");
+    var trh = $("<tr/>");
+    for (i = 0; i < noCols; i++) {
+        var col = cols[i];
+        $(trh).append(col.cell);
+        noRows = col.cells.length;
+    }
+    $(thead).append(trh);
+    $(table).append(thead);
+    var tbody = $("<tbody/>");
+    for (k = 0; k < noRows; k++) {
+        var tr = $("<tr/>");
+        for (i = 0; i < noCols; i++) {
+            var col = cols[i];
+            cells = col.cells;
+            var cell = col.cells[k];
+            if($(cell).text().trim().length<1) {
+                $(cell).text("-");
+            }
+            $(tr).append(cell);
+        }
+        $(tbody).append(tr);
+    }
+    $(table).append(tbody);
+
+}
