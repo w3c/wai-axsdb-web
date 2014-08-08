@@ -208,11 +208,12 @@ UserTestingProfile.showTestingProfiles = function () {
                 $(".userProfilesDiv").find("#"+selected).attr("checked", true);
                 selected = undefined;
             }
-            $('.environments tr').on('click', function(event) {
-                $(this).find('input').prop('checked', 'checked');
-                accessdb.session.set("testProfileId",$(this).find('input').val());
-            });
+
         }
+        $(document).on("click", ".environments tr td", function (event) {
+            $(this).find('input').prop('checked', 'checked');
+            accessdb.session.set("testProfileId",$(this).find('input').val());
+        });
     }
     return userTestingProfiles.length;
 };

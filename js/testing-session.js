@@ -40,7 +40,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
         this.on('change:testProfileId', function (o) {
             console.log("change:testProfileId");
             console.log("testProfileId: " + this.get("testProfileId"));
-
+            self.save();
         });
         this.on('change:testResultList', function (o) {
             console.log("change:testResultList");
@@ -278,6 +278,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
             if(status===403){ // not auth
                // accessdb.session.set("sessionId", data.sessionId);
                 //self.saveLocalSession();
+                accessdb.session.attributes = data;
                 console.log("unauth session: " + accessdb.sessionId);
             }
             else if(status>=200){ // auth session
