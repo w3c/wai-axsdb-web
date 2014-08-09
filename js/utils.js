@@ -166,8 +166,9 @@ Utils.sortResultsTable = function (table, targetTable) {
     var first = null;
     var count = 0;
     $.each(cols1st, function (key, value) {
-        count++;
         if (first != null) {
+            count++;
+
             var col = {
                 key: $(value).text(),
                 cell: value,
@@ -196,7 +197,7 @@ Utils.sortResultsTable = function (table, targetTable) {
     for (i = 0; i < noCols; i++) {
         var col = cols[i];
         $(trh).append($(col.cell).clone( true ));
-        noRows = col.cells.length + 1;
+        noRows = col.cells.length ;
     }
     $(thead).append(trh);
     $(targetTable).append(thead);
@@ -205,8 +206,8 @@ Utils.sortResultsTable = function (table, targetTable) {
         var tr = $("<tr/>");
         for (i = 0; i < noCols; i++) {
             var col = cols[i];
-            cells = col.cells;
-            var cell = col.cells[k];
+            cells = $(col.cells).clone(true);
+            var cell =  $(col.cells[k]).clone(true);
             if($(cell).text().trim().length<1) {
                 $(cell).text("-");
             }
