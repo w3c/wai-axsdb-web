@@ -118,6 +118,9 @@ accessdb.Views.TestResultsFullViewByTechnique = function (){
             this.$el.find('.chart').peity("pie", {
                 fill: ["green", "#f98"]
             });
+            var table = this.$el.find('table').get();
+            Utils.sortResultsTable(table, table);
+            this.$el.find('table').tablesorter();
         }
     };
     this.fetch = function (callback){
