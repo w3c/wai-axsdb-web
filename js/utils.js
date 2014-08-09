@@ -160,18 +160,18 @@ Utils.arrayToSqlVal = function (arr) {
     return val;
 };
 
-Utils.sortResultsTable = function (table) {
+Utils.sortResultsTable = function (table, targetTable) {
     var cols1st = $(table).find("thead th");
     var cols = [];
     var first = null;
-    var count = 1;
+    var count = 0;
     $.each(cols1st, function (key, value) {
         count++;
         if (first != null) {
             var col = {
                 key: $(value).text(),
                 cell: value,
-                cells: $(table).find("td:nth-child(" + count + ")").get()
+                cells: $(table).find("tbody tr:nth-child(" + count + ")").siblings().andSelf().find("td:nth-child(" + (key+1)+ ")").clone( true )
             };
             //    console.log(col );
             cols.push(col);
@@ -182,11 +182,12 @@ Utils.sortResultsTable = function (table) {
     });
     cols = _.sortBy(cols, "key");
     cols.unshift({
-        key: " ",
-        cell: first,
-        cells: $(table).find("th:nth-child(1)").get()}
+            key: " ",
+            cell: first,
+            cells:$(table).find("tbody tr:nth-child(1)").siblings().andSelf().find("th:nth-child(1)").clone( true )
+        }
     );
-    $(table).empty();
+    $(targetTable).empty();
     var noRows = 0;
     var currentRow = 0;
     var noCols = cols.length;
@@ -194,11 +195,11 @@ Utils.sortResultsTable = function (table) {
     var trh = $("<tr/>");
     for (i = 0; i < noCols; i++) {
         var col = cols[i];
-        $(trh).append(col.cell);
-        noRows = col.cells.length;
+        $(trh).append($(col.cell).clone( true ));
+        noRows = col.cells.length + 1;
     }
     $(thead).append(trh);
-    $(table).append(thead);
+    $(targetTable).append(thead);
     var tbody = $("<tbody/>");
     for (k = 0; k < noRows; k++) {
         var tr = $("<tr/>");
@@ -209,10 +210,10 @@ Utils.sortResultsTable = function (table) {
             if($(cell).text().trim().length<1) {
                 $(cell).text("-");
             }
-            $(tr).append(cell);
+            $(tr).append($(cell).clone( true ));
         }
         $(tbody).append(tr);
     }
-    $(table).append(tbody);
+    $(targetTable).append(tbody);
 
 }
