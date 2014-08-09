@@ -361,6 +361,16 @@
                     return url;
                 }
             };
+
+        function dataToUrl(resData,params){
+            var url = "type/" + params.type + "/typevalue/" + params.typeValue;
+            url = url + "/ua/" + (resData.uaProduct.name || "null");
+            url = url + "/uaver/" + (resData.uaProduct.version || "null");
+            url = url + "/at/" + (resData.atProduct.name || "null");
+            url = url + "/atver/" + (resData.atProduct.version || "null");
+            // url = url + "/filter/" + encodeURI(JSON.stringify(params.filter));
+            return url;
+        }
         %>
         <% firstrow = true %>
         <% _.each(results.rows, function(row) {
@@ -396,9 +406,10 @@
                      }
                      else {
                         if(parseInt(col.noOfAll)>0){
+
                         %>
                             <td><span class="chart"><%=col.noOfPass %>/<%=col.noOfAll %></span>
-                                <a title="show test results of this combination" href="#/results-details.html/<%=accessdb.p.toUrl() %>" class="TestResultFullViewTechniqueAnchor"><%=col.noOfPass %>/<%=col.noOfAll %></a>
+                                <a title="show test results of this combination <%=col.resData.uaProduct.name %>" href="#/results-details.html/<%=dataToUrl(col.resData,params) %>" class="TestResultFullViewTechniqueAnchor"><%=col.noOfPass %>/<%=col.noOfAll %></a>
                             </td>
                         <%
                         } else { %>
