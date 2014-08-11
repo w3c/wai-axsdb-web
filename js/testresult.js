@@ -39,7 +39,7 @@ TestResult.viewTestingResultsBeforeSave = function () {
         $("#testingResultsDiv").append(tmp);
     }
     else {
-        $("#testingResultsDiv").html("<p>No results yet!</p>");
+        $("#testingResultsDiv").html("<p>Currently found no test result data into your session.</p>");
     }
 };
 TestResult.isInLocalResults = function (unitid) {
