@@ -30,16 +30,16 @@ Utils.UIRoleAdapt = function () {
     }
     else {
         $(".roleExpertsOnly").hide();
-        var msg = $('<p role="alert"></p>').addClass("accessdbUserMessage").append("You need Collaborator Role for this action!");
-        $(".roleExpertsOnly").parent().append(msg);
+        // var msg = $('<p role="alert"></p>').addClass("accessdbUserMessage").append("You need Collaborator Role for this action!");
+        // $(".roleExpertsOnly").parent().append(msg);
     }
     if (accessdb.session.isUserAdmin()) {
         $(".roleAdminOnly").show();
     }
     else {
         $(".roleAdminOnly").hide();
-        var msg = $('<p role="alert"></p>').addClass("accessdbUserMessage").append("You need Admin Role for this action!");
-        $(".roleAdminOnly").parent().append(msg);
+        // var msg = $('<p role="alert"></p>').addClass("accessdbUserMessage").append("You need Admin Role for this action!");
+        // $(".roleAdminOnly").parent().append(msg);
     }
     if(accessdb.session.isLoggedIn()){
         $(".axsdb-only-user").show();
