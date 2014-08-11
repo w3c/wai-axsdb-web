@@ -589,7 +589,7 @@ TestUnit.loadTestsTree = function (){
                 if(!accessdb.testTitles)
                     accessdb.testTitles = [];
                 accessdb.testTitles[testNode.value] =  data.children[ind].children[i].description;
-                data.children[ind].children[i].label = "Test Case " + data.children[ind].children[i].label;
+                data.children[ind].children[i].label = "Test Case " + Utils.stripTestID(data.children[ind].children[i].value) + ": " + data.children[ind].children[i].label;
                 data.children[ind].children[i].collapsed = false;
                 if(accessdb.session.isTestInQueue(testNode.value)){
                     //set selected
