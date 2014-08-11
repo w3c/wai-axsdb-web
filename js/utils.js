@@ -97,9 +97,9 @@ Utils.getUniqCol = function (matrix, col) {
 };
 
 Utils.msg2user = function (msg) {
-    window.alert(msg);
-    //$("#msg2user").html(msg);
-    //$("#msg2user" ).dialog();
+    //window.alert(msg);
+    $("#msg2user").html(msg);
+    $("#msg2user" ).dialog();
 };
 Utils.getFileNameWithNoExt = function (x) {
     return x.substr(0, x.lastIndexOf('.'));
@@ -216,5 +216,16 @@ Utils.sortResultsTable = function (table, targetTable) {
         $(tbody).append(tr);
     }
     $(targetTable).append(tbody);
+
+};
+
+Utils.stripTestID = function (id){
+    if(id){
+        var newID = id.split('_');
+        var first = newID[0];
+        return first + "_" + newID[1].replace(/(^|,)0+/g, '$1');
+    }
+    else
+        return "";
 
 }

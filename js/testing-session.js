@@ -191,6 +191,8 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
                             self.load(function(error){
                                 UserTestingProfile.loadUserProfilesByUserId(function(error, data1){
                                     accessdb.session.set("userTestingProfiles", data1);
+                                    Utils.msg2user("Logged in successfully!");
+                                    window.accessdb.appRouter.loadPage("home");
                                 });
                                 callback(true);
                                 return;
