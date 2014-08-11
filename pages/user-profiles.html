@@ -15,35 +15,53 @@
 				</ol>
 				<div class="centered">
 					<h1>Select Testing Environment</h1>
-					<!--
-					<aside class="column-first">
-						<h3 class="information"><span class="icon-info"></span> Information</h3>
-						<p>This page allows you to select, add, edit or remove your user testing environments. These are saved in your environment if you are logged in for future use. Otherwise these are saved temporaly in your browser session (until you close your tab/window).</p>
-					</aside>
-					-->
-					<div class="column-second">
-							<div class="btn-pills">
-								<a role="button" href="#/user-profile-add.html" class="btn"><span class="icon-plus-sign"></span> Add Environment</a>
-								<a role="button" href="#/user-profile-edit.html/-1" id="editProfileBtn" class="btn"><span class="icon-pencil"></span> Edit selected Environment</a>
-								<a role="button" href="#/user-profiles.html" id="deleteProfileBtn" class="btn"><span class="icon-minus-sign-alt"></span> Delete selected Environment</a>
-							</div>
-						<table class="full-width environments">
-							<col class="col1">
-							<col class="col2">
-							<thead>
-								<tr>
-									<th scope="col" style="width:1%;">Select</th>
-									<th scope="col">Testing Environment</th>
-								</tr>
-							</thead>
-							<tbody class="userProfilesDiv ui-corner-all ui-controlgroup ui-controlgroup-vertical">
+					<!-- if user has NO environments -->
+					<div class="has-no-profiles">
+						<aside class="infobox">
+							<h3 class="information"><span class="icon-info"></span> Information</h3>
+							<p>Testing environments denote the operating system, browser and assistive technology used for testing.
+								<span class="axsdb-only-anon">They are available as long as you don’t close your tab or window. <a href="#/log-in.html">Log in</a> to save them for future use.</span>
+								<span class="axsdb-only-user roleAdminOnly roleExpertsOnly">Log in next time to find your environments here.</span>
+							</p>
+						</aside>
+						<div class="column-second" style="text-align:center;">
+							<a role="button" href="#/user-profile-add.html" class="btn-primary"><span class="icon-plus-sign"></span> Add your first Environment</a>
+						</div>
+					</div>
+					<!-- endif user has NO environments -->
+					<!-- if user has environments -->
+					<div class="has-profiles">
+						<aside class="infobox">
+							<h3 class="information"><span class="icon-info"></span> Information</h3>
+							<p>Testing environments denote the operating system, browser and assistive technology used for testing. Select, add, edit or remove testing environments. (Changes here won’t affect previous tests.)</p>
+						</aside>
+						<div class="column-second">
 
-							</tbody>
-            </table>
+							<table class="full-width environments">
+								<col class="col1">
+								<col class="col2">
+								<thead>
+									<tr>
+										<th scope="col" style="width:1%;">Select</th>
+										<th scope="col">Testing Environment</th>
+									</tr>
+								</thead>
+								<tbody class="userProfilesDiv ui-corner-all ui-controlgroup ui-controlgroup-vertical">
+
+								</tbody>
+							</table>
+							<div class="btn-pills-full">
+									<a role="button" href="#/user-profile-add.html" class="btn"><span class="icon-plus-sign"></span> Add Environment</a>
+									<a role="button" href="#/user-profile-edit.html/-1" id="editProfileBtn" class="btn"><span class="icon-pencil"></span> Edit selected Environment</a>
+									<a role="button" href="#/user-profiles.html" id="deleteProfileBtn" class="btn"><span class="icon-minus-sign-alt"></span> Delete selected Environment</a>
+								</div>
+						</div>
+
+						<div class="steps">
+							<a role="button" href="#/tests-run.html" class="btn-primary btn-next">Next: Select Test Cases <span class="icon-arrow-right"></span></a>
+						</div>
 					</div>
-					<div class="steps">
-						<a role="button" href="#/tests-run.html" class="btn-primary btn-next">Next: Select Test Cases <span class="icon-arrow-right"></span></a>
-					</div>
+					<!-- endif user has environments -->
 				</div>
 
 			</div>
