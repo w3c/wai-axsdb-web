@@ -120,7 +120,6 @@ accessdb.Views.TestResultsFullViewByTechnique = function (){
             });
             var table = this.$el.find('table').get();
             Utils.sortResultsTable(table, table);
-            this.$el.find('table').tablesorter();
         }
     };
     this.fetch = function (callback){
