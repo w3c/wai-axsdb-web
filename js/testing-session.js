@@ -82,6 +82,7 @@ window.accessdb.Models.testingSession = Backbone.Model.extend({
     },
     isUserCollaborator: function () {
         return this.hasUserRole(accessdb.config.USER_ROLE_AXSDBCOL_CODE)
+            || this.hasUserRole("35422") //FIXME: as const
             || this.hasUserRole(accessdb.config.USER_ROLE_AXSDBW3C_CODE);
     },
     hasUserRole: function (r) {
