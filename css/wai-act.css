@@ -654,6 +654,8 @@ main, footer > div {
   display: block;
   width: 99%;
   margin: 0 0.5%;
+  overflow: hidden;
+  padding: 1em 0;
 }
 
 /* line 3, ../sass/modules/_footer.scss */
@@ -1324,30 +1326,46 @@ select {
 }
 
 /* line 425, ../sass/wai-act.scss */
-.btn-pills {
+.btn-pills, .btn-pills-full {
   letter-spacing: -10px;
   margin-bottom: 1em;
 }
 /* line 428, ../sass/wai-act.scss */
-.btn-pills a, .btn-pills button {
+.btn-pills a, .btn-pills-full a, .btn-pills button, .btn-pills-full button {
   letter-spacing: normal;
 }
 /* line 431, ../sass/wai-act.scss */
-.btn-pills .btn, .btn-pills .alltutorials a, .alltutorials .btn-pills a, .btn-pills .btn-primary, .btn-pills .btn-small {
+.btn-pills .btn, .btn-pills-full .btn, .btn-pills .alltutorials a, .alltutorials .btn-pills a, .btn-pills-full .alltutorials a, .alltutorials .btn-pills-full a, .btn-pills .btn-primary, .btn-pills-full .btn-primary, .btn-pills .btn-small, .btn-pills-full .btn-small {
   border-radius: 0;
   margin-left: -1px;
 }
 /* line 434, ../sass/wai-act.scss */
-.btn-pills .btn:first-child, .btn-pills .alltutorials a:first-child, .alltutorials .btn-pills a:first-child, .btn-pills .btn-primary:first-child, .btn-pills .btn-small:first-child {
+.btn-pills .btn:first-child, .btn-pills-full .btn:first-child, .btn-pills .alltutorials a:first-child, .alltutorials .btn-pills a:first-child, .btn-pills-full .alltutorials a:first-child, .alltutorials .btn-pills-full a:first-child, .btn-pills .btn-primary:first-child, .btn-pills-full .btn-primary:first-child, .btn-pills .btn-small:first-child, .btn-pills-full .btn-small:first-child {
   margin-left: 0;
   border-radius: .25em 0 0 .25em;
 }
 /* line 438, ../sass/wai-act.scss */
-.btn-pills .btn:last-child, .btn-pills .alltutorials a:last-child, .alltutorials .btn-pills a:last-child, .btn-pills .btn-primary:last-child, .btn-pills .btn-small:last-child {
+.btn-pills .btn:last-child, .btn-pills-full .btn:last-child, .btn-pills .alltutorials a:last-child, .alltutorials .btn-pills a:last-child, .btn-pills-full .alltutorials a:last-child, .alltutorials .btn-pills-full a:last-child, .btn-pills .btn-primary:last-child, .btn-pills-full .btn-primary:last-child, .btn-pills .btn-small:last-child, .btn-pills-full .btn-small:last-child {
   border-radius: 0 .25em .25em 0;
 }
 
-/* line 444, ../sass/wai-act.scss */
+/* line 443, ../sass/wai-act.scss */
+.btn-pills-full {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+/* line 446, ../sass/wai-act.scss */
+.btn-pills-full .btn, .btn-pills-full .alltutorials a, .alltutorials .btn-pills-full a, .btn-pills-full .btn-primary, .btn-pills-full .btn-small {
+  -webkit-box-flex: auto;
+  -webkit-flex: auto;
+  -ms-flex: auto;
+  flex: auto;
+  text-align: center;
+}
+
+/* line 452, ../sass/wai-act.scss */
 .btn, .alltutorials a, .btn-primary, .btn-small {
   background: -webkit-linear-gradient(top, #e6e6e6, #cccccc);
   background: -webkit-gradient(linear, left top, left bottom, from(#e6e6e6), to(#cccccc));
@@ -1363,25 +1381,25 @@ select {
   border-style: solid;
   border-radius: .25em;
 }
-/* line 458, ../sass/wai-act.scss */
+/* line 466, ../sass/wai-act.scss */
 .btn:hover, .alltutorials a:hover, .btn-primary:hover, .btn-small:hover, .btn:focus, .alltutorials a:focus, .btn-primary:focus, .btn-small:focus {
   color: #333;
   text-decoration: underline;
   -webkit-box-shadow: 0 0 6px #888;
   box-shadow: 0 0 6px #888;
 }
-/* line 463, ../sass/wai-act.scss */
+/* line 471, ../sass/wai-act.scss */
 .btn small, .alltutorials a small, .btn-primary small, .btn-small small {
   display: block;
   font-size: 77.77778%;
 }
 
-/* line 469, ../sass/wai-act.scss */
+/* line 477, ../sass/wai-act.scss */
 .btn-login {
   text-align: right;
 }
 
-/* line 473, ../sass/wai-act.scss */
+/* line 481, ../sass/wai-act.scss */
 .btn-primary {
   background: -webkit-linear-gradient(top, #004c99, #003366);
   background: -webkit-gradient(linear, left top, left bottom, from(#004c99), to(#003366));
@@ -1389,32 +1407,32 @@ select {
   color: #fff;
   border-color: #001933;
 }
-/* line 478, ../sass/wai-act.scss */
+/* line 486, ../sass/wai-act.scss */
 .btn-primary:hover, .btn-primary:focus {
   color: #fff;
   text-decoration: underline;
 }
 
-/* line 484, ../sass/wai-act.scss */
+/* line 492, ../sass/wai-act.scss */
 .btn-small {
   padding: .15em .2em;
   line-height: 1;
 }
 
-/* line 490, ../sass/wai-act.scss */
+/* line 498, ../sass/wai-act.scss */
 .btn-icon, .results button, .results .result .btn, .results .result .alltutorials a, .alltutorials .results .result a, .results .result .btn-primary, .results .result .btn-small {
   border: none;
   background-color: transparent;
   padding: 0;
 }
 
-/* line 496, ../sass/wai-act.scss */
+/* line 504, ../sass/wai-act.scss */
 .btn-next {
   float: right;
 }
 
 /* ====== ICONS   ======== EDIT ABOVE! ======== */
-/* line 502, ../sass/wai-act.scss */
+/* line 510, ../sass/wai-act.scss */
 .icon, .notes::before, .treevue li::before {
   display: inline-block;
   height: 1em;
@@ -1423,68 +1441,68 @@ select {
   background-repeat: no-repeat;
   vertical-align: middle;
 }
-/* line 509, ../sass/wai-act.scss */
+/* line 517, ../sass/wai-act.scss */
 .icon.icon-with-visible-text, .icon-with-visible-text.notes::before, .treevue li.icon-with-visible-text::before {
   margin-right: .25em;
 }
-/* line 512, ../sass/wai-act.scss */
+/* line 520, ../sass/wai-act.scss */
 .icon.icon-menu, .icon-menu.notes::before, .treevue li.icon-menu::before {
   background-image: url(../img/menu.svg);
 }
-/* line 515, ../sass/wai-act.scss */
+/* line 523, ../sass/wai-act.scss */
 .icon.icon-menu-active, .icon-menu-active.notes::before, .treevue li.icon-menu-active::before {
   background-image: url(../img/menu-active.svg);
 }
-/* line 518, ../sass/wai-act.scss */
+/* line 526, ../sass/wai-act.scss */
 .icon.icon-link, .icon-link.notes::before, .treevue li.icon-link::before {
   background-image: url(../img/link.svg);
 }
-/* line 521, ../sass/wai-act.scss */
+/* line 529, ../sass/wai-act.scss */
 .icon.icon-images, .icon-images.notes::before, .treevue li.icon-images::before {
   background-image: url(../img/images.svg);
 }
-/* line 524, ../sass/wai-act.scss */
+/* line 532, ../sass/wai-act.scss */
 .icon.icon-tables, .icon-tables.notes::before, .treevue li.icon-tables::before {
   background-image: url(../img/tables.svg);
 }
-/* line 527, ../sass/wai-act.scss */
+/* line 535, ../sass/wai-act.scss */
 .icon.icon-forms, .icon-forms.notes::before, .treevue li.icon-forms::before {
   background-image: url(../img/forms.svg);
 }
-/* line 530, ../sass/wai-act.scss */
+/* line 538, ../sass/wai-act.scss */
 .icon.icon-carousels, .icon-carousels.notes::before, .treevue li.icon-carousels::before {
   background-image: url(../img/images.svg);
 }
-/* line 533, ../sass/wai-act.scss */
+/* line 541, ../sass/wai-act.scss */
 .icon.icon-arrow, .icon-arrow.notes::before, .treevue li.icon-arrow::before {
   background-image: url(../img/arrow.svg);
 }
-/* line 536, ../sass/wai-act.scss */
+/* line 544, ../sass/wai-act.scss */
 .icon.icon-expand, .icon-expand.notes::before, .treevue li.icon-expand::before, .treevue li.treevue-collapsed::before {
   background-image: url(../img/expand.svg);
 }
-/* line 539, ../sass/wai-act.scss */
+/* line 547, ../sass/wai-act.scss */
 .icon.icon-collapse, .icon-collapse.notes::before, .treevue li.icon-collapse::before, .treevue li.treevue-expanded::before {
   background-image: url(../img/collapse.svg);
 }
-/* line 542, ../sass/wai-act.scss */
+/* line 550, ../sass/wai-act.scss */
 .icon.icon-info, .notes::before, .treevue li.icon-info::before, .treevue li.notes::before {
   background-image: url(../img/info.svg);
 }
-/* line 545, ../sass/wai-act.scss */
+/* line 553, ../sass/wai-act.scss */
 .icon.icon-file, .icon-file.notes::before, .treevue li.icon-file::before {
   background-image: url(../img/file.svg);
 }
-/* line 548, ../sass/wai-act.scss */
+/* line 556, ../sass/wai-act.scss */
 .icon.icon-remove, .icon-remove.notes::before, .treevue li.icon-remove::before {
   background-image: url(../img/remove.svg);
 }
 
-/* line 553, ../sass/wai-act.scss */
+/* line 561, ../sass/wai-act.scss */
 .area-login {
   text-align: center;
 }
-/* line 555, ../sass/wai-act.scss */
+/* line 563, ../sass/wai-act.scss */
 .area-login > span {
   display: inline-block;
   border: 2px solid #ccc;
@@ -1496,7 +1514,7 @@ select {
 /*
 * Hide only visually, but have it available for screenreaders: h5bp.com/v
 */
-/* line 569, ../sass/wai-act.scss */
+/* line 577, ../sass/wai-act.scss */
 .visuallyhidden, footer h2 {
   border: 0;
   clip: rect(0 0 0 0);
@@ -1512,7 +1530,7 @@ select {
 * Extends the .visuallyhidden class to allow the element to be focusable
 * when navigated to via the keyboard: h5bp.com/p
 */
-/* line 585, ../sass/wai-act.scss */
+/* line 593, ../sass/wai-act.scss */
 .visuallyhidden.focusable:active, footer h2.focusable:active,
 .visuallyhidden.focusable:focus,
 footer h2.focusable:focus {
@@ -1524,28 +1542,28 @@ footer h2.focusable:focus {
   width: auto;
 }
 
-/* line 603, ../sass/wai-act.scss */
+/* line 611, ../sass/wai-act.scss */
 .grid {
   width: 99%;
   margin: 0 0.5%;
 }
 
-/* line 607, ../sass/wai-act.scss */
+/* line 615, ../sass/wai-act.scss */
 .with-filter {
   clear: both;
 }
 @media screen and (min-width: 43em) {
-  /* line 610, ../sass/wai-act.scss */
+  /* line 618, ../sass/wai-act.scss */
   .with-filter h3 > button {
     display: none;
   }
-  /* line 611, ../sass/wai-act.scss */
+  /* line 619, ../sass/wai-act.scss */
   .with-filter .column-first {
     float: left;
     margin-right: -100%;
     width: 32%;
   }
-  /* line 614, ../sass/wai-act.scss */
+  /* line 622, ../sass/wai-act.scss */
   .with-filter .column-second {
     float: left;
     margin-right: -100%;
@@ -1555,24 +1573,24 @@ footer h2.focusable:focus {
   }
 }
 @media screen and (min-width: 43em) {
-  /* line 622, ../sass/wai-act.scss */
+  /* line 630, ../sass/wai-act.scss */
   .with-filter.with-basket h3 > button {
     display: none;
   }
-  /* line 623, ../sass/wai-act.scss */
+  /* line 631, ../sass/wai-act.scss */
   .with-filter.with-basket .column-first {
     float: left;
     margin-right: -100%;
     width: 23.5%;
   }
-  /* line 626, ../sass/wai-act.scss */
+  /* line 634, ../sass/wai-act.scss */
   .with-filter.with-basket .column-second {
     float: left;
     margin-right: -100%;
     width: 57.5%;
     margin-left: 25.5%;
   }
-  /* line 630, ../sass/wai-act.scss */
+  /* line 638, ../sass/wai-act.scss */
   .with-filter.with-basket .column-third {
     float: left;
     margin-right: -100%;
@@ -1581,30 +1599,30 @@ footer h2.focusable:focus {
   }
 }
 
-/* line 638, ../sass/wai-act.scss */
+/* line 646, ../sass/wai-act.scss */
 .column-filters {
   background-color: #f5f5f5;
   padding: .25em;
 }
-/* line 641, ../sass/wai-act.scss */
+/* line 649, ../sass/wai-act.scss */
 .column-filters form > div {
   border-bottom: 1px dotted #777;
   padding: 0 0 1em;
   margin-bottom: 1em;
 }
-/* line 645, ../sass/wai-act.scss */
+/* line 653, ../sass/wai-act.scss */
 .column-filters form > div:last-child {
   border-bottom-style: none;
   padding-bottom: 0;
   margin-bottom: 0;
 }
-/* line 650, ../sass/wai-act.scss */
+/* line 658, ../sass/wai-act.scss */
 .column-filters form > div h4 {
   margin-bottom: 0;
 }
 
 @media screen and (min-width: 43em) {
-  /* line 656, ../sass/wai-act.scss */
+  /* line 664, ../sass/wai-act.scss */
   .centered {
     float: left;
     margin-right: -100%;
@@ -1613,7 +1631,7 @@ footer h2.focusable:focus {
   }
 }
 
-/* line 663, ../sass/wai-act.scss */
+/* line 671, ../sass/wai-act.scss */
 .column {
   float: left;
   margin-right: -100%;
@@ -1621,89 +1639,89 @@ footer h2.focusable:focus {
 }
 
 @media screen and (min-width: 43em) {
-  /* line 668, ../sass/wai-act.scss */
+  /* line 676, ../sass/wai-act.scss */
   .onehalf, .two4ths, .three6ths {
     float: left;
     margin-right: -100%;
     width: 49%;
   }
 
-  /* line 671, ../sass/wai-act.scss */
+  /* line 679, ../sass/wai-act.scss */
   .one3rd, .two6ths {
     float: left;
     margin-right: -100%;
     width: 32%;
   }
 
-  /* line 674, ../sass/wai-act.scss */
+  /* line 682, ../sass/wai-act.scss */
   .two3rds, .content .inner, .four6ths {
     float: left;
     margin-right: -100%;
     width: 66%;
   }
 
-  /* line 677, ../sass/wai-act.scss */
+  /* line 685, ../sass/wai-act.scss */
   .one4th {
     float: left;
     margin-right: -100%;
     width: 23.5%;
   }
 
-  /* line 683, ../sass/wai-act.scss */
+  /* line 691, ../sass/wai-act.scss */
   .three4ths {
     float: left;
     margin-right: -100%;
     width: 74.5%;
   }
 
-  /* line 686, ../sass/wai-act.scss */
+  /* line 694, ../sass/wai-act.scss */
   .one6th {
     float: left;
     margin-right: -100%;
     width: 15%;
   }
 
-  /* line 698, ../sass/wai-act.scss */
+  /* line 706, ../sass/wai-act.scss */
   .five6ths {
     float: left;
     margin-right: -100%;
     width: 83%;
   }
 }
-/* line 709, ../sass/wai-act.scss */
+/* line 717, ../sass/wai-act.scss */
 .flush.right {
   float: right;
 }
 
-/* line 716, ../sass/wai-act.scss */
+/* line 724, ../sass/wai-act.scss */
 .treevue, .treevue ul {
   clear: both;
   padding: 0;
   margin: 0;
   cursor: auto;
 }
-/* line 721, ../sass/wai-act.scss */
+/* line 729, ../sass/wai-act.scss */
 .treevue li, .treevue ul li {
   list-style: none;
 }
 
-/* line 726, ../sass/wai-act.scss */
+/* line 734, ../sass/wai-act.scss */
 .treevue li {
   padding-bottom: 0.25em;
   padding-left: 3em;
   overflow: hidden;
 }
 @media screen and (min-width: 56em) {
-  /* line 726, ../sass/wai-act.scss */
+  /* line 734, ../sass/wai-act.scss */
   .treevue li {
     padding-left: 1.5em;
   }
 }
-/* line 733, ../sass/wai-act.scss */
+/* line 741, ../sass/wai-act.scss */
 .treevue li input[type=checkbox] {
   margin-right: .25em;
 }
-/* line 736, ../sass/wai-act.scss */
+/* line 744, ../sass/wai-act.scss */
 .treevue li::before {
   content: '';
   float: left;
@@ -1712,7 +1730,7 @@ footer h2.focusable:focus {
   margin-left: -3em;
 }
 @media screen and (min-width: 56em) {
-  /* line 736, ../sass/wai-act.scss */
+  /* line 744, ../sass/wai-act.scss */
   .treevue li::before {
     width: 1.5em;
     height: 1.5em;
@@ -1720,27 +1738,27 @@ footer h2.focusable:focus {
   }
 }
 
-/* line 751, ../sass/wai-act.scss */
+/* line 759, ../sass/wai-act.scss */
 .treevue li.treevue-expanded {
   cursor: pointer;
 }
 
-/* line 758, ../sass/wai-act.scss */
+/* line 766, ../sass/wai-act.scss */
 .treevue li.treevue-collapsed {
   cursor: pointer;
 }
 
-/* line 765, ../sass/wai-act.scss */
+/* line 773, ../sass/wai-act.scss */
 .treevue label:hover {
   background: rgba(0, 0, 0, 0.05);
 }
 
-/* line 769, ../sass/wai-act.scss */
+/* line 777, ../sass/wai-act.scss */
 .treeitem_focus {
   outline: solid 1px black;
 }
 
-/* line 774, ../sass/wai-act.scss */
+/* line 782, ../sass/wai-act.scss */
 .subheading .unapproved {
   background-color: #FCC;
   line-height: 1.5;
@@ -1751,7 +1769,7 @@ footer h2.focusable:focus {
   margin-right: .25em;
 }
 
-/* line 786, ../sass/wai-act.scss */
+/* line 794, ../sass/wai-act.scss */
 .decision-tree {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1766,13 +1784,13 @@ footer h2.focusable:focus {
   margin: 1em 0;
   padding: 0;
 }
-/* line 792, ../sass/wai-act.scss */
+/* line 800, ../sass/wai-act.scss */
 .decision-tree > li {
   margin-bottom: 1em;
   padding: .5em .5em 0;
   font-weight: bold;
 }
-/* line 796, ../sass/wai-act.scss */
+/* line 804, ../sass/wai-act.scss */
 .decision-tree > li > ul {
   margin: .5em 0 0;
   padding: 0;
@@ -1795,7 +1813,7 @@ footer h2.focusable:focus {
   align-items: stretch;
   border: 1px solid #aaa;
 }
-/* line 805, ../sass/wai-act.scss */
+/* line 813, ../sass/wai-act.scss */
 .decision-tree > li > ul > li {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1805,20 +1823,20 @@ footer h2.focusable:focus {
   padding: .5em;
   border: 1px solid #aaa;
 }
-/* line 813, ../sass/wai-act.scss */
+/* line 821, ../sass/wai-act.scss */
 .decision-tree > li > ul > li:only-child, .decision-tree > li > ul > li:nth-child(odd):last-child {
   width: 100%;
 }
-/* line 819, ../sass/wai-act.scss */
+/* line 827, ../sass/wai-act.scss */
 .decision-tree .yes {
   background-color: #D9EDF7;
 }
-/* line 822, ../sass/wai-act.scss */
+/* line 830, ../sass/wai-act.scss */
 .decision-tree .no {
   background-color: #F2DEDE;
   position: relative;
 }
-/* line 825, ../sass/wai-act.scss */
+/* line 833, ../sass/wai-act.scss */
 .decision-tree .no:after {
   top: 100%;
   left: 50%;
@@ -1834,7 +1852,7 @@ footer h2.focusable:focus {
   margin-left: -.5em;
   z-index: 500;
 }
-/* line 826, ../sass/wai-act.scss */
+/* line 834, ../sass/wai-act.scss */
 .decision-tree .no:before {
   top: 100%;
   left: 50%;
@@ -2362,4 +2380,20 @@ div.admin {
 /* line 299, ../sass/_asd.scss */
 a.removeFields, a.addMoreFields {
   text-decoration: none;
+}
+
+/* line 303, ../sass/_asd.scss */
+.infobox {
+  margin-bottom: 1em;
+  font-size: .8em;
+}
+/* line 307, ../sass/_asd.scss */
+.infobox h3 {
+  font-size: 1em;
+  margin: 0;
+  font-weight: bold;
+}
+/* line 313, ../sass/_asd.scss */
+.infobox p {
+  margin-top: 0;
 }
