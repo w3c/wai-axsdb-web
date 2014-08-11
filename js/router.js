@@ -112,11 +112,14 @@ window.accessdb.appRouter.on('route:results-details', function (type, typeValue,
     accessdb.TestResultsDetails.reload(params);
 });
 window.accessdb.appRouter.on('route:user-profiles', function () {
+    var profilecount = 0;
     window.accessdb.appRouter.loadPage("user-profiles");
     if(accessdb.session && accessdb.session.get("userTestingProfiles")){
-        if(accessdb.session.get("userTestingProfiles").length<1){
+        profilecount = accessdb.session.get("userTestingProfiles").length;
+        if(profilecount<1){
             UserTestingProfile.loadUserProfilesByUserId(function(error, data, status){
                 accessdb.session.set("userTestingProfiles", data);
+                profilecount = data.length;
             });
         }
     }
@@ -124,8 +127,13 @@ window.accessdb.appRouter.on('route:user-profiles', function () {
         console.warn("user profiles not in session :");
         console.log(accessdb.session);
     }
+    $('.has-profiles, .has-no-profiles').hide();
     UserTestingProfile.showTestingProfiles();
-
+    if (profilecount > 0) {
+        $('.has-profiles').show();
+    } else {
+        $('.has-no-profiles').show();
+    }
 });
 
 window.accessdb.appRouter.on('route:user-profile-add', function () {
