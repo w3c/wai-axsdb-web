@@ -107,7 +107,7 @@ window.accessdb.appRouter.on('route:results-details', function (type, typeValue,
         atVer : Utils.urlParam(atVer),
         type: type,
         typeValue : typeValue
-    }
+    };
     accessdb.TestResultsDetails = new accessdb.Views.TestResultsDetails();
     accessdb.TestResultsDetails.reload(params);
 });

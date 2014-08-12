@@ -220,12 +220,29 @@ Utils.sortResultsTable = function (table, targetTable) {
 };
 
 Utils.stripTestID = function (id){
-    if(id){
-        var newID = id.split('_');
-        var first = newID[0];
-        return first + "_" + newID[1].replace(/(^|,)0+/g, '$1');
+    try {
+        if(id){
+            var newID = id.split('_');
+            var first = newID[0];
+            return first + "_" + newID[1].replace(/(^|,)0+/g, '$1');
+        }
+        else
+            return "";
     }
-    else
-        return "";
+    catch(e){
 
+    }
+}
+Utils.stripTechniqueFromTestID = function (id){
+    try {
+        if (id) {
+            var newID = id.split('_');
+            return newID[0];
+        }
+        else
+            return "";
+    }
+    catch(e){
+
+    }
 }

@@ -213,6 +213,10 @@ accessdb.Views.TestResultsFullViewByTest = function (){
                 params: this.params
             } );
             this.$el.html( template );
+            var btnTechnique = $($("#" + accessdb.config.PAGE_ID_PREFIX + "results-test" + " .back-button").get(0));
+            var technique = Utils.stripTechniqueFromTestID(this.params.typeValue);
+            btnTechnique.attr("href","#/results-technique.html/"+technique);
+            $(btnTechnique.find("span").get(1)).html("Back to technique " + technique);
             this.$el.find('.chart').peity("pie", {
                 fill: ["green", "#f98"]
             });
@@ -287,6 +291,26 @@ accessdb.Views.TestResultsDetails = function (){
                 params: this.params}
             );
             this.$el.html( template );
+            var test = null;
+            var technique = null;
+            var btnTechnique = $($("#" + accessdb.config.PAGE_ID_PREFIX + "results-details" + " .back-button").get(0));
+            var btnTest = $($("#" + accessdb.config.PAGE_ID_PREFIX + "results-details" + " .back-button").get(1));
+            if(this.params.type==="Test"){
+                test = this.params.typeValue;
+                technique = Utils.stripTechniqueFromTestID(test);
+            }
+            else{
+                technique = this.params.typeValue;
+            }
+            btnTechnique.attr("href","#/results-technique.html/"+technique);
+            $(btnTechnique.find("span").get(1)).html("Back to technique " + technique);
+            if(test){
+                btnTest.attr("href","#/results-test.html/"+test);
+                $(btnTest.find("span").get(1)).html("Back to test " + Utils.stripTestID(test));
+                btnTest.show();
+            }
+            else
+                btnTest.hide();
             Utils.UIRoleAdapt();
         }
     };

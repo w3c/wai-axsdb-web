@@ -309,7 +309,15 @@
     </ul>
 </script>
 <script type="text/template" id="Results_template">
-    <h1>Test Results for <%=params.type%> <%=Utils.stripTestID(params.typeValue)%>, <%=params.ua%> <%=params.uaVer%> with <%=params.at%> <%=params.atVer%></h1>
+    <h1>Test Results for <%=params.type%> <%
+        if(params.type==="Test")
+        {
+        %>
+            <%= Utils.stripTestID(params.typeValue)%>
+        <% } else {   %>
+            <%= params.typeValue%>
+        <% }
+        %>, <%=params.ua%> <%=params.uaVer%> with <%=params.at%> <%=params.atVer%></h1>
     <div class="">
         <div class="column-second">
             <div id="Results"><!-- Template: Results_template --></div>
@@ -353,7 +361,7 @@
 </script>
 
 <script type="text/template" id="TestResultsFullViewByTechnique_template">
-    <table class="result-details tablesorter" id="TestResultsFullViewByTechnique_table">
+    <table class="result-details" id="TestResultsFullViewByTechnique_table">
         <caption>In the columns, you can find browser versions.<br>The rows show assistive technologies.</caption>
         <% lresults = results.length
         accessdb.p = {
