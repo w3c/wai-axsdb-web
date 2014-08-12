@@ -113,9 +113,9 @@ accessdb.Models.TestingHelper = function (){
             return count;
         },
         progressUpdate : function (){
-            var current = count + 1;
+            var done = count;
             var all = this.countMore() + count;
-            $("#axsdb-page-test-run h1 .subheading").html('Progress: ' + current + " of " + all + " Tests finished");
+            $("#axsdb-page-test-run h1 .subheading").html('Progress: ' + done + " of " + all + " Tests finished");
         }
     }
 }
