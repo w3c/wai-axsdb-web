@@ -601,9 +601,9 @@ TestUnit.loadTestsTree = function (){
         }
         $(".testsOnPage").html(countTests);
         TestUnit.viewTestUnitIdList();
-        accessdb.API.TEST.countAll(function(error, data, status){
-            if(data)
-                $(".tests_count_all").html(data);
+        accessdb.API.TEST.countAll(function(res){
+            if(res)
+                $(".tests_count_all").html(res);
         });
         $.treevue(data.children,  filter.page+"-teststree", {useAria: false}).appendTo('#thetestsTreeDiv');
         Utils.loadingEnd(".webTechTreeDiv");
