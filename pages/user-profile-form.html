@@ -1,49 +1,104 @@
 <article id="axsdb-page-user-profile-form">
-    <nav class="navbar" role="navigation">
-        <a href="#/home.html" class="btn-small"><span class="icon-home"></span> Home</a>
-	<a href="#/log-in.html" class="btn-small login"><span class="icon-unlock-alt"></span> <span class="login-info">Log In</span></a>
-    </nav>
-    <h1>Add Testing Environment</h1>
+  <nav class="navbar" role="navigation">
+    <a href="#/home.html" class="btn-small"><span class="icon-home"></span> Home</a>
+    <a href="#/log-in.html" class="btn-small login"><span class="icon-unlock-alt"></span> <span class="login-info">Log In</span></a>
+  </nav>
+  <div class="centered">
+    <h1>Add/Edit Testing Environment</h1>
     <p>Define an environment that you want to use to run test cases</p>
     <form>
-        <input type="hidden" id="testProfileId" value="-1" />
-        <fieldset>
-	    <legend>About the Environment:</legend>
-	    <label title="A user friendly name for user to identify it" for="profileName">Name: </label>
-	    <input style="width: 30em;" placeholder="An optional human readable name for easier identification" type="text" name="profileName"  id="profileName" value=""/>
-	    <br/>
-	    <label for="profileComment">Comment: </label><br>
-	    <textarea name="profileComment" id="profileComment" cols="60" placeholder="Some comment" style="width:100%;" ></textarea>
-	    <br/>
-	</fieldset>
-	<fieldset>
-            <legend>User Agent:</legend>
-            <label for="userAgent">Name: </label>
-            <input required type="text" name="userAgent" id="userAgent" />
-            <label for="userAgent_ver">Version: </label>
-            <input required type="text" name="userAgent_ver" id="userAgent_ver" />
-        </fieldset>
-        <fieldset>
-            <legend>Assistive Technology:</legend>
-            <label for="assistiveTechnology">Name: </label>
-            <input type="text" name="assistiveTechnology" id="assistiveTechnology" />
-            <label for="assistiveTechnology_ver">Version: </label>
-            <input type="text" name="assistiveTechnology_ver" id="assistiveTechnology_ver" />
-        </fieldset>
-        <fieldset>
-            <legend>Operating System :</legend>
-            <label for="os">Name: </label>
+      <input type="hidden" id="testProfileId" value="-1" />
+      <!--
+    <fieldset>
+      <legend>About the Environment:</legend>
+        <div class="form-block">
+          <div class="form-row">
+            <label for="profileName">Name: </label>
+            <span>
+              <input placeholder="An optional human readable name for easier identification" type="text" name="profileName"  id="profileName" value=""/>
+            </span>
+          </div>
+          <div class="form-row">
+            <label for="profileComment">Comment: </label>
+            <span>
+              <textarea name="profileComment" id="profileComment" cols="60" placeholder="Some comment"></textarea>
+            </span>
+          </div>
+        </div>
+    </fieldset>
+    -->
+    <fieldset>
+      <legend>Operating System:</legend>
+      <div class="form-block">
+        <div class="form-row">
+          <label for="os"><abbr title="Operating System">OS</abbr> Name: </label>
+          <span>
             <input required type="text" name="os" id="os" />
-            <label for="os_ver">Version: </label>
+          </span>
+        </div>
+        <div class="form-row">
+          <label for="os_ver"><abbr title="Operating System">OS</abbr> Version: </label>
+          <span>
             <input required type="text" name="os_ver" id="os_ver" />
-        </fieldset>
-        <fieldset>
-            <legend>Plugin :</legend>
-            <label for="plugin">Plugin: </label>
-            <input type="text" name="plugin" id="plugin" />
-            <label for="plugin_ver">Version: </label>
-            <input type="text" name="plugin_ver" id="plugin_ver" />
-        </fieldset>
-	<a role="button" style="width: 10em;height: 1.5em;display: block;text-align: center;vertical-align: middle;" href="#/user-profiles.html" class="btn testprofileSave">Save profile</a>
+          </span>
+        </div>
+      </div>
+      </fieldset>
+    <fieldset>
+        <legend>Browser:</legend>
+        <div class="form-block">
+          <div class="form-row">
+            <label for="userAgent">Browser Name: </label>
+            <span>
+              <input required type="text" name="userAgent" id="userAgent" />
+            </span>
+          </div>
+          <div class="form-row">
+            <label for="userAgent_ver">Browser Version: </label>
+            <span>
+              <input required type="text" name="userAgent_ver" id="userAgent_ver" />
+            </span>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Assistive Technology:</legend>
+        <div class="form-block">
+          <div class="form-row">
+            <label for="assistiveTechnology"><abbr title="Assistive Technology">AT</abbr> Name: </label>
+            <span>
+              <input type="text" name="assistiveTechnology" id="assistiveTechnology" />
+            </span>
+          </div>
+          <div class="form-row">
+            <label for="assistiveTechnology_ver"><abbr title="Assistive Technology">AT</abbr> Version: </label>
+            <span>
+              <input type="text" name="assistiveTechnology_ver" id="assistiveTechnology_ver" />
+            </span>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Plugin :</legend>
+        <div class="form-block">
+          <div class="form-row">
+            <label for="plugin">Plugin Name: </label>
+            <span>
+              <input type="text" name="plugin" id="plugin" />
+            </span>
+          </div>
+          <div class="form-row">
+            <label for="plugin_ver">Plugin Version: </label>
+            <span>
+              <input type="text" name="plugin_ver" id="plugin_ver" />
+            </span>
+          </div>
+        </div>
+      </fieldset>
+      <div class="form-submit">
+          <a role="button" href="#/user-profiles.html" class="btn-primary btn-next testprofileSave">Save Environment</a>
+      </div>
+
     </form>
+  </div>
 </article>

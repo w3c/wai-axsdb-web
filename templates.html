@@ -43,10 +43,20 @@
         <td><input name="testprofilesin" id="testprofile-<%= id %>" value="<%= id %>" type="radio" required></td>
         <td>
             <label for="testprofile-<%= id %>">
-                OS: <%= p.platform.name %> <%= p.assistiveTechnology.version.text %><br>
-                Browser: <%= p.userAgent.name %> <%= p.userAgent.version.text %><br>
-                Assistive Technology: <%= p.assistiveTechnology.name %> <%= p.assistiveTechnology.version.text %> <br>
-                Plugin: <%= p.plugin.name %> <%= p.plugin.version.text %>
+                <strong>
+                    <% if(p.userAgent.name) { %>
+                        Browser: <%= p.userAgent.name %> <%= p.userAgent.version.text %><br>
+                    <% } %>
+                    <% if(p.assistiveTechnology.name) { %>
+                        Assistive Technology: <%= p.assistiveTechnology.name %> <%= p.assistiveTechnology.version.text %><br>
+                    <% } %>
+                </strong>
+                <% if(p.plugin.name) { %>
+                    Plugin: <%= p.plugin.name %> <%= p.plugin.version.text %> <br>
+                <% } %>
+                <% if(p.platform.name) { %>
+                    Operating System: <%= p.platform.name %> <%= p.assistiveTechnology.version.text %>
+                <% } %>
             </label>
         </td>
     </tr>

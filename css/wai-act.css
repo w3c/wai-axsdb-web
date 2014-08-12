@@ -1182,7 +1182,7 @@ table.result-details td {
 }
 /* line 267, ../sass/wai-act.scss */
 table.result-details td.untested {
-  color: #aaa;
+  color: #666;
 }
 /* line 272, ../sass/wai-act.scss */
 table.testcase-details {
