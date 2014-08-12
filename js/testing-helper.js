@@ -115,9 +115,7 @@ accessdb.Models.TestingHelper = function (){
         progressUpdate : function (){
             var current = count + 1;
             var all = this.countMore() + count;
-            $("#axsdb-page-test-run progress").attr("max", all);
-            $("#axsdb-page-test-run progress").attr("value", current);
-            $("#axsdb-page-test-run progress").html(current + " of " + all + " Tests finished");
+            $("#axsdb-page-test-run h1 .subheading").html('Progress: ' + current + " of " + all + " Tests finished");
         }
     }
 }
