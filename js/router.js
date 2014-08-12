@@ -74,7 +74,7 @@ window.accessdb.appRouter.on('route:results-technique', function (id) {
 });
 window.accessdb.appRouter.on('route:results-test', function (id) {
     TestUnit.prototype.loadById(id, function(test){
-        $(".results-test-id").html(test.testUnitId);
+        $(".results-test-id").html(Utils.stripTestID(test.testUnitId));
         $(".results-test-title").html(test.title);
     });
     this.params.testUnitId = id;

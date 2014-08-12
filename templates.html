@@ -1,5 +1,5 @@
 <script type="text/template" id="test-details-template">
-    <h1><span class="id"><%= t.testUnitId %></span>: <%= t.title %></h1>
+    <h1><span class="id"><%= Utils.stripTestID(t.testUnitId) %></span>: <%= t.title %></h1>
     <div class="column-second">
         <div class="roleExpertsOnly admin">
             <a class="btn" href="#test-submit.html/<%= t.testUnitId %>"><span class="icon-pencil"></span> Edit Test</a>
@@ -35,7 +35,7 @@
                 </span>
             </span>
         </button>
-        <span id="<%= test.testUnitId %>"><%= test.title %> (<%= test.testUnitId %>)</span>
+        <span id="<%= test.testUnitId %>"><%= test.title %> (<%= Utils.stripTestID(test.testUnitId) %>)</span>
     </li>
 </script>
 <script type="text/template" id="user-profile-template">
@@ -99,11 +99,11 @@
 </script>
 <script type="text/template" id="test-run-template">
         <header>
-            <h2><span class="subheading">Test : <%= test.testUnitId %></span> <%= test.title %></h2>
+            <h2><span class="subheading">Test : <%= Utils.stripTestID(test.testUnitId) %></span> <%= test.title %></h2>
         </header>
         <section>
             <h3>Test Description</h3>
-            <p><%= test.testUnitId %></p>
+            <p><%= Utils.stripTestID(test.testUnitId) %></p>
         </section>
 
         <section>
@@ -278,7 +278,7 @@
                 <% first = false %>
                 <% } %>
                 <th scope="row">
-                    <%= r.testUnitId %>: <a role="button" href="#/test.html/<%= r.testUnitId %>">  <%= r.testTitle %></a> <!-- Link to test case -->
+                    <%= Utils.stripTestID(r.testUnitId) %>: <a role="button" href="#/test.html/<%= r.testUnitId %>">  <%= r.testTitle %></a> <!-- Link to test case -->
                 </th>
                 <td class="result">
                     <a role="button" href="#/results-test.html/<%= r.testUnitId %>" class="btn btn-small">
@@ -296,7 +296,7 @@
     <ul id="RelatedTestCases">
     <% _.each(results, function(r) { %>
         <li>
-            <strong><%= r.testUnitId %>:</strong> <a role="button" href="#/results-test.html/<%= r.testUnitId %>">  <%= r.testTitle %></a>
+            <strong><%= Utils.stripTestID(r.testUnitId) %>:</strong> <a role="button" href="#/results-test.html/<%= r.testUnitId %>">  <%= r.testTitle %></a>
             <a role="button" href="#/results-test.html/<%= r.testUnitId %>" class="btn btn-small">
                 <span class="chart" style="display:none"><%= r.noOfPass %>/<%= r.noOfAll %></span>
                 <%= r.noOfPass %>/<%= r.noOfAll %>
@@ -309,7 +309,7 @@
     </ul>
 </script>
 <script type="text/template" id="Results_template">
-    <h1>Test Results for <%=params.type%> <%=params.typeValue%>, <%=params.ua%> <%=params.uaVer%> with <%=params.at%> <%=params.atVer%></h1>
+    <h1>Test Results for <%=params.type%> <%=Utils.stripTestID(params.typeValue)%>, <%=params.ua%> <%=params.uaVer%> with <%=params.at%> <%=params.atVer%></h1>
     <div class="">
         <div class="column-second">
             <div id="Results"><!-- Template: Results_template --></div>
@@ -317,7 +317,7 @@
     </div>
     <% _.each(results, function(r) { %>
         <table class="testcase-details">
-            <caption><strong>Testcase:</strong> <a href="#/results-test.html/<%= r.testUnitId %>"><%= r.testUnitId %></a>: <%=r.testTitle%></caption>
+            <caption><strong>Testcase:</strong> <a href="#/results-test.html/<%= r.testUnitId %>"><%= Utils.stripTestID(r.testUnitId) %></a>: <%=r.testTitle%></caption>
             <col class="col1"> <col class="col2"> <col class="col3"> <col class="col4"> <col class="col5"> <col class="col6 admin roleAdminOnly">
             <thead>
                 <tr>
