@@ -65,11 +65,22 @@ accessdb.Models.TestingHelper = function (){
             //testIds.push(test.testUnitId);
             return this.loadNext();
         },
+        inputIsValid : function(){
+            return $(holder).find('input[name="result"]:checked').length > 0;
+
+        },
         saveAndLoadNext : function(){
-            this.prepareResult();
-            this.saveDataToSession();
-            Utils.resetForm(holder);
-            return this.loadNext();
+            if(this.inputIsValid()){
+                this.prepareResult();
+                this.saveDataToSession();
+                Utils.resetForm(holder);
+                return this.loadNext();
+            }
+            else{
+                Utils.msg2user("It seems you have not responded the question. Please try again");
+                return true;
+            }
+
         },
         saveDataToSession: function (){
             testIds = _.filter(testIds, function(item) {
