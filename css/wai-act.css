@@ -1335,17 +1335,17 @@ select {
   letter-spacing: normal;
 }
 /* line 431, ../sass/wai-act.scss */
-.btn-pills .btn, .btn-pills-full .btn, .btn-pills .alltutorials a, .alltutorials .btn-pills a, .btn-pills-full .alltutorials a, .alltutorials .btn-pills-full a, .btn-pills .btn-primary, .btn-pills-full .btn-primary, .btn-pills .btn-small, .btn-pills-full .btn-small, .btn-pills #selected .box-caption, #selected .btn-pills .box-caption, .btn-pills-full #selected .box-caption, #selected .btn-pills-full .box-caption, .btn-pills #selected figure figcaption, #selected figure .btn-pills figcaption, .btn-pills-full #selected figure figcaption, #selected figure .btn-pills-full figcaption, .btn-pills figure #selected figcaption, figure #selected .btn-pills figcaption, .btn-pills-full figure #selected figcaption, figure #selected .btn-pills-full figcaption {
+.btn-pills .btn, .btn-pills-full .btn, .btn-pills .alltutorials a, .alltutorials .btn-pills a, .btn-pills-full .alltutorials a, .alltutorials .btn-pills-full a, .btn-pills .btn-primary, .btn-pills-full .btn-primary, .btn-pills #selected .box-caption, #selected .btn-pills .box-caption, .btn-pills-full #selected .box-caption, #selected .btn-pills-full .box-caption, .btn-pills #selected figure figcaption, #selected figure .btn-pills figcaption, .btn-pills-full #selected figure figcaption, #selected figure .btn-pills-full figcaption, .btn-pills figure #selected figcaption, figure #selected .btn-pills figcaption, .btn-pills-full figure #selected figcaption, figure #selected .btn-pills-full figcaption, .btn-pills .btn-small, .btn-pills-full .btn-small {
   border-radius: 0;
   margin-left: -1px;
 }
 /* line 434, ../sass/wai-act.scss */
-.btn-pills .btn:first-child, .btn-pills-full .btn:first-child, .btn-pills .alltutorials a:first-child, .alltutorials .btn-pills a:first-child, .btn-pills-full .alltutorials a:first-child, .alltutorials .btn-pills-full a:first-child, .btn-pills .btn-primary:first-child, .btn-pills-full .btn-primary:first-child, .btn-pills .btn-small:first-child, .btn-pills-full .btn-small:first-child, .btn-pills #selected .box-caption:first-child, #selected .btn-pills .box-caption:first-child, .btn-pills-full #selected .box-caption:first-child, #selected .btn-pills-full .box-caption:first-child, .btn-pills #selected figure figcaption:first-child, #selected figure .btn-pills figcaption:first-child, .btn-pills-full #selected figure figcaption:first-child, #selected figure .btn-pills-full figcaption:first-child, .btn-pills figure #selected figcaption:first-child, figure #selected .btn-pills figcaption:first-child, .btn-pills-full figure #selected figcaption:first-child, figure #selected .btn-pills-full figcaption:first-child {
+.btn-pills .btn:first-child, .btn-pills-full .btn:first-child, .btn-pills .alltutorials a:first-child, .alltutorials .btn-pills a:first-child, .btn-pills-full .alltutorials a:first-child, .alltutorials .btn-pills-full a:first-child, .btn-pills .btn-primary:first-child, .btn-pills-full .btn-primary:first-child, .btn-pills #selected .box-caption:first-child, #selected .btn-pills .box-caption:first-child, .btn-pills-full #selected .box-caption:first-child, #selected .btn-pills-full .box-caption:first-child, .btn-pills #selected figure figcaption:first-child, #selected figure .btn-pills figcaption:first-child, .btn-pills-full #selected figure figcaption:first-child, #selected figure .btn-pills-full figcaption:first-child, .btn-pills figure #selected figcaption:first-child, figure #selected .btn-pills figcaption:first-child, .btn-pills-full figure #selected figcaption:first-child, figure #selected .btn-pills-full figcaption:first-child, .btn-pills .btn-small:first-child, .btn-pills-full .btn-small:first-child {
   margin-left: 0;
   border-radius: .25em 0 0 .25em;
 }
 /* line 438, ../sass/wai-act.scss */
-.btn-pills .btn:last-child, .btn-pills-full .btn:last-child, .btn-pills .alltutorials a:last-child, .alltutorials .btn-pills a:last-child, .btn-pills-full .alltutorials a:last-child, .alltutorials .btn-pills-full a:last-child, .btn-pills .btn-primary:last-child, .btn-pills-full .btn-primary:last-child, .btn-pills .btn-small:last-child, .btn-pills-full .btn-small:last-child, .btn-pills #selected .box-caption:last-child, #selected .btn-pills .box-caption:last-child, .btn-pills-full #selected .box-caption:last-child, #selected .btn-pills-full .box-caption:last-child, .btn-pills #selected figure figcaption:last-child, #selected figure .btn-pills figcaption:last-child, .btn-pills-full #selected figure figcaption:last-child, #selected figure .btn-pills-full figcaption:last-child, .btn-pills figure #selected figcaption:last-child, figure #selected .btn-pills figcaption:last-child, .btn-pills-full figure #selected figcaption:last-child, figure #selected .btn-pills-full figcaption:last-child {
+.btn-pills .btn:last-child, .btn-pills-full .btn:last-child, .btn-pills .alltutorials a:last-child, .alltutorials .btn-pills a:last-child, .btn-pills-full .alltutorials a:last-child, .alltutorials .btn-pills-full a:last-child, .btn-pills .btn-primary:last-child, .btn-pills-full .btn-primary:last-child, .btn-pills #selected .box-caption:last-child, #selected .btn-pills .box-caption:last-child, .btn-pills-full #selected .box-caption:last-child, #selected .btn-pills-full .box-caption:last-child, .btn-pills #selected figure figcaption:last-child, #selected figure .btn-pills figcaption:last-child, .btn-pills-full #selected figure figcaption:last-child, #selected figure .btn-pills-full figcaption:last-child, .btn-pills figure #selected figcaption:last-child, figure #selected .btn-pills figcaption:last-child, .btn-pills-full figure #selected figcaption:last-child, figure #selected .btn-pills-full figcaption:last-child, .btn-pills .btn-small:last-child, .btn-pills-full .btn-small:last-child {
   border-radius: 0 .25em .25em 0;
 }
 
@@ -1357,7 +1357,7 @@ select {
   display: flex;
 }
 /* line 446, ../sass/wai-act.scss */
-.btn-pills-full .btn, .btn-pills-full .alltutorials a, .alltutorials .btn-pills-full a, .btn-pills-full .btn-primary, .btn-pills-full .btn-small, .btn-pills-full #selected .box-caption, #selected .btn-pills-full .box-caption, .btn-pills-full #selected figure figcaption, #selected figure .btn-pills-full figcaption, .btn-pills-full figure #selected figcaption, figure #selected .btn-pills-full figcaption {
+.btn-pills-full .btn, .btn-pills-full .alltutorials a, .alltutorials .btn-pills-full a, .btn-pills-full .btn-primary, .btn-pills-full #selected .box-caption, #selected .btn-pills-full .box-caption, .btn-pills-full #selected figure figcaption, #selected figure .btn-pills-full figcaption, .btn-pills-full figure #selected figcaption, figure #selected .btn-pills-full figcaption, .btn-pills-full .btn-small {
   -webkit-box-flex: auto;
   -webkit-flex: auto;
   -ms-flex: auto;
@@ -1366,7 +1366,7 @@ select {
 }
 
 /* line 452, ../sass/wai-act.scss */
-.btn, .alltutorials a, .btn-primary, .btn-small, #selected .box-caption, #selected figure figcaption, figure #selected figcaption {
+.btn, .alltutorials a, .btn-primary, #selected .box-caption, #selected figure figcaption, figure #selected figcaption, .btn-small {
   background: -webkit-linear-gradient(top, #e6e6e6, #cccccc);
   background: -webkit-gradient(linear, left top, left bottom, from(#e6e6e6), to(#cccccc));
   background: linear-gradient(to bottom, #e6e6e6, #cccccc);
@@ -1382,14 +1382,14 @@ select {
   border-radius: .25em;
 }
 /* line 466, ../sass/wai-act.scss */
-.btn:hover, .alltutorials a:hover, .btn-primary:hover, .btn-small:hover, #selected .box-caption:hover, #selected figure figcaption:hover, figure #selected figcaption:hover, .btn:focus, .alltutorials a:focus, .btn-primary:focus, .btn-small:focus, #selected .box-caption:focus, #selected figure figcaption:focus, figure #selected figcaption:focus {
+.btn:hover, .alltutorials a:hover, .btn-primary:hover, #selected .box-caption:hover, #selected figure figcaption:hover, figure #selected figcaption:hover, .btn-small:hover, .btn:focus, .alltutorials a:focus, .btn-primary:focus, #selected .box-caption:focus, #selected figure figcaption:focus, figure #selected figcaption:focus, .btn-small:focus {
   color: #333;
   text-decoration: underline;
   -webkit-box-shadow: 0 0 6px #888;
   box-shadow: 0 0 6px #888;
 }
 /* line 471, ../sass/wai-act.scss */
-.btn small, .alltutorials a small, .btn-primary small, .btn-small small, #selected .box-caption small, #selected figure figcaption small, figure #selected figcaption small {
+.btn small, .alltutorials a small, .btn-primary small, #selected .box-caption small, #selected figure figcaption small, figure #selected figcaption small, .btn-small small {
   display: block;
   font-size: 77.77778%;
 }
@@ -1400,7 +1400,7 @@ select {
 }
 
 /* line 481, ../sass/wai-act.scss */
-.btn-primary {
+.btn-primary, #selected .box-caption, #selected figure figcaption, figure #selected figcaption {
   background: -webkit-linear-gradient(top, #004c99, #003366);
   background: -webkit-gradient(linear, left top, left bottom, from(#004c99), to(#003366));
   background: linear-gradient(to bottom, #004c99, #003366);
@@ -1408,7 +1408,7 @@ select {
   border-color: #001933;
 }
 /* line 486, ../sass/wai-act.scss */
-.btn-primary:hover, .btn-primary:focus {
+.btn-primary:hover, #selected .box-caption:hover, #selected figure figcaption:hover, figure #selected figcaption:hover, .btn-primary:focus, #selected .box-caption:focus, #selected figure figcaption:focus, figure #selected figcaption:focus {
   color: #fff;
   text-decoration: underline;
 }
@@ -1420,7 +1420,7 @@ select {
 }
 
 /* line 498, ../sass/wai-act.scss */
-.btn-icon, .results button, .results .result .btn, .results .result .alltutorials a, .alltutorials .results .result a, .results .result .btn-primary, .results .result .btn-small, .results .result #selected .box-caption, #selected .results .result .box-caption, .results .result #selected figure figcaption, #selected figure .results .result figcaption, .results .result figure #selected figcaption, figure #selected .results .result figcaption {
+.btn-icon, .results button, .results .result .btn, .results .result .alltutorials a, .alltutorials .results .result a, .results .result .btn-primary, .results .result #selected .box-caption, #selected .results .result .box-caption, .results .result #selected figure figcaption, #selected figure .results .result figcaption, .results .result figure #selected figcaption, figure #selected .results .result figcaption, .results .result .btn-small {
   border: none;
   background-color: transparent;
   padding: 0;
@@ -2329,14 +2329,14 @@ footer h2.focusable:focus {
   display: none;
 }
 /* line 264, ../sass/_asd.scss */
-.results .result .btn, .results .result .alltutorials a, .alltutorials .results .result a, .results .result .btn-primary, .results .result .btn-small, .results .result #selected .box-caption, #selected .results .result .box-caption, .results .result #selected figure figcaption, #selected figure .results .result figcaption, .results .result figure #selected figcaption, figure #selected .results .result figcaption {
+.results .result .btn, .results .result .alltutorials a, .alltutorials .results .result a, .results .result .btn-primary, .results .result #selected .box-caption, #selected .results .result .box-caption, .results .result #selected figure figcaption, #selected figure .results .result figcaption, .results .result figure #selected figcaption, figure #selected .results .result figcaption, .results .result .btn-small {
   display: block;
   position: relative;
   padding: .15em 1.5em .15em .2em;
   white-space: nowrap;
 }
 /* line 270, ../sass/_asd.scss */
-.results .result .btn > span, .results .result .alltutorials a > span, .alltutorials .results .result a > span, .results .result .btn-primary > span, .results .result .btn-small > span, .results .result #selected .box-caption > span, #selected .results .result .box-caption > span, .results .result #selected figure figcaption > span, #selected figure .results .result figcaption > span, .results .result figure #selected figcaption > span, figure #selected .results .result figcaption > span {
+.results .result .btn > span, .results .result .alltutorials a > span, .alltutorials .results .result a > span, .results .result .btn-primary > span, .results .result #selected .box-caption > span, #selected .results .result .box-caption > span, .results .result #selected figure figcaption > span, #selected figure .results .result figcaption > span, .results .result figure #selected figcaption > span, figure #selected .results .result figcaption > span, .results .result .btn-small > span {
   position: absolute;
   right: 0.2em;
 }
