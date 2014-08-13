@@ -1335,17 +1335,17 @@ select {
   letter-spacing: normal;
 }
 /* line 431, ../sass/wai-act.scss */
-.btn-pills .btn, .btn-pills-full .btn, .btn-pills .alltutorials a, .alltutorials .btn-pills a, .btn-pills-full .alltutorials a, .alltutorials .btn-pills-full a, .btn-pills .btn-primary, .btn-pills-full .btn-primary, .btn-pills .btn-small, .btn-pills-full .btn-small {
+.btn-pills .btn, .btn-pills-full .btn, .btn-pills .alltutorials a, .alltutorials .btn-pills a, .btn-pills-full .alltutorials a, .alltutorials .btn-pills-full a, .btn-pills .btn-primary, .btn-pills-full .btn-primary, .btn-pills .btn-small, .btn-pills-full .btn-small, .btn-pills #selected .box-caption, #selected .btn-pills .box-caption, .btn-pills-full #selected .box-caption, #selected .btn-pills-full .box-caption, .btn-pills #selected figure figcaption, #selected figure .btn-pills figcaption, .btn-pills-full #selected figure figcaption, #selected figure .btn-pills-full figcaption, .btn-pills figure #selected figcaption, figure #selected .btn-pills figcaption, .btn-pills-full figure #selected figcaption, figure #selected .btn-pills-full figcaption {
   border-radius: 0;
   margin-left: -1px;
 }
 /* line 434, ../sass/wai-act.scss */
-.btn-pills .btn:first-child, .btn-pills-full .btn:first-child, .btn-pills .alltutorials a:first-child, .alltutorials .btn-pills a:first-child, .btn-pills-full .alltutorials a:first-child, .alltutorials .btn-pills-full a:first-child, .btn-pills .btn-primary:first-child, .btn-pills-full .btn-primary:first-child, .btn-pills .btn-small:first-child, .btn-pills-full .btn-small:first-child {
+.btn-pills .btn:first-child, .btn-pills-full .btn:first-child, .btn-pills .alltutorials a:first-child, .alltutorials .btn-pills a:first-child, .btn-pills-full .alltutorials a:first-child, .alltutorials .btn-pills-full a:first-child, .btn-pills .btn-primary:first-child, .btn-pills-full .btn-primary:first-child, .btn-pills .btn-small:first-child, .btn-pills-full .btn-small:first-child, .btn-pills #selected .box-caption:first-child, #selected .btn-pills .box-caption:first-child, .btn-pills-full #selected .box-caption:first-child, #selected .btn-pills-full .box-caption:first-child, .btn-pills #selected figure figcaption:first-child, #selected figure .btn-pills figcaption:first-child, .btn-pills-full #selected figure figcaption:first-child, #selected figure .btn-pills-full figcaption:first-child, .btn-pills figure #selected figcaption:first-child, figure #selected .btn-pills figcaption:first-child, .btn-pills-full figure #selected figcaption:first-child, figure #selected .btn-pills-full figcaption:first-child {
   margin-left: 0;
   border-radius: .25em 0 0 .25em;
 }
 /* line 438, ../sass/wai-act.scss */
-.btn-pills .btn:last-child, .btn-pills-full .btn:last-child, .btn-pills .alltutorials a:last-child, .alltutorials .btn-pills a:last-child, .btn-pills-full .alltutorials a:last-child, .alltutorials .btn-pills-full a:last-child, .btn-pills .btn-primary:last-child, .btn-pills-full .btn-primary:last-child, .btn-pills .btn-small:last-child, .btn-pills-full .btn-small:last-child {
+.btn-pills .btn:last-child, .btn-pills-full .btn:last-child, .btn-pills .alltutorials a:last-child, .alltutorials .btn-pills a:last-child, .btn-pills-full .alltutorials a:last-child, .alltutorials .btn-pills-full a:last-child, .btn-pills .btn-primary:last-child, .btn-pills-full .btn-primary:last-child, .btn-pills .btn-small:last-child, .btn-pills-full .btn-small:last-child, .btn-pills #selected .box-caption:last-child, #selected .btn-pills .box-caption:last-child, .btn-pills-full #selected .box-caption:last-child, #selected .btn-pills-full .box-caption:last-child, .btn-pills #selected figure figcaption:last-child, #selected figure .btn-pills figcaption:last-child, .btn-pills-full #selected figure figcaption:last-child, #selected figure .btn-pills-full figcaption:last-child, .btn-pills figure #selected figcaption:last-child, figure #selected .btn-pills figcaption:last-child, .btn-pills-full figure #selected figcaption:last-child, figure #selected .btn-pills-full figcaption:last-child {
   border-radius: 0 .25em .25em 0;
 }
 
@@ -1357,7 +1357,7 @@ select {
   display: flex;
 }
 /* line 446, ../sass/wai-act.scss */
-.btn-pills-full .btn, .btn-pills-full .alltutorials a, .alltutorials .btn-pills-full a, .btn-pills-full .btn-primary, .btn-pills-full .btn-small {
+.btn-pills-full .btn, .btn-pills-full .alltutorials a, .alltutorials .btn-pills-full a, .btn-pills-full .btn-primary, .btn-pills-full .btn-small, .btn-pills-full #selected .box-caption, #selected .btn-pills-full .box-caption, .btn-pills-full #selected figure figcaption, #selected figure .btn-pills-full figcaption, .btn-pills-full figure #selected figcaption, figure #selected .btn-pills-full figcaption {
   -webkit-box-flex: auto;
   -webkit-flex: auto;
   -ms-flex: auto;
@@ -1366,7 +1366,7 @@ select {
 }
 
 /* line 452, ../sass/wai-act.scss */
-.btn, .alltutorials a, .btn-primary, .btn-small {
+.btn, .alltutorials a, .btn-primary, .btn-small, #selected .box-caption, #selected figure figcaption, figure #selected figcaption {
   background: -webkit-linear-gradient(top, #e6e6e6, #cccccc);
   background: -webkit-gradient(linear, left top, left bottom, from(#e6e6e6), to(#cccccc));
   background: linear-gradient(to bottom, #e6e6e6, #cccccc);
@@ -1382,14 +1382,14 @@ select {
   border-radius: .25em;
 }
 /* line 466, ../sass/wai-act.scss */
-.btn:hover, .alltutorials a:hover, .btn-primary:hover, .btn-small:hover, .btn:focus, .alltutorials a:focus, .btn-primary:focus, .btn-small:focus {
+.btn:hover, .alltutorials a:hover, .btn-primary:hover, .btn-small:hover, #selected .box-caption:hover, #selected figure figcaption:hover, figure #selected figcaption:hover, .btn:focus, .alltutorials a:focus, .btn-primary:focus, .btn-small:focus, #selected .box-caption:focus, #selected figure figcaption:focus, figure #selected figcaption:focus {
   color: #333;
   text-decoration: underline;
   -webkit-box-shadow: 0 0 6px #888;
   box-shadow: 0 0 6px #888;
 }
 /* line 471, ../sass/wai-act.scss */
-.btn small, .alltutorials a small, .btn-primary small, .btn-small small {
+.btn small, .alltutorials a small, .btn-primary small, .btn-small small, #selected .box-caption small, #selected figure figcaption small, figure #selected figcaption small {
   display: block;
   font-size: 77.77778%;
 }
@@ -1420,7 +1420,7 @@ select {
 }
 
 /* line 498, ../sass/wai-act.scss */
-.btn-icon, .results button, .results .result .btn, .results .result .alltutorials a, .alltutorials .results .result a, .results .result .btn-primary, .results .result .btn-small {
+.btn-icon, .results button, .results .result .btn, .results .result .alltutorials a, .alltutorials .results .result a, .results .result .btn-primary, .results .result .btn-small, .results .result #selected .box-caption, #selected .results .result .box-caption, .results .result #selected figure figcaption, #selected figure .results .result figcaption, .results .result figure #selected figcaption, figure #selected .results .result figcaption {
   border: none;
   background-color: transparent;
   padding: 0;
@@ -2111,30 +2111,51 @@ footer h2.focusable:focus {
   float: right;
 }
 
-/* line 91, ../sass/_asd.scss */
-#selected button {
-  margin-top: 1em;
+/* line 90, ../sass/_asd.scss */
+#selected {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  float: left;
+  margin-top: 0;
+  border: none;
 }
-/* line 92, ../sass/_asd.scss */
+/* line 96, ../sass/_asd.scss */
+#selected span.icon-triangle-right, #selected span.icon-triangle-down {
+  font-size: 1.5em;
+  vertical-align: middle;
+}
+/* line 103, ../sass/_asd.scss */
+#selected .box-content, #selected figure .figcontent, figure #selected .figcontent {
+  border: 1px solid #036;
+  background-color: #F5F5F5;
+}
+/* line 107, ../sass/_asd.scss */
+#selected.sticky {
+  -webkit-box-shadow: 0 0 10px rgba(51, 51, 51, 0.4);
+  box-shadow: 0 0 10px rgba(51, 51, 51, 0.4);
+}
+/* line 110, ../sass/_asd.scss */
 #selected + * {
   clear: both;
 }
 
-/* line 95, ../sass/_asd.scss */
+/* line 113, ../sass/_asd.scss */
 .ui-radio {
   overflow: hidden;
   border-top: 1px solid #ccc;
 }
-/* line 98, ../sass/_asd.scss */
+/* line 116, ../sass/_asd.scss */
 .ui-radio:first-child {
   border-top: none;
 }
-/* line 101, ../sass/_asd.scss */
+/* line 119, ../sass/_asd.scss */
 .ui-radio .ui-btn-inner {
   display: block;
 }
 
-/* line 106, ../sass/_asd.scss */
+/* line 124, ../sass/_asd.scss */
 .timeline {
   display: -webkit-box;
   display: -webkit-flex;
@@ -2145,7 +2166,7 @@ footer h2.focusable:focus {
   counter-reset: timeline;
   overflow: hidden;
 }
-/* line 112, ../sass/_asd.scss */
+/* line 130, ../sass/_asd.scss */
 .timeline li {
   counter-increment: timeline;
   -webkit-box-flex: 1;
@@ -2159,7 +2180,7 @@ footer h2.focusable:focus {
   background-color: #eef;
   border-left: 1px solid #ccc;
 }
-/* line 121, ../sass/_asd.scss */
+/* line 139, ../sass/_asd.scss */
 .timeline li:after {
   left: 0;
   top: 50%;
@@ -2175,28 +2196,28 @@ footer h2.focusable:focus {
   margin-top: -20px;
 }
 @media screen and (min-width: 43em) {
-  /* line 121, ../sass/_asd.scss */
+  /* line 139, ../sass/_asd.scss */
   .timeline li:after {
     border-width: 40px;
     margin-top: -40px;
   }
 }
-/* line 128, ../sass/_asd.scss */
+/* line 146, ../sass/_asd.scss */
 .timeline li:first-child {
   border-left: none;
 }
-/* line 130, ../sass/_asd.scss */
+/* line 148, ../sass/_asd.scss */
 .timeline li:first-child:after {
   display: none;
 }
-/* line 134, ../sass/_asd.scss */
+/* line 152, ../sass/_asd.scss */
 .timeline li a, .timeline li > span {
   z-index: 100;
   position: relative;
   display: block;
   color: #555;
 }
-/* line 139, ../sass/_asd.scss */
+/* line 157, ../sass/_asd.scss */
 .timeline li a:before, .timeline li > span:before {
   display: inline-block;
   color: #555;
@@ -2208,25 +2229,25 @@ footer h2.focusable:focus {
   line-height: 2;
   border-radius: 50%;
 }
-/* line 150, ../sass/_asd.scss */
+/* line 168, ../sass/_asd.scss */
 .timeline li a > span, .timeline li > span > span {
   display: block;
 }
-/* line 155, ../sass/_asd.scss */
+/* line 173, ../sass/_asd.scss */
 .timeline li.timeline-current > span, .timeline li.timeline-current a {
   color: #036;
 }
-/* line 157, ../sass/_asd.scss */
+/* line 175, ../sass/_asd.scss */
 .timeline li.timeline-current > span:before, .timeline li.timeline-current a:before {
   color: #fff;
   background-color: #036;
   border-color: #036;
 }
-/* line 164, ../sass/_asd.scss */
+/* line 182, ../sass/_asd.scss */
 .timeline li.timeline-past {
   background-color: #ccc;
 }
-/* line 167, ../sass/_asd.scss */
+/* line 185, ../sass/_asd.scss */
 .timeline li.timeline-past a:before, .timeline li.timeline-past > span:before {
   color: green;
   content: "\e61a";
@@ -2244,12 +2265,12 @@ footer h2.focusable:focus {
   -webkit-transition: all .5s ease-in;
   transition: all .5s ease-in;
 }
-/* line 197, ../sass/_asd.scss */
+/* line 215, ../sass/_asd.scss */
 .timeline .icon-ok-sign {
   color: green;
 }
 
-/* line 202, ../sass/_asd.scss */
+/* line 220, ../sass/_asd.scss */
 .steps, .form-submit {
   overflow: hidden;
   background: -webkit-gradient(linear, left top, left bottom, from(rgba(213, 213, 213, 0)), to(#d5d5d5));
@@ -2260,140 +2281,158 @@ footer h2.focusable:focus {
   margin-bottom: 2em;
 }
 
-/* line 210, ../sass/_asd.scss */
+/* line 228, ../sass/_asd.scss */
 .bigthanks {
   color: green;
   text-align: center;
 }
-/* line 213, ../sass/_asd.scss */
+/* line 231, ../sass/_asd.scss */
 .bigthanks span {
   font-size: 3em;
   vertical-align: middle;
   margin-right: 0.25em;
 }
 
-/* line 220, ../sass/_asd.scss */
+/* line 238, ../sass/_asd.scss */
 .results button {
   display: inline-block;
 }
 
-/* line 226, ../sass/_asd.scss */
+/* line 244, ../sass/_asd.scss */
 .results .col1 {
   width: 1em;
 }
-/* line 227, ../sass/_asd.scss */
+/* line 245, ../sass/_asd.scss */
 .results .col2 {
   width: 4.5em;
 }
-/* line 228, ../sass/_asd.scss */
+/* line 246, ../sass/_asd.scss */
 .results .col3 {
   width: 23em;
 }
-/* line 229, ../sass/_asd.scss */
+/* line 247, ../sass/_asd.scss */
 .results .col4 {
   width: 5em;
 }
-/* line 231, ../sass/_asd.scss */
+/* line 249, ../sass/_asd.scss */
 .results tbody th, .results tbody .liketh {
   background-color: #eee;
   vertical-align: top;
 }
-/* line 235, ../sass/_asd.scss */
+/* line 253, ../sass/_asd.scss */
 .results tbody th a {
   font-weight: normal;
   color: inherit;
 }
-/* line 240, ../sass/_asd.scss */
+/* line 258, ../sass/_asd.scss */
 .results tbody.collapsed + .testcases {
   display: none;
 }
-/* line 246, ../sass/_asd.scss */
-.results .result .btn, .results .result .alltutorials a, .alltutorials .results .result a, .results .result .btn-primary, .results .result .btn-small {
+/* line 264, ../sass/_asd.scss */
+.results .result .btn, .results .result .alltutorials a, .alltutorials .results .result a, .results .result .btn-primary, .results .result .btn-small, .results .result #selected .box-caption, #selected .results .result .box-caption, .results .result #selected figure figcaption, #selected figure .results .result figcaption, .results .result figure #selected figcaption, figure #selected .results .result figcaption {
   display: block;
   position: relative;
   padding: .15em 1.5em .15em .2em;
   white-space: nowrap;
 }
-/* line 252, ../sass/_asd.scss */
-.results .result .btn > span, .results .result .alltutorials a > span, .alltutorials .results .result a > span, .results .result .btn-primary > span, .results .result .btn-small > span {
+/* line 270, ../sass/_asd.scss */
+.results .result .btn > span, .results .result .alltutorials a > span, .alltutorials .results .result a > span, .results .result .btn-primary > span, .results .result .btn-small > span, .results .result #selected .box-caption > span, #selected .results .result .box-caption > span, .results .result #selected figure figcaption > span, #selected figure .results .result figcaption > span, .results .result figure #selected figcaption > span, figure #selected .results .result figcaption > span {
   position: absolute;
   right: 0.2em;
 }
 
-/* line 260, ../sass/_asd.scss */
+/* line 278, ../sass/_asd.scss */
 .empty {
   border-bottom-width: 0;
   border-top: none;
 }
-/* line 263, ../sass/_asd.scss */
+/* line 281, ../sass/_asd.scss */
 tr:last-child .empty {
   border-bottom-width: 1px;
 }
 
-/* line 268, ../sass/_asd.scss */
+/* line 286, ../sass/_asd.scss */
 .admin {
   background-color: #Fd9;
 }
 
-/* line 272, ../sass/_asd.scss */
+/* line 290, ../sass/_asd.scss */
 div.admin {
   padding: .5em;
 }
 
-/* line 277, ../sass/_asd.scss */
+/* line 295, ../sass/_asd.scss */
 .environments .col1 {
   width: 1em;
   text-align: right;
 }
-/* line 278, ../sass/_asd.scss */
+/* line 296, ../sass/_asd.scss */
 .environments .col2 {
   width: 20em;
 }
-/* line 279, ../sass/_asd.scss */
+/* line 297, ../sass/_asd.scss */
 .environments .col3 {
   width: 7em;
   text-align: center;
 }
-/* line 280, ../sass/_asd.scss */
+/* line 298, ../sass/_asd.scss */
 .environments .editcol {
   white-space: nowrap;
 }
-/* line 281, ../sass/_asd.scss */
+/* line 299, ../sass/_asd.scss */
 .environments td {
   vertical-align: top;
 }
-/* line 283, ../sass/_asd.scss */
+/* line 301, ../sass/_asd.scss */
 .environments td:first-child {
   text-align: right;
 }
 
-/* line 289, ../sass/_asd.scss */
+/* line 307, ../sass/_asd.scss */
 .box-note {
   margin-bottom: 2em;
 }
 
-/* line 294, ../sass/_asd.scss */
+/* line 312, ../sass/_asd.scss */
 #test-form-resourceFiles li, #test-form-steps li {
   margin-bottom: 0.25em;
 }
 
-/* line 299, ../sass/_asd.scss */
+/* line 317, ../sass/_asd.scss */
 a.removeFields, a.addMoreFields {
   text-decoration: none;
 }
 
-/* line 303, ../sass/_asd.scss */
+/* line 321, ../sass/_asd.scss */
 .infobox {
   margin-bottom: 1em;
   font-size: .8em;
 }
-/* line 307, ../sass/_asd.scss */
+/* line 325, ../sass/_asd.scss */
 .infobox h3 {
   font-size: 1em;
   margin: 0;
   font-weight: bold;
 }
-/* line 313, ../sass/_asd.scss */
+/* line 331, ../sass/_asd.scss */
 .infobox p {
   margin-top: 0;
+}
+
+/* line 1, ../sass/modules/_sticky.scss */
+.sticky_decoy.invisible {
+  display: none !important;
+}
+
+/* line 5, ../sass/modules/_sticky.scss */
+.sticky {
+  position: fixed;
+  top: 0px;
+}
+
+/* line 10, ../sass/modules/_sticky.scss */
+.sticky_bottom {
+  position: absolute;
+  bottom: 0px;
+  top: auto;
 }

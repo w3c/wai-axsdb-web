@@ -1,3 +1,71 @@
+function makeSticky($dom) {
+    $dom.each(function() {
+        var $dom = $(this);
+
+        //make a record of the original offset of the element
+        var origOffset = $dom.offset();
+        var origOuterHeight = $dom.outerHeight();
+        var origPos = $dom.position();
+
+        var origHeight = $dom.height();
+        var origWidth = $dom.width();
+
+        var $parent = $dom.parent();
+
+        //the dom sticks to the sides of the screen during scrolling if the viewport is scrolled beyond the visibility of the dom
+        //its maximum scroll amount is contained in its parent or another provided dom element so that it sticks to its parent element
+        //we use a empty object decoy to replace the original dom element and then layer the original on top so other inline elements are not affected by the change of dom layout
+        //so this can be called very simply on a dom element
+        var $decoy = $('<div class="sticky_decoy invisible"></div>');
+        $decoy.css({
+            width: $dom.outerWidth(true),
+            height: $dom.outerHeight(true),
+            top: $dom.position().top,
+            left: $dom.position().left,
+            display: $dom.css("display"),
+            position: $dom.css("position"),
+            float: $dom.css("float"),
+            clear: $dom.css("clear")
+        });
+
+        $dom.before($decoy);
+
+        $(window).on("scroll resize", handleScroll);
+        handleScroll();
+
+        function handleScroll() {
+            var scrollPos = {top: $(window).scrollTop(), left: $(window).scrollLeft() };
+
+            var slideDown = scrollPos.top > origOffset.top, stayDown = scrollPos.top + origOuterHeight > $parent.offset().top + $parent.height();
+
+            if (slideDown && !stayDown) {
+                if (!$dom.hasClass("sticky")) {
+                    $decoy.removeClass("invisible");
+                    $dom.addClass("sticky");
+
+                    window.setTimeout(function() {
+                        console.log({width: $decoy.outerWidth(true), height: $decoy.outerHeight(true), left: $decoy.offset().left});
+                        $dom.css({width: origWidth, left: $decoy.offset().left});
+                    }, 0);
+                }
+            } else {
+                $dom.attr("style" ,"").removeClass("sticky");
+                $decoy.addClass("invisible");
+            }
+
+            //stick the element to the bottom of the parent if the elements position is overthe original
+            if (stayDown) {
+                $decoy.removeClass("invisible");
+                $dom.removeClass("sticky").attr("style" ,"").css({left: origPos.left}).addClass("sticky_bottom");
+            } else {
+                if (!$dom.hasClass('sticky')) {
+                    $dom.attr("style", "").removeClass("sticky_bottom");
+                }
+            }
+        }
+    });
+}
+
 $(document).ready(function () {
     $('.input-search').on('keyup', function () {
         var val = $(this).val(),
@@ -52,18 +120,20 @@ $(document).ready(function () {
     });
 
     var toggleBox = function (btn) {
-        $(btn).parent().find('.box-content').toggle('slow');
+        $(btn).parent().find('.box-content').toggle();
         var n = $(btn).parent().find('.box-content li').length;
         if ($(btn).text().indexOf('show') > 0) {
             $(".inqueueshowhide").text('hide');
+            $(btn).parent().find(".icon-triangle-right").removeClass('icon-triangle-right').addClass('icon-triangle-down');
         } else {
             $(".inqueueshowhide").text('show');
+            $(btn).parent().find(".icon-triangle-down").removeClass('icon-triangle-down').addClass('icon-triangle-right');
         }
     }
 
 
     $('.box-collapsed .box-content').hide();
-    $('.box-collapsible .box-caption').attr('tabindex', 0).attr('role', 'button').on('click', function () {
+    $('.box-collapsible .box-caption').css("cursor", "pointer").attr('tabindex', 0).attr('role', 'button').on('click', function () {
         toggleBox(this);
     }).on("keyup", function(event) {
         if ( event.which == 13 ) {

@@ -198,6 +198,7 @@ window.accessdb.appRouter.on('route:tests-run', function () {
     accessdb.TreeHelper.loadTrees(null, function(){
         TestUnit.loadTestsTree();
     });
+    makeSticky($('#selected'));
 });
 window.accessdb.appRouter.on('route:tests-run-submit', function () {
     window.accessdb.appRouter.loadPage("tests-run-submit");
