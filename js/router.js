@@ -217,7 +217,6 @@ window.accessdb.appRouter.loadPage = function(id){
     $("article").hide();
     this.page = accessdb.config.PAGE_ID_PREFIX + id;
     $("#"+this.page).show();
-
     var pageheading = "";
     if (!(this.page === "axsdb-page-home")) {
         pageheading = $("#"+this.page+" h1");
@@ -229,6 +228,9 @@ window.accessdb.appRouter.loadPage = function(id){
         $("title").text('Accessibility Support Database');
     }
     Utils.UIRoleAdapt();
+    $("#"+this.page+ " h1:first" ).attr('tabindex', '-1').focus();
+    console.log("focus to: " + document.activeElement.localName);
+
 };
 window.accessdb.appRouter.redirect = function(page){
     window.location.href = "#/" + page;
