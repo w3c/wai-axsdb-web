@@ -83,7 +83,7 @@
         processData = processDatafn;
         return $('<ul />').
             append($.map(json, createTreeNode)).
-            treevue();
+            treevue({useAria: false});
     };
 
 }(jQuery));
