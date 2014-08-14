@@ -38,11 +38,11 @@
                 box.attr('data-type', 'subselector');
             }
 
-            $('<label />').text(data.label).attr('for', boxId).appendTo(liNode);
+            $('<label />').text(data.label + ' ').attr('for', boxId).appendTo(liNode);
             //FIXME : remove from here
             if(data.type == "TestUnitDescription")
             {
-                $('<a />').text(" test details").attr('href', "#/test.html/"+data.value).attr("class", "btn-small").appendTo(liNode);
+                $('<a />').html('<span class="icon-info"></span><span class="visuallyhidden">Test Details</span>').attr('href', "#/test.html/"+data.value).attr("class", "btn-small").attr("title", "Test Details").appendTo(liNode);
             }
 
         } else { // No checkbox, just add text
