@@ -13,38 +13,6 @@
     <link rel="stylesheet" href="css/codemirror.css" />
 
     <script type="text/javascript" src="js/lib/modernizr.min.js"></script>
-    <script type="text/javascript" src="js/lib/underscore-min.js"></script>
-    <script type="text/javascript" src="js/lib/jquery-2.1.0.min.js"></script>
-    <script src="js/lib/codemirror/codemirror.js"></script>
-    <script src="js/lib/codemirror/xml.js"></script>
-    <script src="js/lib/codemirror/javascript.js"></script>
-    <script src="js/lib/codemirror/css.js"></script>
-    <script src="js/lib/codemirror/vbscript.js"></script>
-    <script src="js/lib/codemirror/htmlmixed.js"></script>
-    <script type="text/javascript" src="js/lib/jquery.multiFieldExtender-2.0.js"></script>
-
-    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/lib/jquery.form.js"></script>
-    <script type="text/javascript" src="js/lib/backbone-min.js"></script>
-    <script type="text/javascript" src="js/lib/jquery.treevue.js"></script>
-    <script type="text/javascript" src="js/lib/jquery.treevue.export.js"></script>
-    <script type="text/javascript" src="js/lib/jquery.treevue.import.js"></script>
-    <script type="text/javascript" src="js/lib/jquery.peity.min.js"></script>
-    <script type="text/javascript" src="js/lib/async.js"></script>
-    <script type="text/javascript" src="js/accessdb.js"></script>
-    <script type="text/javascript" src="js/utils.js"></script>
-    <script type="text/javascript" src="js/API.js"></script>
-    <script type="text/javascript" src="js/testing-session.js"></script>
-    <script type="text/javascript" src="js/tree-helper.js"></script>
-    <script type="text/javascript" src="js/testunit.js"></script>
-    <script type="text/javascript" src="js/testingprofile.js"></script>
-    <script type="text/javascript" src="js/header.js"></script>
-    <script type="text/javascript" src="js/testing-helper.js"></script>
-    <script type="text/javascript" src="js/testresult.js"></script>
-    <script type="text/javascript" src="js/testresult-views.js"></script>
-    <script type="text/javascript" src="js/code.js"></script>
-    <script type="text/javascript" src="js/admin.js"></script>
-    <script type="text/javascript" src="js/mockup.js"></script>
 </head>
 <body class="axsdb">
 <header role="banner">
@@ -92,7 +60,40 @@
 </footer>
 <?php include "templates.html"; ?>
 
-<script type="text/javascript" src="js/router.js"></script>
-<script type="text/javascript" src="js/main.js"></script>
-</body>
+        <script type="text/javascript" src="js/lib/underscore-min.js"></script>
+        <script type="text/javascript" src="js/lib/jquery-2.1.0.min.js"></script>
+        <script src="js/lib/codemirror/codemirror.js"></script>
+        <script src="js/lib/codemirror/xml.js"></script>
+        <script src="js/lib/codemirror/javascript.js"></script>
+        <script src="js/lib/codemirror/css.js"></script>
+        <script src="js/lib/codemirror/vbscript.js"></script>
+        <script src="js/lib/codemirror/htmlmixed.js"></script>
+        <script type="text/javascript" src="js/lib/jquery.multiFieldExtender-2.0.js"></script>
+
+        <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <script type="text/javascript" charset="utf-8" src="js/lib/jquery.form.js"></script>
+        <script type="text/javascript" src="js/lib/backbone-min.js"></script>
+        <script type="text/javascript" src="js/lib/jquery.treevue.js"></script>
+        <script type="text/javascript" src="js/lib/jquery.treevue.export.js"></script>
+        <script type="text/javascript" src="js/lib/jquery.treevue.import.js"></script>
+        <script type="text/javascript" src="js/lib/jquery.peity.min.js"></script>
+        <script type="text/javascript" src="js/lib/async.js"></script>
+        <script type="text/javascript" src="js/accessdb.js"></script>
+        <script type="text/javascript" src="js/utils.js"></script>
+        <script type="text/javascript" src="js/API.js"></script>
+        <script type="text/javascript" src="js/testing-session.js"></script>
+        <script type="text/javascript" src="js/tree-helper.js"></script>
+        <script type="text/javascript" src="js/testunit.js"></script>
+        <script type="text/javascript" src="js/testingprofile.js"></script>
+        <script type="text/javascript" src="js/header.js"></script>
+        <script type="text/javascript" src="js/testing-helper.js"></script>
+        <script type="text/javascript" src="js/testresult.js"></script>
+        <script type="text/javascript" src="js/testresult-views.js"></script>
+        <script type="text/javascript" src="js/code.js"></script>
+        <script type="text/javascript" src="js/admin.js"></script>
+        <script type="text/javascript" src="js/mockup.js"></script>
+
+        <script type="text/javascript" src="js/router.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+    </body>
 </html>
