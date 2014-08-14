@@ -20,12 +20,12 @@
         <a href="/"><img src="img/w3c.png" alt="W3C" width="90"></a>
         <a href="/WAI/" class="wai"><img src="img/wai.png" alt="Web Accessibility Initiative"></a>
     </div>
-</header>
-<main role="main" aria-live="assertive">
     <div class="page-title">
         Accessibility Support Database
         <span class="subheading"><span class="unapproved">Unapproved Prototype</span></span>
     </div>
+</header>
+<main role="main" aria-live="assertive">
     <div role="alert" id="msg2user" title="Feedback dialog"></div>
 
 <?php

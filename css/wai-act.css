@@ -632,19 +632,20 @@ header[role=banner] a:hover, header[role=banner] a:focus {
   margin-bottom: 1em;
   line-height: 1;
   padding: .25em 0 0;
+  float: none;
 }
-/* line 29, ../sass/modules/_header.scss */
+/* line 30, ../sass/modules/_header.scss */
 .page-title .subheading {
   padding: .25em 0 0;
   display: block;
   font-size: .5em;
 }
-/* line 35, ../sass/modules/_header.scss */
+/* line 36, ../sass/modules/_header.scss */
 .page-title a {
   color: inherit;
   text-decoration: none;
 }
-/* line 38, ../sass/modules/_header.scss */
+/* line 39, ../sass/modules/_header.scss */
 .page-title a:hover, .page-title a:focus {
   text-decoration: underline;
 }
@@ -654,7 +655,6 @@ main, footer > div {
   display: block;
   width: 99%;
   margin: 0 0.5%;
-  overflow: hidden;
   padding: 1em 0;
 }
 
