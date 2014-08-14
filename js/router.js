@@ -228,7 +228,9 @@ window.accessdb.appRouter.loadPage = function(id){
         $("title").text('Accessibility Support Database');
     }
     Utils.UIRoleAdapt();
-    $("#"+this.page+ " h1:first" ).focus();
+    $("#"+this.page+ " h1:first" ).attr('tabindex', '-1').focus();
+    console.log("focus to: " + document.activeElement.localName);
+
 };
 window.accessdb.appRouter.redirect = function(page){
     window.location.href = "#/" + page;
