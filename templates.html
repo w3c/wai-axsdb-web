@@ -278,7 +278,7 @@
                 <% first = false %>
                 <% } %>
                 <th scope="row">
-                    <%= Utils.stripTestID(r.testUnitId) %>: <a role="button" href="#/test.html/<%= r.testUnitId %>">  <%= r.testTitle %></a> <!-- Link to test case -->
+                    <%= Utils.stripTestID(r.testUnitId) %>: <a href="#/test.html/<%= r.testUnitId %>"><%= r.testTitle %></a> <!-- Link to test case -->
                 </th>
                 <td class="result">
                     <a role="button" href="#/results-test.html/<%= r.testUnitId %>" class="btn btn-small">
