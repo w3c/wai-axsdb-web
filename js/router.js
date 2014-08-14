@@ -217,7 +217,7 @@ window.accessdb.appRouter.loadPage = function(id){
     $("article").hide();
     this.page = accessdb.config.PAGE_ID_PREFIX + id;
     $("#"+this.page).show();
-
+    $("#"+this.page+ " h1:first" ).focus();
     var pageheading = "";
     if (!(this.page === "axsdb-page-home")) {
         pageheading = $("#"+this.page+" h1");
