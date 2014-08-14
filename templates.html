@@ -99,14 +99,14 @@
 </script>
 <script type="text/template" id="test-run-template">
         <header>
-            <h2><span class="subheading">Test : <%= Utils.stripTestID(test.testUnitId) %></span> <%= test.title %></h2>
+            <h2><strong>Test: <%= Utils.stripTestID(test.testUnitId) %></strong> – <%= test.title %></h2>
         </header>
-        <section>
+        <section class="testsection">
             <h3>Test Description</h3>
             <p><%= test.description %></p>
         </section>
 
-        <section>
+        <section class="testsection">
             <h3>Test Procedure</h3>
             <ol>
                 <% _.each(test.testProcedure.steps, function(s) { %>
@@ -115,20 +115,20 @@
             </ol>
         </section>
 
-        <section>
+        <section class="testsection">
             <h3>Test File(s)</h3>
-            <a href="<%= test.testFile %>" class="btn" target="_blank">Open test file <span class="icon-new-window"><span class="visuallyhidden">in a new window</span></span></a>
+            <p><a href="<%= test.testFile %>" class="btn" role="button" target="_blank">Open test file <span class="icon-new-window"><span class="visuallyhidden">in a new window</span></span></a></p>
         </section>
         <form id="testingForm" action="#">
-            <section>
+            <section  class="testsection">
                 <h3>Test Results</h3>
                 <fieldset>
                     <legend><%= test.testProcedure.yesNoQuestion %></legend>
                     <div class="form-block">
                         <div class="form-row radio">
-											<span>
-												<input type="radio" id="res" value="true" name="result">
-											</span>
+				<span>
+					<input type="radio" id="res" value="true" name="result">
+				</span>
                             <label for="res">Yes/True</label>
                         </div>
                         <div class="form-row radio">
@@ -249,7 +249,7 @@
                     <%= r.technique %>: <a href="http://www.w3.org/TR/WCAG20-TECHS/<%= r.technique %>">  <%= r.techniqueTitle %>&nbsp;<span class="icon-external-link"><span class="visuallyhidden">Link to external page.</span></span></a>
                 </th>
                 <td class="result">
-                    <a role="button" href="#/results-technique.html/<%= r.technique %>" class="btn btn-small">
+                    <a href="#/results-technique.html/<%= r.technique %>" class="btn btn-small">
                         <span class="chart" style="display:none"><%= r.noOfPass %>/<%= r.noOfAll %></span>
                         <%= r.noOfPass %>/<%= r.noOfAll %>
                         <span class="icon-arrow-right2">
@@ -278,10 +278,10 @@
                 <% first = false %>
                 <% } %>
                 <th scope="row">
-                    <%= Utils.stripTestID(r.testUnitId) %>: <a role="button" href="#/test.html/<%= r.testUnitId %>">  <%= r.testTitle %></a> <!-- Link to test case -->
+                    <%= Utils.stripTestID(r.testUnitId) %>: <a href="#/test.html/<%= r.testUnitId %>"><%= r.testTitle %></a> <!-- Link to test case -->
                 </th>
                 <td class="result">
-                    <a role="button" href="#/results-test.html/<%= r.testUnitId %>" class="btn btn-small">
+                    <a href="#/results-test.html/<%= r.testUnitId %>" class="btn btn-small">
                         <span class="chart" style="display:none"><%= r.noOfPass %>/<%= r.noOfAll %></span>
                         <%= r.noOfPass %>/<%= r.noOfAll %>
                         <span class="icon-arrow-right2">
@@ -297,7 +297,7 @@
     <% _.each(results, function(r) { %>
         <li>
             <strong><%= Utils.stripTestID(r.testUnitId) %>:</strong> <a role="button" href="#/results-test.html/<%= r.testUnitId %>">  <%= r.testTitle %></a>
-            <a role="button" href="#/results-test.html/<%= r.testUnitId %>" class="btn btn-small">
+            <a href="#/results-test.html/<%= r.testUnitId %>" class="btn btn-small">
                 <span class="chart" style="display:none"><%= r.noOfPass %>/<%= r.noOfAll %></span>
                 <%= r.noOfPass %>/<%= r.noOfAll %>
                 <span class="icon-arrow-right2">
@@ -362,7 +362,7 @@
 
 <script type="text/template" id="TestResultsFullViewByTechnique_template">
     <table class="result-details" id="TestResultsFullViewByTechnique_table">
-        <caption>In the columns, you can find browser versions.<br>The rows show assistive technologies.</caption>
+        <caption>In the columns, you can find browser versions. The rows show assistive technologies.</caption>
         <% lresults = results.length
         accessdb.p = {
             ua : undefined,
