@@ -99,14 +99,14 @@
 </script>
 <script type="text/template" id="test-run-template">
         <header>
-            <h2><span class="subheading">Test : <%= Utils.stripTestID(test.testUnitId) %></span> <%= test.title %></h2>
+            <h2><strong>Test: <%= Utils.stripTestID(test.testUnitId) %></strong> – <%= test.title %></h2>
         </header>
-        <section>
+        <section class="testsection">
             <h3>Test Description</h3>
             <p><%= test.description %></p>
         </section>
 
-        <section>
+        <section class="testsection">
             <h3>Test Procedure</h3>
             <ol>
                 <% _.each(test.testProcedure.steps, function(s) { %>
@@ -115,20 +115,20 @@
             </ol>
         </section>
 
-        <section>
+        <section class="testsection">
             <h3>Test File(s)</h3>
-            <a href="<%= test.testFile %>" class="btn" target="_blank">Open test file <span class="icon-new-window"><span class="visuallyhidden">in a new window</span></span></a>
+            <p><a href="<%= test.testFile %>" class="btn" role="button" target="_blank">Open test file <span class="icon-new-window"><span class="visuallyhidden">in a new window</span></span></a></p>
         </section>
         <form id="testingForm" action="#">
-            <section>
+            <section  class="testsection">
                 <h3>Test Results</h3>
                 <fieldset>
                     <legend><%= test.testProcedure.yesNoQuestion %></legend>
                     <div class="form-block">
                         <div class="form-row radio">
-											<span>
-												<input type="radio" id="res" value="true" name="result">
-											</span>
+				<span>
+					<input type="radio" id="res" value="true" name="result">
+				</span>
                             <label for="res">Yes/True</label>
                         </div>
                         <div class="form-row radio">
@@ -362,7 +362,7 @@
 
 <script type="text/template" id="TestResultsFullViewByTechnique_template">
     <table class="result-details" id="TestResultsFullViewByTechnique_table">
-        <caption>In the columns, you can find browser versions.<br>The rows show assistive technologies.</caption>
+        <caption>In the columns, you can find browser versions. The rows show assistive technologies.</caption>
         <% lresults = results.length
         accessdb.p = {
             ua : undefined,
