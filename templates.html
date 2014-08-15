@@ -347,10 +347,12 @@
                     <td><%=t.plugin%></td>
                     <td><%=t.contributor%></td>
                     <td><%=t.comment%></td>
-                    <% if(accessdb.session.isUserAdmin()) { %>
+                    <% if(accessdb.session.isUserAdmin())
+                        console.log(t);
+                    { %>
                     <td class="roleAdminOnly">
-                        <button class="btn" value="<%= t.id %>"><span class="icon-pencil"></span> Edit</button>
-                        <button class="btn" value="<%= t.id %>"><span class="icon-minus-sign-alt"></span> Delete</button>
+                        <button class="btn editTestResult" value="<%= t.resultId %>"><span class="icon-pencil"></span> Edit</button>
+                        <button class="btn deleteTestResult" value="<%= t.resultId %>"><span class="icon-minus-sign-alt"></span> Delete</button>
                     </td>
                     <% } %>
                 </tr>

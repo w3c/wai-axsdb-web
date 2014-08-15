@@ -235,3 +235,6 @@ window.accessdb.appRouter.loadPage = function(id){
 window.accessdb.appRouter.redirect = function(page){
     window.location.href = "#/" + page;
 };
+window.accessdb.appRouter.reload = function(page){
+    document.location.reload();
+};

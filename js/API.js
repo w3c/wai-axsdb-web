@@ -7,7 +7,7 @@
     window.accessdb.config = window.accessdb.config || {};
 
     // Config to override
-    window.accessdb.config.URL_API_ROOT = "http://www.w3.org/WAI/accessibility-support/api/";
+    window.accessdb.config.URL_API_ROOT = "http://www.w3.org/WAI/accessibility-support/api_dev/";
     window.accessdb.config.loadingStart = function(holder){
         var div = $('<div class="progress"><div>Loading…</div></div>');
         $(holder).attr("aria-busy", true);
@@ -71,6 +71,8 @@
         URL_SERVICE_TESTRESULT_TREE_UA: "testresult/browse/ua/tree",
         URL_SERVICE_TESTRESULT_TREE_OS: "testresult/browse/os/tree",
         URL_SERVICE_TESTRESULT_PERSIST: "testresult/commit/bunch",
+        URL_SERVICE_TESTRESULT_DELETE: "testresult/",
+        URL_SERVICE_TESTRESULT_EDIT: "testresult/put/",
         URL_SERVICE_GET_RESUTLS: "testresult/browse",
         // Query resource
         URL_SERVICE_QUERY: "query/",
@@ -150,6 +152,10 @@
 
         },
         TESTRESULT: {
+            deleteTestResultById : function(id, callback){
+                var url = accessdb.config.services.URL_SERVICE_TESTRESULT_DELETE + accessdb.sessionId + "/" + id;
+                ajax(url , "DELETE", null, callback);
+            },
             filter: function(filter, callback){
                 ajax(accessdb.config.services.URL_SERVICE_TESTRESULT_FILTER, "POST", filter, callback);
             },

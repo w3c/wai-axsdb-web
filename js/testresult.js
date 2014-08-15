@@ -27,7 +27,22 @@ TestResult.initHandlers = function(){
             accessdb.appRouter.redirect("tests-run-submit.html");
         });
     });
-
+    $(document).on("click", ".deleteTestResult", function (event) {
+        event.preventDefault();
+        var id = $(event.target).attr("value");
+        var txt;
+        var r = confirm("Are you sure you want to delete this test result?");
+        if (r == true) {
+            accessdb.API.TESTRESULT.deleteTestResultById(id, function (error, data, status) {
+                if(!error){
+                    Utils.msg2user("deleted");
+                    window.accessdb.appRouter.reload();
+                }
+                else
+                    Utils.msg2user("not deleted");
+            });
+        }
+    });
 };
 TestResult.viewTestingResultsBeforeSave = function () {
     var testResultList = accessdb.session.get("testResultList");

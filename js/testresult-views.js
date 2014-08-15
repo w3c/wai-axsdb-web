@@ -274,7 +274,7 @@ accessdb.Views.TestResultsDetails = function (){
                     var res = resPerTest[ress];
                     if(res.testingProfile){
                         testResult.testResults.push({
-                            id: res.id,
+                            resultId: res.resultId,
                             result: res.resultValue,
                             os: res.testingProfile.platform.name + " " + res.testingProfile.platform.version.text,
                             plugin: res.testingProfile.plugin.name ,
