@@ -96,10 +96,12 @@ Utils.getUniqCol = function (matrix, col) {
     return column;
 };
 
-Utils.msg2user = function (msg) {
+Utils.msg2user = function (msg, page) {
     //window.alert(msg);
     $("#msg2user").html(msg);
     $("#msg2user" ).dialog();
+    if(page)
+        accessdb.appRouter.loadPage(page);
 };
 Utils.getFileNameWithNoExt = function (x) {
     return x.substr(0, x.lastIndexOf('.'));

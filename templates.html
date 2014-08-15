@@ -309,15 +309,16 @@
     </ul>
 </script>
 <script type="text/template" id="Results_template">
-    <h1>Test Results for <%=params.type%> <%
-        if(params.type==="Test")
-        {
-        %>
-            <%= Utils.stripTestID(params.typeValue)%>
-        <% } else {   %>
-            <%= params.typeValue%>
-        <% }
-        %>, <%=params.ua%> <%=params.uaVer%> with <%=params.at%> <%=params.atVer%></h1>
+    <%
+    var str = "";
+    if(params.type==="Test")
+    {
+    str = str +  Utils.stripTestID(params.typeValue);
+    } else {
+    str = str +  params.typeValue;
+    }
+    $("#ResultsHeading").html("Test Results for" + params.type + str + params.ua+ +params.uaVer+ " with " +params.at + params.atVer );
+    %>
     <div class="">
         <div class="column-second">
             <div id="Results"><!-- Template: Results_template --></div>
