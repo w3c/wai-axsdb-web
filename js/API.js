@@ -24,6 +24,7 @@
     window.accessdb.Models = window.accessdb.Models || {};
     window.accessdb.Models.Filter = function (page) {
         this.page = page || "";
+        this.statusList = ["ACCEPTED"];
         this.userName = null;
         this.lastModified;
         this.criteriosLevel = "AAA";
