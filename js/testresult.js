@@ -27,6 +27,20 @@ TestResult.initHandlers = function(){
             accessdb.appRouter.redirect("tests-run-submit.html");
         });
     });
+    if(_.contains(accessdb.session.get("resultsFilter").statusList, "UNCONFIRMED")){
+        $("#showResultsUnconfirmed").prop( "checked", true );
+    }
+    $(document).on("click", "#showResultsUnconfirmed", function(event){
+        if($(this).is(':checked')) {
+            accessdb.session.get("resultsFilter").statusList = ["ACCEPTED", "UNCONFIRMED"];
+        } else {
+            accessdb.session.get("resultsFilter").statusList = ["ACCEPTED"];
+        }
+        window.accessdb.session.save();
+        //window.accessdb.appRouter.reload();
+        accessdb.TreeHelper.loadDataViews();
+
+    });
     $(document).on("click", ".deleteTestResult", function (event) {
         event.preventDefault();
         var id = $(event.target).attr("value");
