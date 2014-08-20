@@ -40,6 +40,12 @@ function TestUnit() {
             }]
     };
     $("#test-form-status").val(this.status.toLowerCase());
+    if(accessdb.session.isUserAdmin()){
+        $("#test-form-status").prop("disabled", false);
+    }
+    else
+        $("#test-form-status").prop("disabled", false);
+
 };
 TestUnit.loadAndViewTestDetails = function (id){
     console.log( "test id: " + id );
