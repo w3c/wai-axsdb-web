@@ -518,12 +518,12 @@ table {
   font-style: italic;
 }
 /* line 8, ../sass/_fonts.scss */
-.font-primary, .id, body, .page-title .subheading, h1 .subheading, h2 .subheading, h3 .subheading, .list-heading, .content.draft h2::before, .box-caption, figure figcaption, table.testcase-details caption a, table.testcase-details caption strong, .subheading .unapproved {
+.font-primary, .id, body, header[role=banner] .page-title .subheading, h1 .subheading, h2 .subheading, h3 .subheading, .list-heading, .content.draft h2::before, .box-caption, figure figcaption, table.testcase-details caption a, table.testcase-details caption strong, .subheading .unapproved {
   font-family: "Trebuchet MS", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
 }
 
 /* line 12, ../sass/_fonts.scss */
-.font-secondary, .page-title, h1, h2, h3, table.testcase-details caption {
+.font-secondary, header[role=banner] .page-title, h1, h2, h3, table.testcase-details caption {
   font-family: "Vollkorn", Georgia, Times, "Times New Roman", serif;
 }
 
@@ -612,41 +612,40 @@ header[role=banner] div {
   }
 }
 /* line 12, ../sass/modules/_header.scss */
-header[role=banner] img {
-  display: inline-block;
-  vertical-align: middle;
-}
-/* line 16, ../sass/modules/_header.scss */
-header[role=banner] a {
-  text-decoration: none;
-  display: inline-block;
-}
-/* line 19, ../sass/modules/_header.scss */
-header[role=banner] a:hover, header[role=banner] a:focus {
-  text-decoration: underline;
-}
-
-/* line 23, ../sass/modules/_header.scss */
-.page-title {
+header[role=banner] .page-title {
   font-size: 1.75em;
   margin-bottom: 1em;
   line-height: 1;
   padding: .25em 0 0;
   float: none;
 }
-/* line 30, ../sass/modules/_header.scss */
-.page-title .subheading {
+/* line 19, ../sass/modules/_header.scss */
+header[role=banner] .page-title .subheading {
   padding: .25em 0 0;
   display: block;
   font-size: .5em;
 }
-/* line 36, ../sass/modules/_header.scss */
-.page-title a {
+/* line 25, ../sass/modules/_header.scss */
+header[role=banner] .page-title a {
   color: inherit;
   text-decoration: none;
 }
-/* line 39, ../sass/modules/_header.scss */
-.page-title a:hover, .page-title a:focus {
+/* line 28, ../sass/modules/_header.scss */
+header[role=banner] .page-title a:hover, header[role=banner] .page-title a:focus {
+  text-decoration: underline;
+}
+/* line 33, ../sass/modules/_header.scss */
+header[role=banner] img {
+  display: inline-block;
+  vertical-align: middle;
+}
+/* line 37, ../sass/modules/_header.scss */
+header[role=banner] a {
+  text-decoration: none;
+  display: inline-block;
+}
+/* line 40, ../sass/modules/_header.scss */
+header[role=banner] a:hover, header[role=banner] a:focus {
   text-decoration: underline;
 }
 
